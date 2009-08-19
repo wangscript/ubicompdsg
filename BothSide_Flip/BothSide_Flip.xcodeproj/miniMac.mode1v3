@@ -320,7 +320,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>EAGLView.h</string>
+								<string>template.mm</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -328,24 +328,19 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>EAGLView.h</string>
+										<string>template.mm</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>7D918B69103C453F00A1DC44</string>
+										<string>7D918B72103C462F00A1DC44</string>
 										<key>history</key>
 										<array>
 											<string>7D918AEF103C3DDB00A1DC44</string>
-											<string>7D918AF0103C3DDB00A1DC44</string>
 											<string>7D918AF1103C3DDB00A1DC44</string>
 											<string>7D918B47103C453F00A1DC44</string>
 											<string>7D918B49103C453F00A1DC44</string>
 											<string>7D918B4B103C453F00A1DC44</string>
-											<string>7D918B4D103C453F00A1DC44</string>
-											<string>7D918B4E103C453F00A1DC44</string>
-											<string>7D918B4F103C453F00A1DC44</string>
-											<string>7D918B50103C453F00A1DC44</string>
-											<string>7D918B51103C453F00A1DC44</string>
+											<string>7D918B5F103C453F00A1DC44</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -353,70 +348,32 @@
 											<string>7D918AF5103C3DDB00A1DC44</string>
 											<string>7D918AF6103C3DDB00A1DC44</string>
 											<string>7D918AF7103C3DDB00A1DC44</string>
-											<string>7D918AF8103C3DDB00A1DC44</string>
 											<string>7D918AF9103C3DDB00A1DC44</string>
-											<string>7D918AFA103C3DDB00A1DC44</string>
 											<string>7D918AFB103C3DDB00A1DC44</string>
-											<string>7D918AFC103C3DDB00A1DC44</string>
 											<string>7D918AFD103C3DDB00A1DC44</string>
-											<string>7D918AFE103C3DDB00A1DC44</string>
 											<string>7D918B00103C3DDB00A1DC44</string>
-											<string>7D918B01103C3DDB00A1DC44</string>
 											<string>7D918B03103C3DDB00A1DC44</string>
 											<string>7D918B05103C3DDB00A1DC44</string>
 											<string>7D918B06103C3DDB00A1DC44</string>
-											<string>7D918B08103C3DDB00A1DC44</string>
-											<string>7D918B0A103C3DDB00A1DC44</string>
 											<string>7D918B0B103C3DDB00A1DC44</string>
-											<string>7D918B0C103C3DDB00A1DC44</string>
-											<string>7D918B0D103C3DDB00A1DC44</string>
 											<string>7D918B0E103C3DDB00A1DC44</string>
 											<string>7D918B10103C3DDB00A1DC44</string>
-											<string>7D918B12103C3DDB00A1DC44</string>
-											<string>7D918B14103C3DDB00A1DC44</string>
-											<string>7D918B16103C3DDB00A1DC44</string>
 											<string>7D918B17103C3DDB00A1DC44</string>
-											<string>7D918B18103C3DDB00A1DC44</string>
 											<string>7D918B19103C3DDB00A1DC44</string>
-											<string>7D918B1A103C3DDB00A1DC44</string>
 											<string>7D918B1B103C3DDB00A1DC44</string>
-											<string>7D918B1C103C3DDB00A1DC44</string>
 											<string>7D918B1D103C3DDB00A1DC44</string>
-											<string>7D918B1E103C3DDB00A1DC44</string>
 											<string>7D918B1F103C3DDB00A1DC44</string>
 											<string>7D918B20103C3DDB00A1DC44</string>
-											<string>7D918B21103C3DDB00A1DC44</string>
 											<string>7D918B22103C3DDB00A1DC44</string>
-											<string>7D918B23103C3DDB00A1DC44</string>
 											<string>7D918B24103C3DDB00A1DC44</string>
-											<string>7D918B25103C3DDB00A1DC44</string>
 											<string>7D918B26103C3DDB00A1DC44</string>
-											<string>7D918B27103C3DDB00A1DC44</string>
 											<string>7D918B28103C3DDB00A1DC44</string>
-											<string>7D918B29103C3DDB00A1DC44</string>
 											<string>7D918B2A103C3DDB00A1DC44</string>
 											<string>7D918B2B103C3DDB00A1DC44</string>
 											<string>7D918B2C103C3DDB00A1DC44</string>
 											<string>7D918B52103C453F00A1DC44</string>
-											<string>7D918B54103C453F00A1DC44</string>
 											<string>7D918B55103C453F00A1DC44</string>
 											<string>7D918B57103C453F00A1DC44</string>
-											<string>7D918B59103C453F00A1DC44</string>
-											<string>7D918B5A103C453F00A1DC44</string>
-											<string>7D918B5B103C453F00A1DC44</string>
-											<string>7D918B5C103C453F00A1DC44</string>
-											<string>7D918B5D103C453F00A1DC44</string>
-											<string>7D918B5E103C453F00A1DC44</string>
-											<string>7D918B5F103C453F00A1DC44</string>
-											<string>7D918B60103C453F00A1DC44</string>
-											<string>7D918B61103C453F00A1DC44</string>
-											<string>7D918B62103C453F00A1DC44</string>
-											<string>7D918B63103C453F00A1DC44</string>
-											<string>7D918B64103C453F00A1DC44</string>
-											<string>7D918B65103C453F00A1DC44</string>
-											<string>7D918B66103C453F00A1DC44</string>
-											<string>7D918B67103C453F00A1DC44</string>
-											<string>7D918B68103C453F00A1DC44</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -639,7 +596,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>EAGLView.mm</string>
+								<string>template.mm</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
