@@ -144,25 +144,9 @@ Note that setting the view non-opaque will only work if the EAGL surface has an 
 - (void) rotateXMoved:(CGPoint)point;
 - (void) rotateXEnded;
 
-- (void) strtBegan:(CGPoint)point1 andPoint:(CGPoint)point2;
-- (void) strtMoved:(CGPoint)point1 andPoint:(CGPoint)point2;
-- (void) strtEnded;
-- (void) strtHaltWithIndex:(int)idx;
-
-- (void) setTouchAtSameTime: (int)count andFront: (BOOL)front;
-- (void) PushWaitTimer: (id)sender;
-- (void) PushBegan;
-- (void) PushMoved: (id)sender;
-- (void) PushEnded: (id)sender;
 - (int) TouchesOnScreen: (BOOL) isFront;
 
-- (void) cameraMoveBegan:(CGPoint)point;
-- (void) cameraMoveMoved:(CGPoint)point;
-- (void) cameraMoveEnded;
 
-- (void) cameraDiveBegan:(CGPoint)point1 andPoint:(CGPoint)point2;
-- (void) cameraDiveMoved:(CGPoint)point1 andPoint:(CGPoint)point2;
-- (void) cameraDiveEnded;
 
 - (void) increaseTheDirectionState;
 - (void) decreaseTheDirectionState;
