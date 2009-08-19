@@ -13,9 +13,9 @@
 #define GRAB_WITH_BACK_TOUCH	YES
 
 #define ENABLE_OBJECT_GRAB		YES
-#define ENABLE_OBJECT_MOVE		YES
-#define ENABLE_OBJECT_PUSH		YES
-#define ENABLE_OBJECT_FLIP		NO
+#define ENABLE_OBJECT_MOVE	NO
+#define ENABLE_OBJECT_PUSH		NO
+#define ENABLE_OBJECT_FLIP		YES
 #define ENABLE_OBJECT_STRETCH	NO
 
 #define ENABLE_CAMERA_DIVE		NO
@@ -54,7 +54,6 @@ void templateScreenTouchMove( void *_ptr );
 
 void templateScreenAccelerometer( void *_ptr );
 
-//added by danielbas{
 void templateChangeObjectScale( void *_ptr, float det_scale);
 
 void templateRotateObject( void *_ptr , int rotateDirection, int theDirState);  //1: up, 2: right, 3: down, 4: left
@@ -63,9 +62,12 @@ void templateMoveObject( void *_ptr ,float _detX, float _detY, float _detZ);
 
 void templateMoveCamera( void *_ptr ,float _detX, float _detY, float _detZ );
 
-//} added by danielbas
+void templatePrintProgress();
 
 void backTouchHandle(void *_ptr, int type, int index, float pt_x, float pt_y);
 
 void logToFile(NSString *logText, NSString *fileName);
+
+void generateLogFormat();
+
 #endif
