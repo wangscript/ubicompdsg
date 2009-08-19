@@ -15,13 +15,13 @@
 		28FD14FE0DC6FC130079059D /* EAGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 28FD14FD0DC6FC130079059D /* EAGLView.mm */; };
 		28FD15000DC6FC520079059D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD14FF0DC6FC520079059D /* OpenGLES.framework */; };
 		28FD15080DC6FC5B0079059D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD15070DC6FC5B0079059D /* QuartzCore.framework */; };
+		7D918A81103C1C9400A1DC44 /* Task_Flip.sio2 in Resources */ = {isa = PBXBuildFile; fileRef = 7D918A80103C1C9400A1DC44 /* Task_Flip.sio2 */; };
 		8869928810382ACF000723F1 /* default16x16.tga in Resources */ = {isa = PBXBuildFile; fileRef = 8869928710382ACF000723F1 /* default16x16.tga */; };
 		889B398A103055BA00204ACA /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 889B3985103055BA00204ACA /* BrowserViewController.m */; };
 		889B398B103055BA00204ACA /* Picker.m in Sources */ = {isa = PBXBuildFile; fileRef = 889B3987103055BA00204ACA /* Picker.m */; };
 		889B398C103055BA00204ACA /* TCPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 889B3989103055BA00204ACA /* TCPServer.m */; };
 		889B3A141030590300204ACA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 889B3A131030590300204ACA /* SystemConfiguration.framework */; };
 		889B3A461030591300204ACA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 889B3A451030591300204ACA /* CoreGraphics.framework */; };
-		88CE4CB91035937A009CDD6C /* Task_Drag.sio2 in Resources */ = {isa = PBXBuildFile; fileRef = 88CE4CB81035937A009CDD6C /* Task_Drag.sio2 */; };
 		E073A29A100D3660004A0982 /* sio2_camera.cc in Sources */ = {isa = PBXBuildFile; fileRef = E073A255100D3660004A0982 /* sio2_camera.cc */; };
 		E073A29B100D3660004A0982 /* sio2_emitter.cc in Sources */ = {isa = PBXBuildFile; fileRef = E073A258100D3660004A0982 /* sio2_emitter.cc */; };
 		E073A29C100D3660004A0982 /* sio2_font.cc in Sources */ = {isa = PBXBuildFile; fileRef = E073A25A100D3660004A0982 /* sio2_font.cc */; };
@@ -323,15 +323,16 @@
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* templateAppDelegate.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = templateAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* templateAppDelegate.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = templateAppDelegate.m; sourceTree = "<group>"; };
-		1D6058910D05DD3D006BFB54 /* template.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = template.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D6058910D05DD3D006BFB54 /* BothSideFlip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BothSideFlip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		28AD733E0D9D9553002E5188 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
-		28FD14FC0DC6FC130079059D /* EAGLView.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = EAGLView.h; sourceTree = "<group>"; };
-		28FD14FD0DC6FC130079059D /* EAGLView.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = EAGLView.mm; sourceTree = "<group>"; };
+		28FD14FC0DC6FC130079059D /* EAGLView.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = EAGLView.h; path = ../../BothSide_Flip/Classes/EAGLView.h; sourceTree = "<group>"; };
+		28FD14FD0DC6FC130079059D /* EAGLView.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = EAGLView.mm; path = ../../BothSide_Flip/Classes/EAGLView.mm; sourceTree = "<group>"; };
 		28FD14FF0DC6FC520079059D /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		28FD15070DC6FC5B0079059D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = main.mm; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* template_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = template_Prefix.pch; sourceTree = "<group>"; };
+		7D918A80103C1C9400A1DC44 /* Task_Flip.sio2 */ = {isa = PBXFileReference; lastKnownFileType = file; name = Task_Flip.sio2; path = ../data/Task_Flip.sio2; sourceTree = SOURCE_ROOT; };
 		8869928710382ACF000723F1 /* default16x16.tga */ = {isa = PBXFileReference; lastKnownFileType = file; name = default16x16.tga; path = ../data/default16x16.tga; sourceTree = SOURCE_ROOT; };
 		889B3984103055BA00204ACA /* BrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserViewController.h; sourceTree = "<group>"; };
 		889B3985103055BA00204ACA /* BrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserViewController.m; sourceTree = "<group>"; };
@@ -341,7 +342,6 @@
 		889B3989103055BA00204ACA /* TCPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPServer.m; sourceTree = "<group>"; };
 		889B3A131030590300204ACA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		889B3A451030591300204ACA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		88CE4CB81035937A009CDD6C /* Task_Drag.sio2 */ = {isa = PBXFileReference; lastKnownFileType = file; name = Task_Drag.sio2; path = ../data/Task_Drag.sio2; sourceTree = SOURCE_ROOT; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E073A254100D3660004A0982 /* sio2_action.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = sio2_action.h; path = ../src/sio2/sio2_action.h; sourceTree = SOURCE_ROOT; };
 		E073A255100D3660004A0982 /* sio2_camera.cc */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = sio2_camera.cc; path = ../src/sio2/sio2_camera.cc; sourceTree = SOURCE_ROOT; };
@@ -962,7 +962,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D6058910D05DD3D006BFB54 /* template.app */,
+				1D6058910D05DD3D006BFB54 /* BothSideFlip.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -979,7 +979,7 @@
 				E0E3112A0E5EA54900F6D25F /* theora */,
 				E0E310FA0E5EA54900F6D25F /* vorbis */,
 				E0E310DE0E5EA54900F6D25F /* zlib */,
-				88CE4C4E10358A95009CDD6C /* BothSide_Drag */,
+				88CE4C4E10358A95009CDD6C /* BothSide_Flip */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* BothSide_Main */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -1032,16 +1032,16 @@
 			path = ../BothSide_Main;
 			sourceTree = "<group>";
 		};
-		88CE4C4E10358A95009CDD6C /* BothSide_Drag */ = {
+		88CE4C4E10358A95009CDD6C /* BothSide_Flip */ = {
 			isa = PBXGroup;
 			children = (
-				88CE4CB81035937A009CDD6C /* Task_Drag.sio2 */,
 				8D1107310486CEB800E47090 /* Info.plist */,
+				7D918A80103C1C9400A1DC44 /* Task_Flip.sio2 */,
 				E0E310880E5EA40200F6D25F /* template.mm */,
 				E0E310870E5EA40200F6D25F /* template.h */,
 				32CA4F630368D1EE00C91783 /* template_Prefix.pch */,
 			);
-			name = BothSide_Drag;
+			name = BothSide_Flip;
 			sourceTree = "<group>";
 		};
 		E0E310AC0E5EA54900F6D25F /* sio2 */ = {
@@ -1677,9 +1677,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1D6058900D05DD3D006BFB54 /* template */ = {
+		1D6058900D05DD3D006BFB54 /* BothSideFlip */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "template" */;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "BothSideFlip" */;
 			buildPhases = (
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
@@ -1689,9 +1689,9 @@
 			);
 			dependencies = (
 			);
-			name = template;
+			name = BothSideFlip;
 			productName = template;
-			productReference = 1D6058910D05DD3D006BFB54 /* template.app */;
+			productReference = 1D6058910D05DD3D006BFB54 /* BothSideFlip.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1699,14 +1699,14 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
-			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "BothSide_Drag" */;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "BothSide_Flip" */;
 			compatibilityVersion = "Xcode 3.1";
 			hasScannedForEncodings = 1;
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1D6058900D05DD3D006BFB54 /* template */,
+				1D6058900D05DD3D006BFB54 /* BothSideFlip */,
 			);
 		};
 /* End PBXProject section */
@@ -1719,8 +1719,8 @@
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
 				E0E313F60E5EA78B00F6D25F /* Icon.png in Resources */,
 				E0E313F70E5EA78B00F6D25F /* Default.png in Resources */,
-				88CE4CB91035937A009CDD6C /* Task_Drag.sio2 in Resources */,
 				8869928810382ACF000723F1 /* default16x16.tga in Resources */,
+				7D918A81103C1C9400A1DC44 /* Task_Flip.sio2 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2056,7 +2056,7 @@
 					"-falign-loops=16",
 					"-fvisibility=default",
 				);
-				PRODUCT_NAME = template;
+				PRODUCT_NAME = BothSideFlip;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = dynamic;
 			};
@@ -2086,7 +2086,7 @@
 					"-falign-loops=16",
 					"-fvisibility=default",
 				);
-				PRODUCT_NAME = template;
+				PRODUCT_NAME = BothSideFlip;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = dynamic;
 			};
@@ -2133,7 +2133,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "template" */ = {
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "BothSideFlip" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,
@@ -2142,7 +2142,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "BothSide_Drag" */ = {
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "BothSide_Flip" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
