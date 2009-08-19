@@ -268,9 +268,6 @@ BOOL isDebug = YES;
 		
 	}
 	
-	
-
-	
 	return YES;
 }
 
@@ -407,120 +404,9 @@ BOOL isDebug = YES;
 		fingersOnBack = TRUE;
 	}
 	
-	TouchPoint *tp1, *tp2, *tp3, *tp4;
-	// Algmemted Part for STRETCH: -------------------------------------------------------------------
-	if(!strtState) 
-	{   
-		//CASE1: 其中一組DragPair已經產生：
-	    if(dragState && newestDragFrontIdx[0]<5 && newestDragFrontIdx[1]<5 && newestDragBackIdx[0]<5 && newestDragBackIdx[1]<5)
-		{
-			tp1 = [self.frontLoc objectAtIndex: newestDragFrontIdx[0]];
-			tp2 = [self.backLoc  objectAtIndex: newestDragBackIdx[0]];
-
-			if( tp1._point.x < tp2._point.x + STRETCH_INITIAL_LIMIT && tp1._point.x > tp2._point.x - STRETCH_INITIAL_LIMIT &&
-			    tp1._point.y < tp2._point.y + STRETCH_INITIAL_LIMIT && tp1._point.y > tp2._point.y - STRETCH_INITIAL_LIMIT)
-			{
-				strtPairIdx[0] = dragPairIdx[0];
-				strtPairIdx[1] = dragPairIdx[1];
-				strtPairIdx[2] = newestDragFrontIdx[0];
-				strtPairIdx[3] = newestDragBackIdx[0];
-				
-				if(strtDebug) printf("The strtPairIndex are <%d,%d><%d,%d>", strtPairIdx[0], strtPairIdx[1], strtPairIdx[2], strtPairIdx[3]);
-				
-				if(strtDebug) printf("From Drag!!!!\n");
-				tp3 = [self.frontLoc objectAtIndex:dragPairIdx[0]];
-				[self strtBegan:tp1._point  andPoint:tp3._point];
-			}
-		}
-		//CASE2: 其中一組FlipPair已經產生：
-		else if(flipState && newestFlipFrontIdx<5 && newestFlipBackIdx<5)
-		{
-			tp1 = [self.frontLoc objectAtIndex:newestFlipFrontIdx];
-			tp2 = [self.backLoc  objectAtIndex:newestFlipBackIdx ];
-			
-			if( tp1._point.x < tp2._point.x + STRETCH_INITIAL_LIMIT && tp1._point.x > tp2._point.x - STRETCH_INITIAL_LIMIT &&
-			    tp1._point.y < tp2._point.y + STRETCH_INITIAL_LIMIT && tp1._point.y > tp2._point.y - STRETCH_INITIAL_LIMIT)
-			{
-				strtPairIdx[0] = flipPairIdx[0];
-				strtPairIdx[1] = flipPairIdx[1];
-				strtPairIdx[2] = newestFlipFrontIdx;
-				strtPairIdx[3] = newestFlipBackIdx;
-				
-				if(strtDebug) printf("The strtPairIndex are <%d,%d><%d,%d>\n", strtPairIdx[0], strtPairIdx[1], strtPairIdx[2], strtPairIdx[3]);
-				
-				if(strtDebug) printf("From FLIP!!!!\n");
-				tp3 = [self.frontLoc objectAtIndex:flipPairIdx[0]];
-				[self strtBegan:tp1._point andPoint:tp3._point ];
-			}
-		}
-		//CASE3: 尚未有FlipPair或DragPair生成:
-		else if(newestDragFrontIdx[0]<5 && newestDragFrontIdx[1]<5 && newestDragBackIdx[0]<5 && newestDragBackIdx[1]<5) 
-		{
-			tp1 = [self.frontLoc objectAtIndex: newestDragFrontIdx[0]];
-			tp2 = [self.frontLoc objectAtIndex: newestDragFrontIdx[1]];
-			tp3 = [self.backLoc  objectAtIndex: newestDragBackIdx[0]];
-			tp4 = [self.backLoc  objectAtIndex: newestDragBackIdx[1]];
-			
-			if( tp1._point.x < tp3._point.x + STRETCH_INITIAL_LIMIT && tp1._point.x > tp3._point.x - STRETCH_INITIAL_LIMIT &&
-			    tp1._point.y < tp3._point.y + STRETCH_INITIAL_LIMIT && tp1._point.y > tp3._point.y - STRETCH_INITIAL_LIMIT &&
-			    tp2._point.x < tp4._point.x + STRETCH_INITIAL_LIMIT && tp2._point.x > tp4._point.x - STRETCH_INITIAL_LIMIT &&
-			    tp2._point.y < tp4._point.y + STRETCH_INITIAL_LIMIT && tp2._point.y > tp4._point.y - STRETCH_INITIAL_LIMIT) 
-			{
-				strtPairIdx[0] = newestDragFrontIdx[0];
-				strtPairIdx[1] = newestDragBackIdx[0];
-				strtPairIdx[2] = newestDragFrontIdx[1];
-				strtPairIdx[3] = newestDragBackIdx[1];
-				
-				if(strtDebug) printf("From Strt!!!!\n");
-				if(strtDebug) printf("The strtPairIndex are <%d,%d><%d,%d>\n", strtPairIdx[0], strtPairIdx[1], strtPairIdx[2], strtPairIdx[3]);
-				
-				[self strtBegan:tp1._point andPoint:tp2._point];
-			}
-			
-			else if( tp1._point.x < tp4._point.x + STRETCH_INITIAL_LIMIT && tp1._point.x > tp4._point.x - STRETCH_INITIAL_LIMIT &&
-					 tp1._point.y < tp4._point.y + STRETCH_INITIAL_LIMIT && tp1._point.y > tp4._point.y - STRETCH_INITIAL_LIMIT &&
-					 tp2._point.x < tp3._point.x + STRETCH_INITIAL_LIMIT && tp2._point.x > tp3._point.x - STRETCH_INITIAL_LIMIT &&
-					 tp2._point.y < tp3._point.y + STRETCH_INITIAL_LIMIT && tp2._point.y > tp3._point.y - STRETCH_INITIAL_LIMIT) 
-			{
-				
-				if(strtDebug) printf("From Strt2!!!!\n");
-				strtPairIdx[0] = newestDragFrontIdx[0];
-				strtPairIdx[1] = newestDragBackIdx[1];
-				strtPairIdx[2] = newestDragFrontIdx[1];
-				strtPairIdx[3] = newestDragBackIdx[0];	
-				[self strtBegan:tp1._point andPoint:tp2._point];
-			}
-			
-			
-				
-				
-		}
-	}
-	if(strtState && isStrtHalt && newestDragBackIdx[0] < 5 && newestDragFrontIdx[0] < 5 ) //Case: Stretch Halted
-	{
-			if(isDebug) printf("Started from Stretch Halted ---------------\n");
-			if(isDebug) printf("The newestDragFrontIdx: %d",newestDragFrontIdx[0]);
-			if(isDebug) printf("The newestDragFrontIdx: %d",newestDragBackIdx[0]);
-		
-			tp1 = [self.frontLoc objectAtIndex: newestDragFrontIdx[0]];
-			tp2 = [self.frontLoc objectAtIndex: newestDragBackIdx[0]];
-			if( tp1._point.x < tp2._point.x + STRETCH_INITIAL_LIMIT && tp1._point.x > tp2._point.x - STRETCH_INITIAL_LIMIT &&
-			   tp1._point.y < tp2._point.y + STRETCH_INITIAL_LIMIT && tp1._point.y > tp2._point.y - STRETCH_INITIAL_LIMIT) {
-				
-				strtPairIdx[2] = newestDragFrontIdx[0];
-				strtPairIdx[3] = newestDragBackIdx[0];
-				
-				tp3 = [self.frontLoc objectAtIndex:strtPairIdx[0]];
-				
-				tempStrtDistance = sqrt(pow(tp1._point.x - tp3._point.x, 2)+pow(tp1._point.y - tp3._point.y, 2));
-				
-				isStrtHalt = NO;
-			}
-		
-	
-	}
+	TouchPoint *tp1, *tp2;
 	// Algmented Part for DRAG: ----------------------------------------------------------------------
-	if(!strtState && !dragState && newestDragFrontIdx[0]<5 && newestDragBackIdx[0]<5) 
+	if(!dragState && newestDragFrontIdx[0]<5 && newestDragBackIdx[0]<5) 
 	{
 		tp1 = [self.frontLoc objectAtIndex: newestDragFrontIdx[0]];
 		tp2 = [self.backLoc  objectAtIndex: newestDragBackIdx[0]];
@@ -539,7 +425,7 @@ BOOL isDebug = YES;
 		}	
 	}
 	// Algmented Part for FLIP: ----------------------------------------------------------------------
-	if(!strtState && !flipState && newestFlipFrontIdx<5 && newestFlipBackIdx<5) 
+	if(!flipState && newestFlipFrontIdx<5 && newestFlipBackIdx<5) 
 	{
 		if(!dragState) 
 		{ 
@@ -576,39 +462,6 @@ BOOL isDebug = YES;
 	}
 	// -----------------------------------------------------------------------------------------------
 
-	
-	
-	// 當只有偵測到一個指頭：
-	if( sio2->_SIO2window->n_touch == 1 && !cameraDiveState && newestSingleIdx<5 )
-	{
-		if(!cameraMoveState)
-		{
-			tp1 = [self.frontLoc objectAtIndex: newestSingleIdx];
-			cameraMoveIdx = newestSingleIdx;
-			[self cameraMoveBegan:tp1._point];
-		}
-		else 
-		{
-			tp1 = [self.frontLoc objectAtIndex: newestSingleIdx];
-			tp2 = [self.frontLoc objectAtIndex: cameraMoveIdx  ];
-			cameraDiveIdx[0] = newestSingleIdx;
-			cameraDiveIdx[1] = cameraMoveIdx;
-			[self cameraMoveEnded];
-			[self cameraDiveBegan:tp1._point andPoint:tp2._point];
-		}
-		
-	}
-	
-	// 當偵測到兩個指頭：
-	else if( sio2->_SIO2window->n_touch == 2 && !cameraMoveState && !cameraDiveState && newestDoubleIdx[0]<5 && newestDoubleIdx[1]<5 )  
-	{
-		tp1 = [self.frontLoc objectAtIndex: newestDoubleIdx[0]];
-		tp2 = [self.frontLoc objectAtIndex: newestDoubleIdx[1]];
-		cameraDiveIdx[0] = newestDoubleIdx[0];
-		cameraDiveIdx[1] = newestDoubleIdx[1];
-		[self cameraDiveBegan:tp1._point andPoint:tp2._point];
-	}
-	
 	return index;
 }
 
@@ -721,50 +574,9 @@ BOOL isDebug = YES;
 			[self flipMoved:tp1._point];
 		}
 	}
-	// Algmented Part for STRETCH: -------------------------------------------------------------------------------------------
-	if(strtState && !isStrtHalt)
-	{//NOTE: 判斷stretch的move只需要判斷正面的那兩點
-		tp1 = [self.frontLoc objectAtIndex: strtPairIdx[0]];
-		tp2 = [self.frontLoc  objectAtIndex: strtPairIdx[2]];
-		//if(strtDebug) if(isDebug) printf(" ==--> The strtPairIndex are <%d,%d><%d,%d>\n", strtPairIdx[0], strtPairIdx[1], strtPairIdx[2], strtPairIdx[3]);
-		
-		double strtNewDistance;
-		strtNewDistance = pow( tp1._point.x - tp2._point.x, 2 ) + pow( tp1._point.y - tp2._point.y, 2);
-		
-		if( strtNewDistance > strtPrevDistance + STRETCH_MOVE_THRESOULD) {
-			strtExpand = YES;
-			[self strtMoved:tp1._point andPoint:tp2._point];
-		}
-		else if(strtNewDistance < strtPrevDistance - STRETCH_MOVE_THRESOULD) {														
-			strtExpand = NO;
-			[self strtMoved:tp1._point andPoint:tp2._point];
-		}
-		
-	    strtPrevDistance = strtNewDistance;
-	}
+
 	// -----------------------------------------------------------------------------------------------------------------------
-	
-	if(cameraMoveState)
-	{
-		tp1 = [self.frontLoc objectAtIndex: cameraMoveIdx];
-		[self cameraMoveMoved: tp1._point];
-	}
-	else if(cameraDiveState)
-	{
-		tp1 = [self.frontLoc objectAtIndex: cameraDiveIdx[0]];
-		tp2 = [self.frontLoc objectAtIndex: cameraDiveIdx[1]];
-		[self cameraDiveMoved: tp1._point andPoint: tp2._point];
-	}
-	
-	/*
-	if( !dragState && !strtState &&rotateXState){
-		
-		printf("==============kkk============\n");
-		
-		tp1 = [self.backLoc objectAtIndex: rotateXPairIdx[1]];
-		[self rotateXMoved:tp1._point];
-		
-	}*/
+
 	return i;
 }
 
@@ -776,16 +588,11 @@ BOOL isDebug = YES;
 			tempPtr = [self.frontLoc objectAtIndex:i];
 			if(tempPtr._touch == touch){
 				
-				if (strtState && strtPairIdx[0] == num && !isStrtHalt ) [self strtHaltWithIndex:0];
-				if (strtState && strtPairIdx[2] == num && !isStrtHalt ) [self strtHaltWithIndex:2];				
-				if (strtState && strtPairIdx[0] == i && isStrtHalt ) [self strtEnded];
-				
+							
 				if (newestDragFrontIdx[0] == i) newestDragFrontIdx[0] = 5;
 				if (newestDragFrontIdx[1] == i) newestDragFrontIdx[1] = 5;
 				if (newestFlipFrontIdx    == i) newestFlipFrontIdx    = 5;
 				
-				if( cameraMoveState && cameraMoveIdx == i) [self cameraMoveEnded];
-				if( cameraDiveState && (cameraDiveIdx[0] == i || cameraDiveIdx[1] == i) ) [self cameraDiveEnded];
 				if( newestSingleIdx    == i) newestSingleIdx    = 5;
 				if( newestDoubleIdx[0] == i) newestDoubleIdx[0] = 5;
 				if( newestDoubleIdx[1] == i) newestDoubleIdx[1] = 5;
@@ -803,11 +610,7 @@ BOOL isDebug = YES;
 	else{
 		
 		if (dragState && dragPairIdx[1] == num) [self dragEnded];
-		if (flipState && flipPairIdx[1] == num) [self flipEnded];
-		if (strtState && strtPairIdx[1] == num && !isStrtHalt ) [self strtHaltWithIndex:1];
-		if (strtState && strtPairIdx[3] == num && !isStrtHalt ) [self strtHaltWithIndex:3];
-		if (strtState && strtPairIdx[1] == num && isStrtHalt ) [self strtEnded];
-		
+		if (flipState && flipPairIdx[1] == num) [self flipEnded];		
 		if (newestDragBackIdx[0] == num) newestDragBackIdx[0] = 5;
 		if (newestDragBackIdx[1] == num) newestDragBackIdx[1] = 5;
 		if (newestFlipBackIdx    == num) newestFlipBackIdx    = 5;
@@ -982,16 +785,6 @@ BOOL isDebug = YES;
 	newestSingleIdx    = 5;
 	newestDoubleIdx[0] = 5;
 	newestDoubleIdx[1] = 5;
-	
-	cameraMoveIdx      = 5;
-	cameraDiveIdx[0]   = 5;
-	cameraDiveIdx[1]   = 5;
-	
-	cameraMoveState		  = NO;
-	cameraDiveState		  = NO;
-	
-	tempCameraMovePts    = CGPointMake(0, 0);
-	tempCameraDiveDistance = 0;
 	
 	//---- Initialization for FLIP: -------------------------------------
 	rotateDirection = ROTATE_WAIT;
@@ -1211,169 +1004,6 @@ BOOL isDebug = YES;
 
 #pragma mark Object Stretch
 // ================ Functions for OBJECT STRETCH =================
-
-- (void) strtBegan:(CGPoint)point1 andPoint:(CGPoint)point2 {  	
-	if(!ENABLE_OBJECT_STRETCH) return;
-	
-	if(isDebug) printf("Stretch Began\n");
-	strtState = YES;
-	// Also Reset _DragState and _FlipState: 
-	if(dragState) [self dragEnded];
-	if(flipState) [self flipEnded];
-
-	tempStrtDistance = sqrt( pow(point1.x - point2.x, 2) + pow(point1.y - point2.y,2) );
-}
-
-- (void) strtMoved:(CGPoint)point1 andPoint:(CGPoint)point2 {
-	if(strtExpand) 
-		if(isDebug) printf("Stretch Expand\n");
-	else
-		if(isDebug) printf("Stretch Shrink\n");
-	
-	double theDistance = sqrt( pow(point1.x - point2.x, 2) + pow(point1.y - point2.y, 2) );
-	double scaleIndex = theDistance - tempStrtDistance;
-	
-	//if(isDebug) printf("@Call sio2ResourceDispatchEvents: \n");
-	if( scaleIndex>10 || scaleIndex<10){
-		mysio2ResourceDispatchEvents( sio2->_SIO2resource,
-									 sio2->_SIO2window,
-									 my_WINDOW_CHANGE_OBJ_SCALE,
-									 SIO2_WINDOW_TAP_DOWN,
-									 0.05*scaleIndex,  //scale
-									 0,     //direction, 1: horizontal ; 2: vertical
-									 0,     //dirState
-									 0,     //delta x
-									 0,     //delta y
-									 0      //delta z
-									 );
-	
-		tempStrtDistance = theDistance;
-	}
-}
-
-- (void) strtHaltWithIndex:(int)idx {
-	if(isDebug) printf("Stretch Halted\n");
-	if( idx == 0 || idx == 1)
-	{
-		strtPairIdx[0] = strtPairIdx[2];
-		strtPairIdx[1] = strtPairIdx[3];
-	}
-	strtPairIdx[2] = 5;
-	strtPairIdx[3] = 5;
-	isStrtHalt = YES;
-}
-
-
-- (void) strtEnded {
-	if(isDebug) printf("Stretch End\n");
-	strtState  = NO;
-	strtExpand = NO;
-	isStrtHalt = NO;
-	newestDragFrontIdx[0] = 5;
-	newestDragFrontIdx[1] = 5;
-	newestDragBackIdx[0]  = 5;
-	newestDragBackIdx[1]  = 5;
-	newestFlipFrontIdx    = 5;
-	newestFlipBackIdx     = 5;
-	tempStrtDistance      = 0;
-	
-	if(selection != nil)
-		[gestureSequence addObject: INTOBJ(GESTURE_BOTH_STRETCH)];
-}
-
-#pragma mark Object Push
-// ================ Functions for OBJECT PUSH =================
-
-- (void) setTouchAtSameTime: (int)count andFront: (BOOL)front {
-	double nowTime = [NSDate timeIntervalSinceReferenceDate];
-	if ((nowTime - _SameTouchFirstTime) < PUSH_INITIAL_PERIOD) {
-		_PushState = 5;
-		_PushFromFront = front;
-		NSTimer *timer;
-		timer = [NSTimer scheduledTimerWithTimeInterval: PUSH_INITIAL_WAIT_TIME 
-												 target: self
-											   selector: @selector(PushWaitTimer:)
-											   userInfo: nil
-												repeats: NO ];
-	}
-	
-	_SameTouchFirstTime = nowTime;
-}
-
-- (void) PushWaitTimer: (id)sender {
-	if (_PushState == 5) {
-		[self PushBegan];
-	}
-}
-
-- (void) PushBegan {
-	if (!ENABLE_OBJECT_PUSH) return;
-	
-	if (_PushFromFront){
-		if(isDebug) printf("Push (From Front) Began\n");
-	}
-	else {
-		if(isDebug) printf("Push (From Back) Began\n");	
-	}
-	_PushState = 1;
-	NSTimer *timer;
-	timer = [NSTimer scheduledTimerWithTimeInterval: PUSH_PERIOD_TIME 
-											 target: self
-										   selector: @selector(PushMoved:)
-										   userInfo: nil
-											repeats: YES ];
-}
-
-- (void) PushMoved: (id)sender {
-	if(_PushState > 0) {
-		if ([self TouchesOnScreen: _PushFromFront] < 2){
-			[self PushEnded: (id)sender];
-		}
-		else {
-			_PushState = [self TouchesOnScreen: _PushFromFront];
-		}
-		if(isDebug) printf("Push (From %s) Moved, Level: %d\n", (_PushFromFront ? "Front" : "Back"), _PushState);
-
-		double scale;
-		if(!_PushFromFront) {
-			switch(_PushState) {
-			case 2:	scale = 5; break;
-			case 3: scale = 7; break;
-			case 4:	scale = 9; break;
-			}
-		}
-		else {
-			switch(_PushState) {
-				case 2: scale = -5; break;
-				case 3: scale = -7; break;
-				case 4:	scale = -9;	break;
-			}		
-		}
-		
-		mysio2ResourceDispatchEvents( sio2->_SIO2resource,
-									  sio2->_SIO2window,
-									  my_WINDOW_MOVE_OBJ,
-									  SIO2_WINDOW_TAP_DOWN,
-									  0,			//scale
-									  0,			//direction, 1: horizontal ; 2: vertical
-									  0,			//dirState
-									  0,			//delta x
-									  0,            //delta y
-									  50*scale		//delta z
-									 );
-	
-	}
-}
-
-- (void) PushEnded: (id)sender {
-	[sender invalidate];
-	if(isDebug) printf("Push End\n");
-	_PushState = 0;
-	
-	if(selection!= nil)
-		[gestureSequence addObject: INTOBJ(GESTURE_BOTH_PUSH)];
-}
-
 - (int) TouchesOnScreen: (BOOL) isFront {
 	int i, tmp;
 	int count = 0;
@@ -1385,108 +1015,6 @@ BOOL isDebug = YES;
 }
 
 #pragma mark Camera Move
-// ================ Functions for CAMERA MOVE =================
-
-- (void) cameraMoveBegan:(CGPoint)point {
-	if (!ENABLE_CAMERA_MOVE) return;
-
-	//if(isDebug) if(isDebug) printf("@ Camera_Move_Began: \n");
-	cameraMoveState = YES;
-	tempCameraMovePts = point;
-}
-
-- (void) cameraMoveMoved:(CGPoint)point {
-	//if(isDebug) if(isDebug) printf("@ Camera_Move_Moved: \n");
-	
-	int theDeltaX = point.x - tempCameraMovePts.x;
-	int theDeltaY = point.y - tempCameraMovePts.y;
-	if(!strtState && !dragState && isRotateEnded && !_PushState && cameraMoveState)
-	{
-		mysio2ResourceDispatchEvents( sio2->_SIO2resource,
-									 sio2->_SIO2window,
-									 my_WINDOW_MOVE_CAMERA,
-									 SIO2_WINDOW_TAP_DOWN,
-									 0,  //scale
-									 0,     //direction, 1: horizontal ; 2: vertical
-									 0,     //dirState
-									 (float)10 * theDeltaX,     //delta x
-									 (float)10 * theDeltaY,     //delta y
-									 0      //delta z
-									 );
-	}
-	
-	
-	tempCameraMovePts = point;
-	
-}
-
-- (void) cameraMoveEnded {
-	//if(isDebug) if(isDebug) printf("@ Camera_Move_Ended: \n");
-	cameraMoveState = NO;
-	cameraMoveIdx   = 5;	
-	//sio2->_SIO2camera->dir->x = 0.0f;
-	//sio2->_SIO2camera->dir->y = 0.0f;
-	//sio2->_SIO2camera->dir->z = 0.0f;
-	if(!strtState && !dragState && isRotateEnded && !_PushState)
-	{
-	mysio2ResourceDispatchEvents( sio2->_SIO2resource,
-								 sio2->_SIO2window,
-								 my_WINDOW_MOVE_CAMERA,
-								 SIO2_WINDOW_TAP_DOWN,
-								 0,  //scale
-								 0,     //direction, 1: horizontal ; 2: vertical
-								 0,     //dirState
-								 0,     //delta x
-								 0,     //delta y
-								 0      //delta z
-								 );
-	}
-	
-	if(YES)
-		[gestureSequence addObject: INTOBJ(GESTURE_CAMERA_MOVE)];
-}
-
-#pragma mark Camera Dive
-// ================ Functions for CAMERA DIVE =================
-
-- (void) cameraDiveBegan:(CGPoint)point1 andPoint:(CGPoint)point2 {
-	if (!ENABLE_CAMERA_DIVE) return;
-
-	cameraDiveState = YES;
-	tempCameraDiveDistance = sqrt( pow(point1.x - point2.x, 2) + pow(point1.y - point2.y, 2) );
-}
-
-- (void) cameraDiveMoved:(CGPoint)point1 andPoint:(CGPoint)point2 {
-	
-	double theDistance = sqrt( pow(point1.x - point2.x, 2) + pow(point1.y - point2.y, 2) );
-	double scaleIndex = theDistance - tempCameraDiveDistance;
-
-	if(!strtState && !dragState && isRotateEnded && !_PushState && cameraDiveState){
-		mysio2ResourceDispatchEvents( sio2->_SIO2resource,
-									  sio2->_SIO2window,
-									  my_WINDOW_MOVE_CAMERA,
-									  SIO2_WINDOW_TAP_DOWN,
-									  0,  //scale
-									  0,     //direction, 1: horizontal ; 2: vertical
-								      0,     //dirState
-									  0,     //delta x
-									  0,     //delta y
-									  10* scaleIndex      //delta z
-									);
-	}
-	tempCameraDiveDistance = theDistance;
-	
-}
-
-- (void) cameraDiveEnded {
-	cameraDiveState = NO;
-	cameraDiveIdx[0] = 5;
-	cameraDiveIdx[1] = 5;
-	
-	if(YES)
-		[gestureSequence addObject: INTOBJ(GESTURE_CAMERA_DIVE)];
-}
-
 #pragma mark Helpful Functions for Rotation
 // ============== helpful functions for rotation ==============
 

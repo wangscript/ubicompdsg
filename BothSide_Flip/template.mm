@@ -607,8 +607,9 @@ void templateRotateObject( void *_ptr , int rotateDirection, int theDirState ) {
 	}
 	
 }
+
 void templateMoveObject( void *_ptr ,float _detX, float _detY, float _detZ ) {	
-	
+/*	
 	SIO2object *_SIO2object = selection;
 	
 	// Check if we get a pointer.
@@ -651,9 +652,12 @@ void templateMoveObject( void *_ptr ,float _detX, float _detY, float _detZ ) {
 		
 		sio2TransformBindMatrix( _SIO2object->_SIO2transform  );
 	}
+*/ 
 }
+ 
+
 void templateMoveCamera( void *_ptr ,float _detX, float _detY, float _detZ ) {	
-	
+/*	
 	SIO2camera *_SIO2camera = ( SIO2camera * )sio2ResourceGet( sio2->_SIO2resource, SIO2_CAMERA,"camera/Camera");
 	float k = _SIO2camera->_SIO2transform->loc->x * 0.0005;
 	
@@ -679,6 +683,7 @@ void templateMoveCamera( void *_ptr ,float _detX, float _detY, float _detZ ) {
 		//_SIO2camera->_SIO2transform->tar->x -= _detZ * 0.005;
 	}
 	
+ */
 }
 
 void backTouchHandle(void *_ptr, int type, int index, float pt_x, float pt_y) {
