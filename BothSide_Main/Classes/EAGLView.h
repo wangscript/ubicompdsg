@@ -94,7 +94,7 @@ Note that setting the view non-opaque will only work if the EAGL surface has an 
 	//------------ Bool Verivals for flip ---------------------
 	int  rotateDirection;
 	int  theDirState;
-	BOOL isRotateEnded;	
+
 	//---------------------------------------------------------
 
 @private

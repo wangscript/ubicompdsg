@@ -254,9 +254,8 @@ void sio2TransformBindMatrix2(SIO2transform *_SIO2transform,GLfloat *matrixrotat
 				
 		
 		glTranslatef( _SIO2transform->loc->x,
-					 _SIO2transform->loc->y,
-					 _SIO2transform->loc->z );
-		
+				 _SIO2transform->loc->y,
+				 _SIO2transform->loc->z );
 		
 		glRotatef( x,
 				  0.0f,
@@ -270,7 +269,6 @@ void sio2TransformBindMatrix2(SIO2transform *_SIO2transform,GLfloat *matrixrotat
 				  1.0f,
 				  0.0f,
 				  0.0f);		
-		
 		
 		glScalef(_SIO2transform->scl->x,
 				 _SIO2transform->scl->y,
@@ -288,7 +286,6 @@ void sio2TransformBindMatrix2(SIO2transform *_SIO2transform,GLfloat *matrixrotat
 		glPushMatrix();
 		{	
 			glLoadIdentity();
-			
 			
 			glTranslatef( _SIO2transform->loc->x,
 						 _SIO2transform->loc->y,

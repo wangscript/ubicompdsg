@@ -54,6 +54,9 @@ extern bool             isReadyToLog;
 
 extern vec2				*selectionPosition;
 
+//for flip
+extern BOOL isRotateEnded;
+extern BOOL oldIsRotateEnded;
 
 extern GLfloat matrixrotate[16];
 
@@ -175,6 +178,7 @@ BOOL isDebug = YES;
 		rotateDirection = ROTATE_WAIT;
 		theDirState     = 0;
 		isRotateEnded   = YES;
+		oldIsRotateEnded = YES;
 		//-------------------------------------------------------------------
 	
 	}
@@ -1068,7 +1072,7 @@ BOOL isDebug = YES;
 	
 	if(!isRotateEnded) return;
 	
-	printf("\n\nRotateX Began\n");
+	//printf("\n\nRotateX Began\n");
 	rotateXState = YES;
 	tempRotateXPoint = point;
 	rotateDirection = ROTATE_WAIT;
@@ -1078,7 +1082,7 @@ BOOL isDebug = YES;
 - (void) rotateXMoved:(CGPoint)point {
 	//if (!ENABLE_OBJECT_FLIP) return;
     
-		if(isDebug) printf("====================== ROtate X ============\n");
+		//if(isDebug) printf("====================== ROtate X ============\n");
 			rotateDirection = ROTATE_X;
 			isRotateEnded    = NO;
 			NSTimer *timer;
@@ -1092,7 +1096,7 @@ BOOL isDebug = YES;
 
 - (void) rotateXEnded {
 	
-	if(isDebug) printf("ROtate X End\n");
+	//if(isDebug) printf("ROtate X End\n");
 	rotateXState = NO;
 	newestRotateXFrontIdx = 5;
 	newestRotateXBackIdx  = 5;
