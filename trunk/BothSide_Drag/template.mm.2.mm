@@ -11,7 +11,6 @@ using namespace std;
 #define SIO2_FILE_NAME			"Task_Drag.sio2"
 #define TASK_TOTAL_ROUND		5
 
-
 #define OBJ_IN_SAME_POSISION	1
 #define pi						3.1415926
 
@@ -28,7 +27,6 @@ using namespace std;
 
 //rotate
 GLfloat matrixrotate[16];
-bool objectHovered = FALSE;
 
 // ============= Shared variable between each task project ============= //
 
@@ -73,7 +71,7 @@ float	dz;
 float	det_scale;
 float	_rotateAngle;
 
-NSMutableArray *gestureSequence;  // Ë®????Gesture???
+NSMutableArray *gestureSequence;  // Ë®òÈåÑGestureÁî®
 
 bool	fingersOnFront;
 bool	fingersOnBack;
@@ -92,11 +90,9 @@ NSDate	*taskDate = [NSDate date];
 
 // ============= Private variable for this task project ============= //
 
-SIO2object *objectSelect;
-SIO2object *objectStart;
-SIO2object *objectEnd;
-SIO2object *objectArrow;
-
+SIO2object	*selectObject;
+SIO2object	*targetObject;
+SIO2camera	*camera;
 
 vec3		*cameraOrignalPos;
 vec3		*cameraOrignalTar;
@@ -108,10 +104,19 @@ bool		checkScl;
 bool		checkRot;
 
 // ============= Private functions for this task project ============= //
-void vec3CopyFromFloat(vec3* _v, float _x, float _y, float _z) {
-	_v->x = _x;
-	_v->y = _y;
-	_v->z = _z;
+/*
+void vec4Create(vec4* vec, float w, float x, float y, float z) {
+	vec->w = w;
+	vec->x = x;
+	vec->y = y;
+	vec->z = z;
+}
+
+void vec4Copy(vec4* a, vec4* b) {
+	a->w = b->w;
+	a->x = b->x;
+	a->y = b->y;
+	a->z = b->z;
 }
 
 void vec3Copy(vec3* a, vec3* b) {
@@ -128,60 +133,82 @@ bool vec3BlurEqual(vec3* a, vec3* b, float threshold) {
 			);
 }
 
-/*
-void vec4Create(vec4* vec, float w, float x, float y, float z) {
-	vec->w = w;
-	vec->x = x;
-	vec->y = y;
-	vec->z = z;
+bool rotationEqual() {
+	int n;
+	int y = (int)selectObject->_SIO2transform->rot->y;
+	int z = (int)selectObject->_SIO2transform->rot->z;
+	switch(y) {
+		case   0:
+			switch (z){
+				case   0: n = 5; break;
+				case  90: n = 4; break;
+				case 180: n = 2; break;
+				case 270: n = 3; break;
+			}
+			break;
+		case  90:
+			switch (z){
+				case   0: n = 6; break;
+				case  90: n = 4; break;
+				case 180: n = 1; break;
+				case 270: n = 3; break;
+			}
+			break;
+		case 180:
+			switch (z){
+				case   0: n = 2; break;
+				case  90: n = 4; break;
+				case 180: n = 5; break;
+				case 270: n = 3; break;
+			}
+			break;
+		case 270:
+			switch (z){
+				case   0: n = 1; break;
+				case  90: n = 4; break;
+				case 180: n = 6; break;
+				case 270: n = 3; break;
+			}
+			break;
+	}
+	
+	return showNumber == n;
 }
-
-void vec4Copy(vec4* a, vec4* b) {
-	a->w = b->w;
-	a->x = b->x;
-	a->y = b->y;
-	a->z = b->z;
-}
-
+*/
 bool pointInBox(vec3* pt, vec3* box_center, float scl) {
 	return (   fabsf(pt->x - box_center->x) < scl 
 			&& fabsf(pt->y - box_center->y) < scl
 			&& fabsf(pt->z - box_center->z) < scl
 			);
 }
-
- */
-
+/*
 void generatePosition() {
-	
-	float y1, z1, y2, z2;
+	float x1, y1, z1, x2, y2, z2, scl;
 	
 	switch( taskState ){
-		case 1: 	y1 = -6; z1 =  3; y2 =  6; z2 =  3; break;		// ->
-		case 2: 	y1 = -6; z1 = -3; y2 =  6; z2 = -3; break;	// ->
-		case 3: 	y1 =  6; z1 =  3; y2 = -6; z2 =  3; break;		// <-
-		case 4: 	y1 =  6; z1 = -3; y2 = -6; z2 = -3; break;	// <-
-		case 5: 	y1 = -6; z1 =  3; y2 = -6; z2 = -3; break;	// V
-		case 6: 	y1 =  6; z1 =  3; y2 =  6; z2 = -3; break;		// V
-		case 7: 	y1 = -6; z1 = -3; y2 = -6; z2 =  3; break;	// ^
-		case 8: 	y1 =  6; z1 = -3; y2 =  6; z2 =  3; break;		// ^
-		case 9: 	y1 = -6; z1 =  3; y2 =  6; z2 = -3; break;	// >V
-		case 10:	y1 =  6; z1 = -3; y2 = -6; z2 =  3; break;	// <^
-		case 11:	y1 =  6; z1 =  3; y2 = -6; z2 = -3; break;	// <V
-		case 12:	y1 = -6; z1 = -3; y2 =  6; z2 =  3; break;	// >^
-		default: break;
+		case 1: x1 = 31; y1 = 10; z1 =  5; x2 =  3; y2 =  3; z2 =  3; scl = 2.0; showNumber = 6; break;
+		case 2: x1 =  5; y1 =  3; z1 = 12; x2 = 15; y2 =  3; z2 =  3; scl = 1.5; showNumber = 1; break;
+		case 3: x1 =  5; y1 =  5; z1 =  3; x2 = 12; y2 = 10; z2 = 12; scl = 2.5; showNumber = 4; break;
+		case 4: x1 = 17; y1 = 12; z1 =  8; x2 =  5; y2 = 11; z2 =  4; scl = 3.0; showNumber = 2; break;
+		case 5: x1 =  5; y1 =  6; z1 =  4; x2 = 17; y2 =  3; z2 =  4; scl = 0.8; showNumber = 3; break;
 	}
 	
-	//vec3CopyFromFloat(objectStart->_SIO2transform->loc, 0, y1, z1);
-	vec3CopyFromFloat(objectSelect->_SIO2transform->loc, 0, y1, z1);
-	vec3CopyFromFloat(objectEnd->_SIO2transform->loc, 0, y2, z2);
-
-	//sio2TransformBindMatrix( objectStart->_SIO2transform );
-	sio2TransformBindMatrix( objectSelect->_SIO2transform );
-	sio2TransformBindMatrix( objectEnd->_SIO2transform );
-
+	selectObject->_SIO2transform->loc->x = x1;
+	selectObject->_SIO2transform->loc->y = y1;
+	selectObject->_SIO2transform->loc->z = z1;
+	targetObject->_SIO2transform->loc->x = x2;
+	targetObject->_SIO2transform->loc->y = y2;
+	targetObject->_SIO2transform->loc->z = z2;
+	targetObject->_SIO2transform->scl->x = targetObject->_SIO2transform->scl->y = targetObject->_SIO2transform->scl->z = scl;
+	
+	vec3Copy( camera->_SIO2transform->loc, cameraOrignalPos );
+	//vec3Copy( camera->_SIO2transform->tar, cameraOrignalTar);
+	vec3Copy( selectObject->_SIO2transform->scl, objectOrignalScl );
+	
+	sio2TransformBindMatrix( selectObject->_SIO2transform );
+	sio2TransformBindMatrix( targetObject->_SIO2transform );
 }
-/*
+
 void recordGestureSequence() {
 	
 	NSArray *gestureName = [NSArray arrayWithObjects:	@"BOTH_GRAB",				@"BOTH_DRAG",
@@ -239,18 +266,6 @@ void generateLogFormat() {
 
 void templateRender( void ) {
 	
-	// State Machine
-	{
-		switch(taskState){
-			case 0:
-			case 1:
-				case TAsk_
-		
-		}
-	
-	}
-	
-	
 	nowTime = [NSDate timeIntervalSinceReferenceDate];
 	
 	fingersOnDevice = (fingersOnFront || fingersOnBack);
@@ -276,20 +291,7 @@ void templateRender( void ) {
 		sio2WindowEnterLandscape3D();
 		{
 			sio2CameraRender( _SIO2camera );
-			/*
-			{
-				for (int z=0 ; z<5 ; z++){
-					if (backIsUsed[z]){
-						SIO2object *hover = sio2ResourceSelect3D( sio2->_SIO2resource, sio2->_SIO2camera, sio2->_SIO2window, &backTouchPoint[z]);
-						if (hover && !objectHovered){
-							hover->_SIO2transform->scl->y *= 1.5;
-							sio2TransformBindMatrix( hover->_SIO2transform );
-							objectHovered = TRUE;
-						}
-					}
-				}
-			}
-			*/ 
+			
 			if ( tap_select ) {
 				tap_select = 0;
 				
@@ -311,7 +313,7 @@ void templateRender( void ) {
 					}
 				}
 				
-				// Selection ‰æ?Â§???????Ôº?‰∏???Ωselect?????©‰ª∂
+				// Selection ‰æãÂ§ñËôïÁêÜÔºö‰∏çËÉΩselectÁöÑÁâ©‰ª∂
 				for (int a=0 ; a<excludeObjects.size() ; a++ ){
 					if ( selection == excludeObjects[a] ) {
 						selection = nil;
@@ -321,14 +323,14 @@ void templateRender( void ) {
 			}
 			
 			glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT );
-			sio2CameraUpdateFrustum( sio2->_SIO2camera );
-			sio2ResourceCull( sio2->_SIO2resource, sio2->_SIO2camera );		
+			//sio2CameraUpdateFrustum( sio2->_SIO2camera );
+			//sio2ResourceCull( sio2->_SIO2resource, sio2->_SIO2camera );		
 			sio2ResourceRender( sio2->_SIO2resource,
 							   sio2->_SIO2window,
 							   sio2->_SIO2camera,
 							   SIO2_RENDER_SOLID_OBJECT );
 			
-			// ?????∏Â?∞Ê?±Ë•ø??????Ë©±Â??highlight
+			// ÊúâÈÅ∏Âà∞Êù±Ë•øÁöÑÁöÑË©±ÂÅöhighlight
 			if( selection )	{				
 				if( !_SIO2material_selection )
 				{
@@ -353,7 +355,13 @@ void templateRender( void ) {
 				sio2ObjectRender( selection, sio2->_SIO2window, sio2->_SIO2camera, 0, SIO2_TRANSFORM_MATRIX_BIND );
 
 			}
-		
+/*
+			// Render all the alpha objects currently inside the frustum.
+			sio2ResourceRender( sio2->_SIO2resource,
+							   sio2->_SIO2window,
+							   sio2->_SIO2camera,
+							   SIO2_RENDER_TRANSPARENT_OBJECT );
+*/			
 			sio2ObjectReset();
 			
 			sio2MaterialReset();
@@ -501,18 +509,24 @@ void templateLoading( void ) {
 	sio2ResourceBindAllMatrix( sio2->_SIO2resource );
 	sio2ResourceBindAllImages( sio2->_SIO2resource );
 	sio2ResourceBindAllMaterials( sio2->_SIO2resource );
+	//sio2ResourceBindAllInstances( sio2->_SIO2resource );
 	
 	sio2ResourceGenId( sio2->_SIO2resource );
 	
-	objectSelect = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Moveable" );
-	//objectStart  = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Start" ); 
-	objectEnd    = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/End" );
-	objectArrow  = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Arrow" );
+	selectObject = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Moveable" );
+	selection = selectObject;
+	/*
+	selectObject = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Cube" );
+	targetObject = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Cube1" );
+	excludeObjects.push_back( targetObject );
+	excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneXY" ));
+	excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneYZ" ));
+	excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneXZ" ));
 	
-	//excludeObjects.push_back( objectStart );
-	excludeObjects.push_back( objectEnd );
-	excludeObjects.push_back( objectArrow );
+	camera = ( SIO2camera * )sio2ResourceGet( sio2->_SIO2resource, SIO2_CAMERA,"camera/Camera" );
 
+	selection = selectObject;
+	*/
 	sio2->_SIO2window->_SIO2windowrender = templateRender;
 }
 
@@ -637,11 +651,12 @@ void templateMoveObject( void *_ptr ,float _detX, float _detY, float _detZ ) {
 	{
 		// Apply a rotation based on the touch movement.
 		SIO2camera *_SIO2camera = ( SIO2camera * )sio2ResourceGet( sio2->_SIO2resource, SIO2_CAMERA,"camera/Camera");
-		float k = sio2Distance(_SIO2camera->_SIO2transform->loc, _SIO2object->_SIO2transform->loc) * 0.00017;
+		float k = sio2Distance(_SIO2camera->_SIO2transform->loc, _SIO2object->_SIO2transform->loc) * 0.0001;
 		
 		// Moving object in Z axis
 		if(fabsf(_detX) > 0.01)
 		{
+			if(debug) printf("\nDETX!!!");
 			if(_SIO2object->_SIO2transform->loc->z + _detX * k < 100 && _SIO2object->_SIO2transform->loc->z + _detX * k > -100)
 	    	{
 				_SIO2object->_SIO2transform->loc->z += _detX * k;
@@ -649,6 +664,7 @@ void templateMoveObject( void *_ptr ,float _detX, float _detY, float _detZ ) {
      	}
 		if(fabsf(_detY) > 0.01)
 		{
+			if(debug) printf("\nDETY!!!");
 			if(_SIO2object->_SIO2transform->loc->y + _detY * k < 100 && _SIO2object->_SIO2transform->loc->y + _detY * k > -100)
 			{
 				_SIO2object->_SIO2transform->loc->y += _detY * k;
@@ -657,10 +673,12 @@ void templateMoveObject( void *_ptr ,float _detX, float _detY, float _detZ ) {
 		
 		if(fabs(_detZ) > 0.01)
 		{
+			if(debug) printf("\nDETZ!!!");
 			if(_SIO2object->_SIO2transform->loc->x + _detZ * k < 100 && _SIO2object->_SIO2transform->loc->x + _detZ * k > -100)
 			{
 				_SIO2object->_SIO2transform->loc->x += _detZ * k; 
 			}
+			if(debug) printf("X: %f\n",_SIO2object->_SIO2transform->loc->x);
 		}
 		
 
