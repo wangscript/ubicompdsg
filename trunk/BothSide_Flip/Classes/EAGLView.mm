@@ -54,6 +54,14 @@ extern bool             isReadyToLog;
 
 extern vec2				*selectionPosition;
 
+
+
+//
+extern int movement[100];
+extern int movementOne;
+
+
+
 //for flip
 extern BOOL isRotateEnded;
 extern BOOL oldIsRotateEnded;
@@ -151,7 +159,6 @@ BOOL isDebug = YES;
 		newestFlipFrontIdx    = 5;
 		newestFlipBackIdx     = 5;
 		
-		rotateXState = NO;
 		dragState  = NO;
 		flipState  = NO;
 		isFlipX    = NO;
@@ -180,6 +187,7 @@ BOOL isDebug = YES;
 		isRotateEnded   = YES;
 		oldIsRotateEnded = YES;
 		//-------------------------------------------------------------------
+		
 	
 	}
 	
@@ -357,6 +365,10 @@ BOOL isDebug = YES;
 
 - (int)myTouchBegan:(UITouch*)touch andPoint:(CGPoint)point andFront:(BOOL)isFront andNum:(int)num {// TODO:
 	int index;
+	
+	
+	movementOne++;
+	
 	if(isFront){
 		index = [self findEmpty];
 		[self.frontLoc replaceObjectAtIndex: index 
@@ -374,7 +386,6 @@ BOOL isDebug = YES;
 		newestDoubleIdx[0] = index;
 		//--------------------------------------------------------------------------------------------
 		//--------------------------------------------------------------------------------------------
-		newestRotateXFrontIdx = index;
 		
 		fingersOnFront = TRUE;
 	}
@@ -387,7 +398,6 @@ BOOL isDebug = YES;
 		newestDragBackIdx[1] = newestDragBackIdx[0];
 		newestDragBackIdx[0] = num;
 		newestFlipBackIdx    = num;
-		newestRotateXBackIdx = num;
 		//--------------------------------------------------------------------------------------------
 		index = num+5;
 		mysio2ResourceDispatchEvents( sio2->_SIO2resource,
@@ -442,17 +452,6 @@ BOOL isDebug = YES;
 		flipPairIdx[1]  = newestFlipBackIdx;
 		flipStartPts[0] = tp1._point;
 		flipStartPts[1] = tp2._point;
-		
-		
-		tp1 = [self.frontLoc objectAtIndex: newestRotateXFrontIdx];
-		tp2 = [self.backLoc  objectAtIndex: newestRotateXBackIdx ];
-		
-		rotateXPairIdx[0]  = newestRotateXFrontIdx;
-		rotateXPairIdx[1]  = newestRotateXBackIdx;
-		rotateXStartPts[0] = tp1._point;
-		rotateXStartPts[1] = tp2._point;
-		
-		[self rotateXBegan: rotateXStartPts[0] ];
 		
 		
 		[self flipBegan: flipStartPts[0] ];
@@ -583,6 +582,7 @@ BOOL isDebug = YES;
 - (int)myTouchEnded:(UITouch*)touch andPoint:(CGPoint)point andFront:(BOOL)isFront andNum:(int)num {// TODO:
 	int i;
 	TouchPoint * tempPtr;
+
 	if(isFront){
 		for(i = 0 ; i < 5 ; i++){
 			tempPtr = [self.frontLoc objectAtIndex:i];
@@ -637,10 +637,7 @@ BOOL isDebug = YES;
 		
 		//printf("----------num = %d\n",num);
 	}
-	
-	
-	[self rotateXEnded];
-	
+
 	return i;
 	
 }
@@ -685,7 +682,7 @@ BOOL isDebug = YES;
 	if(count > 1){
 		_SameTouchCount = count;
 
-		//[self setTouchAtSameTime: count andFront: YES];
+		[self setTouchAtSameTime: count andFront: YES];
 	}
 	
 }
@@ -775,7 +772,7 @@ BOOL isDebug = YES;
 	
 	dragState  = NO;
 	flipState  = NO;
-	rotateXState = NO;
+
 	isFlipX    = NO;
 	isFlipY    = NO;
 	strtState  = NO;
@@ -857,49 +854,6 @@ BOOL isDebug = YES;
 		[gestureSequence addObject: INTOBJ(GESTURE_BOTH_DRAG)];
 
 }
-
-#pragma mark Object RotateX
-// ================ Functions for OBJECT FLIP =================
-
-- (void) rotateXBegan:(CGPoint)point {
-	
-	if(!isRotateEnded) return;
-	
-	//printf("\n\nRotateX Began\n");
-	rotateXState = YES;
-	tempRotateXPoint = point;
-	rotateDirection = ROTATE_WAIT;
-	
-}
-
-- (void) rotateXMoved:(CGPoint)point {
-	//if (!ENABLE_OBJECT_FLIP) return;
-    
-		//if(isDebug) printf("====================== ROtate X ============\n");
-			rotateDirection = ROTATE_X;
-			isRotateEnded    = NO;
-			NSTimer *timer;
-			timer = [NSTimer scheduledTimerWithTimeInterval:0.005/90
-														target:self
-													   selector:@selector(rotateTheObject:)
-													   userInfo:nil
-														repeats:YES];
-		
-}
-
-- (void) rotateXEnded {
-	
-	//if(isDebug) printf("ROtate X End\n");
-	rotateXState = NO;
-	newestRotateXFrontIdx = 5;
-	newestRotateXBackIdx  = 5;
-	//tempRotateXPoint = CGPointMake(0,0);
-	
-	/*if( selection!=nil && !dragState && !strtState )
-		[gestureSequence addObject: INTOBJ(GESTURE_BOTH_FLIP)];
-	 */
-}
-
 
 #pragma mark Object Flip
 // ================ Functions for OBJECT FLIP =================
@@ -1001,6 +955,28 @@ BOOL isDebug = YES;
 	if( selection!=nil && !dragState && !strtState )
 		[gestureSequence addObject: INTOBJ(GESTURE_BOTH_FLIP)];
 }
+
+
+
+
+
+- (void) setTouchAtSameTime: (int)count andFront: (BOOL)front {
+	double nowTime = [NSDate timeIntervalSinceReferenceDate];
+	if ((nowTime - _SameTouchFirstTime) < PUSH_INITIAL_PERIOD) {
+		_PushState = 5;
+		_PushFromFront = front;
+		NSTimer *timer;
+		timer = [NSTimer scheduledTimerWithTimeInterval: PUSH_INITIAL_WAIT_TIME 
+												 target: self
+											   selector: @selector(PushWaitTimer:)
+											   userInfo: nil
+												repeats: NO ];
+	}
+	
+	_SameTouchFirstTime = nowTime;
+}
+
+
 
 #pragma mark Object Stretch
 // ================ Functions for OBJECT STRETCH =================

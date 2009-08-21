@@ -34,6 +34,7 @@ Note that setting the view non-opaque will only work if the EAGL surface has an 
 
 @interface EAGLView : UIView {
 	
+	
 	// Data Members for Both-Side touch -----------------------
 	NSMutableArray* backLoc;
 	NSMutableArray* frontLoc;
@@ -45,7 +46,6 @@ Note that setting the view non-opaque will only work if the EAGL surface has an 
 	int  cameraMoveIdx;
 	int  cameraDiveIdx[2];
 	
-	BOOL rotateXState;
 	BOOL dragState;
 	BOOL flipState;
 	BOOL strtState;
@@ -59,8 +59,7 @@ Note that setting the view non-opaque will only work if the EAGL surface has an 
 	int  newestDragBackIdx[2];
 	int  newestFlipFrontIdx;
 	int  newestFlipBackIdx;
-	int  newestRotateXFrontIdx;
-	int  newestRotateXBackIdx;	
+
 
 	int  newestSingleIdx;
 	int  newestDoubleIdx[2];
@@ -71,15 +70,15 @@ Note that setting the view non-opaque will only work if the EAGL surface has an 
 	int dragPairIdx[2];
 	int flipPairIdx[2];
 	int strtPairIdx[4];
-	int rotateXPairIdx[2];
+
 	
 	CGPoint dragStartPts[2];
 	CGPoint flipStartPts[2];
-	CGPoint rotateXStartPts[2];
+
 	
 	CGPoint tempDragPoint;
 	CGPoint tempFlipPoint;
-	CGPoint tempRotateXPoint;
+
 	double  tempStrtDistance; 
 	 
 	int		_PushState;
@@ -140,13 +139,10 @@ Note that setting the view non-opaque will only work if the EAGL surface has an 
 - (void) flipMoved:(CGPoint)point;
 - (void) flipEnded;
 
-- (void) rotateXBegan:(CGPoint)point;
-- (void) rotateXMoved:(CGPoint)point;
-- (void) rotateXEnded;
 
 - (int) TouchesOnScreen: (BOOL) isFront;
 
-
+- (void) setTouchAtSameTime: (int)count andFront: (BOOL)front;
 
 - (void) increaseTheDirectionState;
 - (void) decreaseTheDirectionState;
