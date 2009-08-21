@@ -230,6 +230,8 @@
 			<key>Layout</key>
 			<array>
 				<dict>
+					<key>BecomeActive</key>
+					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -277,7 +279,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>17</integer>
+									<integer>18</integer>
 									<integer>16</integer>
 									<integer>0</integer>
 								</array>
@@ -313,14 +315,12 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>template.mm</string>
+								<string>EAGLView.mm</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -328,52 +328,27 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>template.mm</string>
+										<string>EAGLView.mm</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>7D918B72103C462F00A1DC44</string>
+										<string>7D1836BB103E7CBE0067F566</string>
 										<key>history</key>
 										<array>
 											<string>7D918AEF103C3DDB00A1DC44</string>
 											<string>7D918AF1103C3DDB00A1DC44</string>
 											<string>7D918B47103C453F00A1DC44</string>
 											<string>7D918B49103C453F00A1DC44</string>
-											<string>7D918B4B103C453F00A1DC44</string>
-											<string>7D918B5F103C453F00A1DC44</string>
+											<string>7D1836B8103E7CBE0067F566</string>
+											<string>7D1836B9103E7CBE0067F566</string>
 										</array>
 										<key>prevStack</key>
 										<array>
 											<string>7D918AF4103C3DDB00A1DC44</string>
 											<string>7D918AF5103C3DDB00A1DC44</string>
-											<string>7D918AF6103C3DDB00A1DC44</string>
-											<string>7D918AF7103C3DDB00A1DC44</string>
-											<string>7D918AF9103C3DDB00A1DC44</string>
-											<string>7D918AFB103C3DDB00A1DC44</string>
-											<string>7D918AFD103C3DDB00A1DC44</string>
-											<string>7D918B00103C3DDB00A1DC44</string>
-											<string>7D918B03103C3DDB00A1DC44</string>
-											<string>7D918B05103C3DDB00A1DC44</string>
 											<string>7D918B06103C3DDB00A1DC44</string>
-											<string>7D918B0B103C3DDB00A1DC44</string>
-											<string>7D918B0E103C3DDB00A1DC44</string>
-											<string>7D918B10103C3DDB00A1DC44</string>
-											<string>7D918B17103C3DDB00A1DC44</string>
-											<string>7D918B19103C3DDB00A1DC44</string>
-											<string>7D918B1B103C3DDB00A1DC44</string>
-											<string>7D918B1D103C3DDB00A1DC44</string>
-											<string>7D918B1F103C3DDB00A1DC44</string>
-											<string>7D918B20103C3DDB00A1DC44</string>
-											<string>7D918B22103C3DDB00A1DC44</string>
-											<string>7D918B24103C3DDB00A1DC44</string>
-											<string>7D918B26103C3DDB00A1DC44</string>
-											<string>7D918B28103C3DDB00A1DC44</string>
-											<string>7D918B2A103C3DDB00A1DC44</string>
-											<string>7D918B2B103C3DDB00A1DC44</string>
-											<string>7D918B2C103C3DDB00A1DC44</string>
 											<string>7D918B52103C453F00A1DC44</string>
-											<string>7D918B55103C453F00A1DC44</string>
-											<string>7D918B57103C453F00A1DC44</string>
+											<string>7D1836BA103E7CBE0067F566</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -431,9 +406,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>7D918A7A103C11B600A1DC44</string>
+				<string>7D1836A6103E7BB80067F566</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>7D918A7B103C11B600A1DC44</string>
+				<string>7D1836A7103E7BB80067F566</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -567,12 +542,7 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>7D918B2E103C3DDB00A1DC44</string>
-		<string>7D918B2F103C3DDB00A1DC44</string>
-		<string>1CD10A99069EF8BA00B06720</string>
-		<string>1C78EAAD065D492600B07095</string>
-		<string>7D918A8F103C222D00A1DC44</string>
-		<string>/Users/miniMac/Desktop/DSG_SVN/BothSide_Flip/BothSide_Flip.xcodeproj</string>
+		<string>/Users/miniMac/Desktop/DSG_SVN/Torque_Flip/Torque_Flip.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
 	<string>0 122 1920 1056 0 0 1920 1178 </string>

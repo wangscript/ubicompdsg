@@ -455,7 +455,7 @@ BOOL isDebug = YES;
 		[self rotateXBegan: rotateXStartPts[0] ];
 		
 		
-		[self flipBegan: flipStartPts[0] ];
+		[self flipBegan: flipStartPts[0] andPoint: flipStartPts[1]];
 		
 		isFlipX = NO;
 		isFlipY = NO;
@@ -685,7 +685,7 @@ BOOL isDebug = YES;
 	if(count > 1){
 		_SameTouchCount = count;
 
-		[self setTouchAtSameTime: count andFront: YES];
+		//[self setTouchAtSameTime: count andFront: YES];
 	}
 	
 }
@@ -904,19 +904,92 @@ BOOL isDebug = YES;
 #pragma mark Object Flip
 // ================ Functions for OBJECT FLIP =================
 
-- (void) flipBegan:(CGPoint)point {
+- (void) flipBegan:(CGPoint)point andPoint:(CGPoint)pointback{
 	
 	if(!isRotateEnded) return;
 	
 	printf("\n\nFlip Began\n");
 	flipState = YES;
 	tempFlipPoint = point;
-	rotateDirection = ROTATE_WAIT;
+	
+	if(!dragState){
+		double changeInX = point.x - pointback.x;
+		double changeInY = point.y - pointback.y;
+		double xDistance = fabs(changeInX);
+		double yDistance = fabs(changeInY);
+		
+		
+		printf("point.x = %lf, point.y = %lf,  pointback.x = %lf,  pointback.y = %lf  xDistance = %lf , yDistance = %lf\n",point.x,point.y,pointback.x,pointback.y,xDistance,yDistance);
+		
+		//if(isDebug) printf("===== The Dirstate is: %d ======\n", theDirState);
+		
+		if( yDistance < 50.0 ){
+			if(changeInX>0){
+				if(isDebug) printf("====================== ROtate UP ============\n");
+				rotateDirection = ROTATE_UP;
+				isRotateEnded    = NO;
+				NSTimer *timer;
+				timer = [NSTimer scheduledTimerWithTimeInterval:0.005/90
+														 target:self
+													   selector:@selector(rotateTheObject:)
+													   userInfo:nil
+														repeats:YES];
+				
+			}
+			else {
+				if(isDebug) printf("====================== ROtate Down ============\n");
+				rotateDirection = ROTATE_DOWN;
+				isRotateEnded	 = NO;
+				NSTimer *timer;
+				timer = [NSTimer scheduledTimerWithTimeInterval:0.005/90
+														 target:self
+													   selector:@selector(rotateTheObject:)
+													   userInfo:nil
+														repeats:YES];
+			}
+			
+		}
+		else if( xDistance < 100.0){
+			
+			if(changeInY > 0){
+				if(isDebug) printf("====================== ROtate RIGHT ============\n");
+				rotateDirection = ROTATE_RIGHT;
+				isRotateEnded    = NO;
+				NSTimer *timer;
+				timer = [NSTimer scheduledTimerWithTimeInterval:0.005/90
+														 target:self
+													   selector:@selector(rotateTheObject:)
+													   userInfo:nil
+														repeats:YES];
+				[self increaseTheDirectionState];
+			}
+			else {
+				if(isDebug) printf("====================== ROtate LEFT ============\n");
+				rotateDirection = ROTATE_LEFT;
+				isRotateEnded    = NO;
+				NSTimer *timer;
+				timer = [NSTimer scheduledTimerWithTimeInterval:0.005/90
+														 target:self
+													   selector:@selector(rotateTheObject:)
+													   userInfo:nil
+														repeats:YES];
+				[self decreaseTheDirectionState];
+			}
+		}			
+		// ---------------------------------------
+		
+	}
+	
+	
+	
+	
+	//rotateDirection = ROTATE_WAIT;
 	
 }
 
 - (void) flipMoved:(CGPoint)point {
 	if (!ENABLE_OBJECT_FLIP) return;
+	/*
 	if(isFlipX)
 		if(isDebug) printf("Flip Moved in X-direction\n");
     else
@@ -986,7 +1059,7 @@ BOOL isDebug = YES;
 		}			
 		// ---------------------------------------
 		
-	}
+	}*/
 }
 
 - (void) flipEnded {
