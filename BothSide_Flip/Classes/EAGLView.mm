@@ -685,7 +685,7 @@ BOOL isDebug = YES;
 	if(count > 1){
 		_SameTouchCount = count;
 
-		[self setTouchAtSameTime: count andFront: YES];
+		//[self setTouchAtSameTime: count andFront: YES];
 	}
 	
 }

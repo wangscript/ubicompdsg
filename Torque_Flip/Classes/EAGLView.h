@@ -136,7 +136,7 @@ Note that setting the view non-opaque will only work if the EAGL surface has an 
 - (void) dragMoved:(CGPoint)point;
 - (void) dragEnded;
 
-- (void) flipBegan:(CGPoint)point;
+- (void) flipBegan:(CGPoint)point andPoint:(CGPoint)pointback;
 - (void) flipMoved:(CGPoint)point;
 - (void) flipEnded;
 
