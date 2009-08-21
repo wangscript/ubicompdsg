@@ -238,7 +238,7 @@ void generateLogFormat() {
 #pragma mark SIO2 template
 
 void templateRender( void ) {
-	
+	/*
 	// State Machine
 	{
 		switch(taskState){
@@ -249,7 +249,7 @@ void templateRender( void ) {
 		}
 	
 	}
-	
+	*/
 	
 	nowTime = [NSDate timeIntervalSinceReferenceDate];
 	
