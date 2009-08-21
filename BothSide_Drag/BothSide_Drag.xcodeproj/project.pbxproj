@@ -952,8 +952,7 @@
 				1D3623240D0F684500981E51 /* templateAppDelegate.h */,
 				1D3623250D0F684500981E51 /* templateAppDelegate.m */,
 			);
-			name = Classes;
-			path = ../BothSide_Main/Classes;
+			path = Classes;
 			sourceTree = "<group>";
 		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
