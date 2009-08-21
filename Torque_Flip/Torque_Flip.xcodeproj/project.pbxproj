@@ -717,8 +717,8 @@
 		E0C436310EDBB10000B663CE /* ocintrin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ocintrin.h; path = ../src/theora/ocintrin.h; sourceTree = SOURCE_ROOT; };
 		E0E30D6A0E5EA2FA00F6D25F /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		E0E310860E5EA3C300F6D25F /* main.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = main.h; sourceTree = "<group>"; };
-		E0E310870E5EA40200F6D25F /* template.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = template.h; sourceTree = "<group>"; };
-		E0E310880E5EA40200F6D25F /* template.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = template.mm; sourceTree = "<group>"; };
+		E0E310870E5EA40200F6D25F /* template.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = template.h; path = ../BothSide_Flip/template.h; sourceTree = "<group>"; };
+		E0E310880E5EA40200F6D25F /* template.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = template.mm; path = ../BothSide_Flip/template.mm; sourceTree = "<group>"; };
 		E0E310DF0E5EA54900F6D25F /* zconf.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; name = zconf.h; path = ../src/zlib/zconf.h; sourceTree = SOURCE_ROOT; };
 		E0E310E00E5EA54900F6D25F /* zlib.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; name = zlib.h; path = ../src/zlib/zlib.h; sourceTree = SOURCE_ROOT; };
 		E0E310E10E5EA54900F6D25F /* zutil.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; name = zutil.c; path = ../src/zlib/zutil.c; sourceTree = SOURCE_ROOT; };

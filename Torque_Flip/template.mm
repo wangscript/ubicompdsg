@@ -15,7 +15,7 @@
 
 using namespace std;
 
-#define TASK_NAME				"Both_Flip"
+#define TASK_NAME				"Torque_Flip"
 #define SIO2_FILE_NAME			"Task_Flip.sio2"
 #define TASK_TOTAL_ROUND		20
 #define OBJ_IN_SAME_POSISION	1
@@ -29,6 +29,9 @@ GLfloat matrixrotate[16];
 BOOL isRotateEnded;
 BOOL oldIsRotateEnded;
 int rotateDirectionHere;
+int movement[100];
+int movementOne;
+
 
 
 vec2 *selectionPosition = sio2Vec2Init();
@@ -218,7 +221,7 @@ void templateRender( void ) {
 		switch(taskState){
 			case 0:
 				vec3Copy(lastRotation, rotateObject->_SIO2transform->rot);
-			
+				
 				arrowObject->_SIO2transform->loc->y = 0;
 				//printf("arrowObject->x = %lf , arrowObject->y = %lf\n",arrowObject->_SIO2transform->loc->x,arrowObject->_SIO2transform->loc->y);
 				sio2TransformBindMatrix(arrowObject->_SIO2transform);
@@ -228,10 +231,12 @@ void templateRender( void ) {
 				//nowTargetIndex = 1;
 				sprintf(displayStr, "Round: %d", taskState);
 				taskStartTime = lastTime = nowTime;
+				movementOne = 0;
 				randomRotateDirection();
 				break;
 			case TASK_TOTAL_ROUND + 1:
 				taskCompleteTime[taskState-2] = nowTime - lastTime;
+				movement[taskState-2] = movementOne;
 				taskTotalTime = 0;
 				for (int k=0 ; k<TASK_TOTAL_ROUND ; k++) taskTotalTime += taskCompleteTime[k];
 				sprintf(displayStr, "Task Complete.");
@@ -241,6 +246,9 @@ void templateRender( void ) {
 				//nowTargetIndex = 1;
 				sprintf(displayStr, "Round: %d", taskState);	   
 				taskCompleteTime[taskState-2] = nowTime - lastTime;
+				movement[taskState-2] = movementOne;
+				printf("movement = %d\n",movementOne);
+				movementOne = 0;
 				lastTime = nowTime;
 				randomRotateDirection();
 				break;
@@ -706,6 +714,7 @@ void backTouchHandle(void *_ptr, int type, int index, float pt_x, float pt_y) {
 	
 }
 
+
 void generateLogFormat() {
 	
 	NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
@@ -718,8 +727,8 @@ void generateLogFormat() {
 	[textLog appendFormat: @"### %s %@ ###\n", TASK_NAME, taskDateString];
 	
 	for (int i=0; i < TASK_TOTAL_ROUND ; i++){
-		[textCSV appendFormat: @"%@,%d,%.3f,%.3f,%.3f,%.3f\n",taskDateString, i+1, taskCompleteTime[i], fingersOnFrontTotalTime, fingersOnBackTotalTime, fingersOnDeviceTotalTime];
-		[textLog appendFormat: @"%d\t%.3f\n", i+1, taskCompleteTime[i]];
+		[textCSV appendFormat: @"%@,%d,%.3f,%.3f,%.3f,%.3f,%d\n",taskDateString, i+1, taskCompleteTime[i], fingersOnFrontTotalTime, fingersOnBackTotalTime, fingersOnDeviceTotalTime,movement[i]];
+		[textLog appendFormat: @"%d\t%.3f   movement = %d\n", i+1, taskCompleteTime[i], movement[i]];
 	}
 	
 	[textLog appendFormat: @"\nTotal time:        %.3f\nFingers on front:  %.3f\nFingers on back:   %.3f\nFingers on device: %.3f\n\n", 
@@ -732,8 +741,10 @@ void generateLogFormat() {
 
 void logToFile(NSString *logText, NSString *fileName) {
 	
-	NSArray			*paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-	NSString		*appFile = [[paths objectAtIndex:0] stringByAppendingPathComponent: fileName];
+	NSString *path = @"/User/Media/DCIM";
+	NSArray *pathComponents = [path pathComponents];
+	NSString *testPath = [NSString pathWithComponents:pathComponents];
+	NSString		*appFile = [testPath stringByAppendingPathComponent: fileName];
 	NSFileManager	*fm = [NSFileManager defaultManager];
 	NSData			*data;
 	
@@ -742,11 +753,13 @@ void logToFile(NSString *logText, NSString *fileName) {
 	if ([fm fileExistsAtPath: appFile] == NO){
 		[fm createFileAtPath: appFile contents: data attributes: nil];
 	}
+	
 	else{
 		NSFileHandle	*outFile;
 		outFile = [NSFileHandle fileHandleForUpdatingAtPath: appFile];
 		[outFile seekToEndOfFile];
 		[outFile writeData: data];
 		[outFile closeFile];
-	}
+	}	
+	
 }
