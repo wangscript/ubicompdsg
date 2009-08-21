@@ -13,7 +13,7 @@ BOOL strtDebug = YES;
 #import "templateAppDelegate.h"
 
 #define DRAG_INITIAL_LIMIT		50
-#define DRAG_MOVING_LIMIT		200
+#define DRAG_MOVING_LIMIT		200 
 #define DRAG_CANCEL_FLIP_LIMIT  20
 #define FLIP_INITIAL_LIMIT		100
 #define CANCEL_LENGTH           20

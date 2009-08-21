@@ -158,7 +158,6 @@ SIO2window *sio2WindowInit( void )
 
 SIO2window *sio2WindowFree( SIO2window *_SIO2window )
 {
-	unsigned int i = 0;
 	
 	_SIO2window->loc   = sio2Vec2Free( _SIO2window->loc   );
 	_SIO2window->scl   = sio2Vec2Free( _SIO2window->scl   );
