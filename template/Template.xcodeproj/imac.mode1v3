@@ -333,7 +333,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>88699268103826B0000723F1</string>
+										<string>88AAC041103D75B700791D21</string>
 										<key>history</key>
 										<array>
 											<string>88043F9110298CDF00AF24D5</string>
@@ -358,9 +358,8 @@
 											<string>88CE4BFE10358782009CDD6C</string>
 											<string>88CE4BFF10358782009CDD6C</string>
 											<string>88CE4C2A10358971009CDD6C</string>
-											<string>885CF890103825D8003FC06D</string>
 											<string>88699265103826B0000723F1</string>
-											<string>88699266103826B0000723F1</string>
+											<string>88699268103826B0000723F1</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -373,7 +372,6 @@
 											<string>889B39C11030579B00204ACA</string>
 											<string>887E48671032972500A3011E</string>
 											<string>887E486A1032972500A3011E</string>
-											<string>887E486E1032972500A3011E</string>
 											<string>887E48711032972500A3011E</string>
 											<string>887E48721032972500A3011E</string>
 											<string>88714859103297E90099FF4D</string>
@@ -388,7 +386,6 @@
 											<string>88CE4C2D10358971009CDD6C</string>
 											<string>885CF893103825D8003FC06D</string>
 											<string>885CF895103825D8003FC06D</string>
-											<string>88699267103826B0000723F1</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -446,9 +443,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>88699269103826B0000723F1</string>
+				<string>88AAC034103D75B600791D21</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>8869926A103826B0000723F1</string>
+				<string>88AAC035103D75B600791D21</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -582,8 +579,12 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
+		<string>88AAC03E103D75B600791D21</string>
+		<string>88AAC03F103D75B600791D21</string>
+		<string>1C78EAAD065D492600B07095</string>
 		<string>1CD10A99069EF8BA00B06720</string>
-		<string>/Users/imac/Desktop/NewDSG/template/Template.xcodeproj</string>
+		<string>88043F7E10298B5A00AF24D5</string>
+		<string>/Users/imac/Desktop/DSG_SVN/template/Template.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
 	<string>73 113 1452 839 0 0 1680 1028 </string>
@@ -663,7 +664,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>88043F7E10298B5A00AF24D5</string>
-				<string>885CF84810381FE1003FC06D</string>
+				<string>88AAC036103D75B600791D21</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -783,13 +784,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1CD10A99069EF8BA00B06720</string>
-				<string>8869926B103826B0000723F1</string>
+				<string>88AAC037103D75B600791D21</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>8869926C103826B0000723F1</string>
-				<string>8869926D103826B0000723F1</string>
-				<string>8869926E103826B0000723F1</string>
-				<string>8869926F103826B0000723F1</string>
-				<string>88699270103826B0000723F1</string>
+				<string>88AAC038103D75B600791D21</string>
+				<string>88AAC039103D75B600791D21</string>
+				<string>88AAC03A103D75B600791D21</string>
+				<string>88AAC03B103D75B600791D21</string>
+				<string>88AAC03C103D75B600791D21</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -908,8 +909,6 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -945,7 +944,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C78EAAD065D492600B07095</string>
-				<string>885CF84F10381FE1003FC06D</string>
+				<string>88AAC03D103D75B600791D21</string>
 				<string>1C78EAAC065D492600B07095</string>
 			</array>
 			<key>ToolbarConfiguration</key>
@@ -955,7 +954,7 @@
 			<key>WindowToolGUID</key>
 			<string>1C78EAAD065D492600B07095</string>
 			<key>WindowToolIsVisible</key>
-			<true/>
+			<false/>
 		</dict>
 		<dict>
 			<key>Identifier</key>
