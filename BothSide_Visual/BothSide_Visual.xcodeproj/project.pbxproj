@@ -1677,9 +1677,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1D6058900D05DD3D006BFB54 /* BothSideFlip */ = {
+		1D6058900D05DD3D006BFB54 /* BothSideVisual */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "BothSideFlip" */;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "BothSideVisual" */;
 			buildPhases = (
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
@@ -1689,7 +1689,7 @@
 			);
 			dependencies = (
 			);
-			name = BothSideFlip;
+			name = BothSideVisual;
 			productName = template;
 			productReference = 1D6058910D05DD3D006BFB54 /* BothSideFlip.app */;
 			productType = "com.apple.product-type.application";
@@ -1706,7 +1706,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1D6058900D05DD3D006BFB54 /* BothSideFlip */,
+				1D6058900D05DD3D006BFB54 /* BothSideVisual */,
 			);
 		};
 /* End PBXProject section */
@@ -2133,7 +2133,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "BothSideFlip" */ = {
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "BothSideVisual" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,
