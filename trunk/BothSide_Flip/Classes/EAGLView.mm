@@ -43,6 +43,8 @@ BOOL strtDebug = YES;
 
 #pragma mark -
 
+extern NSString *FILENAME;
+
 extern NSMutableArray	*gestureSequence;
 extern bool				fingersOnFront;
 extern bool				fingersOnBack;
@@ -1045,6 +1047,10 @@ static int _degree_counter = 0; // Counter for rotate 90 degree
 - (void) logButtonPredded:(id) sender
 {
 	isReadyToLog = YES;
+	printf("Start Log!\n");
+	templateAppDelegate* appdel = (templateAppDelegate*)[[UIApplication sharedApplication] delegate];
+	FILENAME = [[NSString alloc] initWithString:[appdel.filename text]];
+	NSLog(FILENAME);
 }
 
 @end

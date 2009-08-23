@@ -36,6 +36,10 @@ Note that setting the view non-opaque will only work if the EAGL surface has an 
 	
 	
 	// Data Members for Both-Side touch -----------------------
+	
+
+	
+	
 	NSMutableArray* backLoc;
 	NSMutableArray* frontLoc;
 	TouchPoint* place;
