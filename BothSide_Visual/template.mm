@@ -64,6 +64,7 @@ bool			backIsUsed[5];
 bool			backEnlarge[5];
 SIO2object*		backHoverOn[5];
 vec2			backTouchPoint[5];
+int				cameraPosition;
 
 
 char	displayStr[ SIO2_MAX_CHAR ] = {""};
@@ -248,61 +249,74 @@ void templateRender( void ) {
 				sio2CameraRender( _SIO2camera );
 				
 				// ----------------------------- Visual Feedback -------------------------------
+				cameraPosition = _SIO2camera->_SIO2transform->loc->y;
 				
 				// The Back-Side Touch:
 				int vIndex;
 				for(vIndex = 0; vIndex < 5; vIndex++)
 				{
-					if( backIsUsed[vIndex] && backHoverOn[vIndex] == NULL )
-					{//Check if the touch point is hovering on sth:
-						vec2* thePos = sio2Vec2Init();
-						thePos->x = backTouchPoint[vIndex].x;
-						thePos->y = 480 - backTouchPoint[vIndex].y;
-						SIO2object* tempObject = sio2ResourceSelect3D( sio2->_SIO2resource,
-																	  sio2->_SIO2camera,
-																	  sio2->_SIO2window,
-																	  thePos);
+					SIO2object* obj = ( SIO2object* ) sio2->_SIO2resource->_SIO2object[vIndex + 4];
+					if(backIsUsed[vIndex])
+					{
+						//Showing the back-side finger on screen:
+						obj->_SIO2transform->loc->y = cameraPosition + 30;  //TODO: The number should be modified latter...
+						sio2TransformBindMatrix( obj ->_SIO2transform  );
 						
-						//Check if the hovered obj had been excluded:
-						for (int a=0 ;  a < excludeObjects.size() ; a++ ){
-							if ( tempObject == excludeObjects[a] ) {
-								tempObject = NULL;
-								break;
+						if(backHoverOn[vIndex] == NULL )
+						{//Check if the touch point is hovering on sth:
+							vec2* thePos = sio2Vec2Init();
+							thePos->x = backTouchPoint[vIndex].x;
+							thePos->y = 480 - backTouchPoint[vIndex].y;
+							SIO2object* tempObject = sio2ResourceSelect3D( sio2->_SIO2resource,
+																		  sio2->_SIO2camera,
+																		  sio2->_SIO2window,
+																		  thePos);
+							
+							//Check if the hovered obj had been excluded:
+							for (int a=0 ;  a < excludeObjects.size() ; a++ ){
+								if ( tempObject == excludeObjects[a] ) {
+									tempObject = NULL;
+									break;
+								}
 							}
+							
+							if(tempObject != NULL)
+							{//Enlarge the object:
+								tempObject->_SIO2transform->scl->x *= 1.1;
+								tempObject->_SIO2transform->scl->y *= 1.1;
+								tempObject->_SIO2transform->scl->z *= 1.1;
+								sio2TransformBindMatrix( tempObject->_SIO2transform  );
+								backHoverOn[vIndex] = tempObject;
+							}
+							
 						}
-						
-						if(tempObject != NULL)
-						{//Enlarge the object:
-							tempObject->_SIO2transform->scl->x *= 1.1;
-							tempObject->_SIO2transform->scl->y *= 1.1;
-							tempObject->_SIO2transform->scl->z *= 1.1;
-							sio2TransformBindMatrix( tempObject->_SIO2transform  );
-							backHoverOn[vIndex] = tempObject;
+						else if( backHoverOn[vIndex] != NULL)
+						{//Check if the touch point is still hovering on sth:
+							vec2* thePos = sio2Vec2Init();
+							thePos->x = backTouchPoint[vIndex].x;
+							thePos->y = 480 - backTouchPoint[vIndex].y;
+							SIO2object* tempObject = sio2ResourceSelect3D( sio2->_SIO2resource,
+																		  sio2->_SIO2camera,
+																		  sio2->_SIO2window,
+																		  thePos);
+							
+							if( tempObject != backHoverOn[vIndex])
+							{ //the touch point is not hovering on sth:
+								backHoverOn[vIndex]->_SIO2transform->scl->x /= 1.10;
+								backHoverOn[vIndex]->_SIO2transform->scl->y /= 1.10;
+								backHoverOn[vIndex]->_SIO2transform->scl->z /= 1.10;
+								sio2TransformBindMatrix( backHoverOn[vIndex]->_SIO2transform  );
+								backHoverOn[vIndex] = NULL;
+							}
+							
 						}
-						
 					}
-					
-					else if( backIsUsed[vIndex] )
-					{//Check if the touch point is still hovering on sth:
-						vec2* thePos = sio2Vec2Init();
-						thePos->x = backTouchPoint[vIndex].x;
-						thePos->y = 480 - backTouchPoint[vIndex].y;
-						SIO2object* tempObject = sio2ResourceSelect3D( sio2->_SIO2resource,
-																	  sio2->_SIO2camera,
-																	  sio2->_SIO2window,
-																	  thePos);
-						
-						if( tempObject == NULL)
-						{ //the touch point is not hovering on sth:
-							backHoverOn[vIndex]->_SIO2transform->scl->x /= 1.10;
-							backHoverOn[vIndex]->_SIO2transform->scl->y /= 1.10;
-							backHoverOn[vIndex]->_SIO2transform->scl->z /= 1.10;
-							sio2TransformBindMatrix( backHoverOn[vIndex]->_SIO2transform  );
-							backHoverOn[vIndex] = NULL;
-						}
-						
+					else
+					{
+						//Not showing the back-side finger:
+						obj->_SIO2transform->loc->y = cameraPosition + 200;
+						sio2TransformBindMatrix( obj ->_SIO2transform  );
 					}
-					
 					
 					
 				}
@@ -352,7 +366,34 @@ void templateRender( void ) {
 				sio2ResourceRender( sio2->_SIO2resource,
 								   sio2->_SIO2window,
 								   sio2->_SIO2camera,
-								   SIO2_RENDER_SOLID_OBJECT | SIO2_RENDER_ALPHA_TESTED_OBJECT);
+								   SIO2_RENDER_SOLID_OBJECT);
+
+				
+				//Visual Feedback for Selection:
+				if(selection)
+				{
+					if(!_SIO2material_selection)
+					{
+						//Initialize the material:
+						_SIO2material_selection = sio2MaterialInit("selection");
+						
+						// Initialize some component of the color
+						_SIO2material_selection->diffuse->z = 0.0f;
+						_SIO2material_selection->diffuse->w = 0.35f;
+						
+						// Change the blending mode
+						_SIO2material_selection->blend = SIO2_MATERIAL_COLOR;
+					}
+					
+					// Set to red
+					_SIO2material_selection->diffuse->x = 1.0f;
+					_SIO2material_selection->diffuse->y = 0.0f;
+					
+					// Render the material
+					sio2MaterialRender( _SIO2material_selection );
+					
+					sio2ObjectRender( selection, sio2->_SIO2window, sio2->_SIO2camera, 0, SIO2_TRANSFORM_MATRIX_BIND );
+				}
 				
 				sio2ObjectReset();
 				sio2MaterialReset();
@@ -422,6 +463,7 @@ void templateRender( void ) {
 }
 
 void templateLoading( void ) {
+	
 	unsigned int i = 0;
 	
 	srand ( time(NULL) );
@@ -430,11 +472,15 @@ void templateLoading( void ) {
 	lastRotation = sio2Vec3Init();
 	nowTime = taskStartTime =  [NSDate timeIntervalSinceReferenceDate];
 	
+	//Initialization for visual feedback: -------------------------- 
 	for(int k=0 ; k<5 ; k++){
 		backIsUsed[k]  = FALSE;
 		backEnlarge[k] = FALSE;
 		backHoverOn[k] = NULL;
+
 	}
+	
+	//---------------------------------------------------------------------
 	
 	_SIO2material_selection = NULL;
 	
@@ -715,9 +761,33 @@ void backTouchHandle(void *_ptr, int type, int index, float pt_x, float pt_y) {
 		case 1: // Add a point
 			backIsUsed[index] = TRUE;
 			backTouchPoint[index] = pt;
+			
+			//Reset the position of the plane indicating the back-side finger:
+			SIO2object* obj1 = (SIO2object*) sio2->_SIO2resource->_SIO2object[index+4];
+			if(obj1)
+			{
+				obj1->_SIO2transform->loc->z = 0.057* ( pt.x - 320/2) ;
+				obj1->_SIO2transform->loc->x = 0.057* ( pt.y - 480/2);
+			}
+			
 			break;
 		case 2: // Modify a point
+			
+			//Move the plane indicating the back-side finger:
+			SIO2object* obj2 = (SIO2object*) sio2->_SIO2resource->_SIO2object[index+4];
+			if(obj2)
+			{
+				vec2 d; 
+				d.x = pt.x - backTouchPoint[index].x;
+				d.y = pt.y - backTouchPoint[index].y;
+				
+				obj2->_SIO2transform->loc->z += d.x*0.057;
+				obj2->_SIO2transform->loc->x += d.y*0.057;
+			}
+			
 			backTouchPoint[index] = pt;
+			
+			
 			break;
 		case 3: // Delete a point
 			backIsUsed[index] = FALSE;
