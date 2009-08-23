@@ -707,11 +707,12 @@ void backTouchHandle(void *_ptr, int type, int index, float pt_x, float pt_y) {
 		case 3: // Delete a point
 			backIsUsed[index] = FALSE;
 			
-			if(backHoverOn[index])
+			if(backHoverOn[index] != NULL)
 			{ //Shrink the obj had been hovered on:
 				backHoverOn[index]->_SIO2transform->scl->x /= 1.10;
 				backHoverOn[index]->_SIO2transform->scl->y /= 1.10;
 				backHoverOn[index]->_SIO2transform->scl->z /= 1.10;
+				sio2TransformBindMatrix( backHoverOn[index]->_SIO2transform  );
 				backHoverOn[index] = NULL;
 			}
 			break;
