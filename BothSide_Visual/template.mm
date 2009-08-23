@@ -253,7 +253,7 @@ void templateRender( void ) {
 				int vIndex;
 				for(vIndex = 0; vIndex < 5; vIndex++)
 				{
-					if( backIsUsed[vIndex] && !backHoverOn[vIndex])
+					if( backIsUsed[vIndex] && backHoverOn[vIndex] == NULL )
 					{//Check if the touch point is hovering on sth:
 						vec2* thePos = sio2Vec2Init();
 						thePos->x = backTouchPoint[vIndex].x;
@@ -262,8 +262,17 @@ void templateRender( void ) {
 																	  sio2->_SIO2camera,
 																	  sio2->_SIO2window,
 																	  thePos);
+						
+						//Check if the hovered obj had been excluded:
+						for (int a=0 ;  a < excludeObjects.size() ; a++ ){
+							if ( tempObject == excludeObjects[a] ) {
+								tempObject = NULL;
+								break;
+							}
+						}
+						
 						if(tempObject != NULL)
-						{ //Enlarge the object:
+						{//Enlarge the object:
 							tempObject->_SIO2transform->scl->x *= 1.1;
 							tempObject->_SIO2transform->scl->y *= 1.1;
 							tempObject->_SIO2transform->scl->z *= 1.1;
@@ -272,7 +281,8 @@ void templateRender( void ) {
 						}
 						
 					}
-					else if(backIsUsed[vIndex])
+					
+					else if( backIsUsed[vIndex] )
 					{//Check if the touch point is still hovering on sth:
 						vec2* thePos = sio2Vec2Init();
 						thePos->x = backTouchPoint[vIndex].x;
@@ -282,7 +292,7 @@ void templateRender( void ) {
 																	  sio2->_SIO2window,
 																	  thePos);
 						
-						if(!tempObject)
+						if( tempObject == NULL)
 						{ //the touch point is not hovering on sth:
 							backHoverOn[vIndex]->_SIO2transform->scl->x /= 1.10;
 							backHoverOn[vIndex]->_SIO2transform->scl->y /= 1.10;
@@ -342,7 +352,7 @@ void templateRender( void ) {
 				sio2ResourceRender( sio2->_SIO2resource,
 								   sio2->_SIO2window,
 								   sio2->_SIO2camera,
-								   SIO2_RENDER_SOLID_OBJECT | SIO2_RENDER_CLIPPED_OBJECT );
+								   SIO2_RENDER_SOLID_OBJECT | SIO2_RENDER_ALPHA_TESTED_OBJECT);
 				
 				sio2ObjectReset();
 				sio2MaterialReset();
@@ -450,9 +460,14 @@ void templateLoading( void ) {
 	// Generate the geometry VBO.
 	sio2ResourceGenId( sio2->_SIO2resource );
 	
-	rotateObject = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Cube" );
-	arrowObject  = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Arrow" );
-	excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Arrow" ));
+	//rotateObject = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Cube" );
+	//arrowObject  = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Arrow" );
+	//excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Arrow" ));
+	excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane" ));
+	excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane2" ));
+	excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane3" ));
+	excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane4" ));
+	excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane5" ));
 	
 	sio2->_SIO2window->_SIO2windowrender = templateRender;
 	
