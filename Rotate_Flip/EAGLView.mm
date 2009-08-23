@@ -42,7 +42,6 @@ BOOL strtDebug = YES;
 #define INTOBJ(v) [NSNumber numberWithInteger: v]
 
 #pragma mark -
-
 extern NSString *FILENAME;
 
 extern NSMutableArray	*gestureSequence;
