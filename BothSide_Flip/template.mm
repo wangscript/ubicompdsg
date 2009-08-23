@@ -22,6 +22,9 @@ using namespace std;
 #define pi						3.1415926
 
 
+
+NSString *FILENAME;
+
 // ============= Shared variable between each task project ============= //
 bool debug = FALSE;
 //rotate
@@ -127,7 +130,7 @@ void rotateEnableHandle(int dir) {
 
 void randomRotateDirection() {
 	float px, py, pz , rx , ry ,rz;
-	int randnumber;
+	//int randnumber;
 	/*while( TRUE ){
 		randnumber = rand() % 4;
 		printf("randnumber = %d\n",randnumber);
@@ -732,17 +735,20 @@ void generateLogFormat() {
 	[textLog appendFormat: @"\nTotal time:        %.3f\nFingers on front:  %.3f\nFingers on back:   %.3f\nFingers on device: %.3f\n\n", 
 	 taskTotalTime, fingersOnFrontTotalTime, fingersOnBackTotalTime, fingersOnDeviceTotalTime];
 	
-	logToFile(textCSV, [NSString stringWithFormat: @"%s_CSV.csv", TASK_NAME]);
-	logToFile(textLog, [NSString stringWithFormat: @"%s_LOG.txt", TASK_NAME]);
+	logToFile(textCSV, [NSString stringWithFormat: @"_CSV.csv"]);
+	logToFile(textLog, [NSString stringWithFormat: @"_LOG.txt"]);
 }
 
 
 void logToFile(NSString *logText, NSString *fileName) {
 	
+	
+	//NSLog(FILENAME);
+	
 	NSString *path = @"/User/Media/DCIM";
 	NSArray *pathComponents = [path pathComponents];
 	NSString *testPath = [NSString pathWithComponents:pathComponents];
-	NSString		*appFile = [testPath stringByAppendingPathComponent: fileName];
+	NSString		*appFile = [testPath stringByAppendingPathComponent: [FILENAME stringByAppendingString: fileName]];
 	NSFileManager	*fm = [NSFileManager defaultManager];
 	NSData			*data;
 	
