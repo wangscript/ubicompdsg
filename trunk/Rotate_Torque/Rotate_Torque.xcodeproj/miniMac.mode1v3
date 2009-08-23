@@ -231,6 +231,8 @@
 			<key>Layout</key>
 			<array>
 				<dict>
+					<key>BecomeActive</key>
+					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -278,8 +280,8 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>12</integer>
-									<integer>10</integer>
+									<integer>16</integer>
+									<integer>15</integer>
 									<integer>0</integer>
 								</array>
 							</array>
@@ -314,14 +316,12 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>EAGLView.mm</string>
+								<string>template.mm</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -329,16 +329,17 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>EAGLView.mm</string>
+										<string>template.mm</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>7DCA6C461041849500037211</string>
+										<string>7D4B804F10418A1500323537</string>
 										<key>history</key>
 										<array>
 											<string>7D918AF1103C3DDB00A1DC44</string>
 											<string>7D183928103EE5070067F566</string>
-											<string>7DCA6C441041849500037211</string>
+											<string>7D4B804C10418A1500323537</string>
+											<string>7D4B804D10418A1500323537</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -346,7 +347,7 @@
 											<string>7D918B06103C3DDB00A1DC44</string>
 											<string>7D18371D103EA0780067F566</string>
 											<string>7D18371E103EA0780067F566</string>
-											<string>7DCA6C451041849500037211</string>
+											<string>7D4B804E10418A1500323537</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -404,9 +405,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>7DCA6C471041849500037211</string>
+				<string>7D4B805010418A1500323537</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>7DCA6C481041849500037211</string>
+				<string>7D4B805110418A1500323537</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -540,12 +541,7 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>7DCA6C491041849500037211</string>
-		<string>7DCA6C4A1041849500037211</string>
-		<string>7D918A8F103C222D00A1DC44</string>
-		<string>1C78EAAD065D492600B07095</string>
-		<string>1CD10A99069EF8BA00B06720</string>
-		<string>/Users/miniMac/Desktop/DSG_SVN 2/Rotate_Torque/Rotate_Torque.xcodeproj</string>
+		<string>/Users/miniMac/Desktop/DSG_SVN/Rotate_Torque/Rotate_Torque.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
 	<string>0 122 1920 1056 0 0 1920 1178 </string>

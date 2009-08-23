@@ -60,6 +60,9 @@ BOOL isRotateEnded;
 BOOL oldIsRotateEnded;
 
 extern GLfloat matrixrotate[16];
+//
+extern int movement[100];
+extern int movementOne;
 
 
 @implementation TouchPoint
@@ -360,6 +363,10 @@ BOOL isDebug = YES;
 
 - (int)myTouchBegan:(UITouch*)touch andPoint:(CGPoint)point andFront:(BOOL)isFront andNum:(int)num {// TODO:
 	int index;
+	
+	
+	movementOne++;
+	
 	if(isFront){
 		index = [self findEmpty];
 		[self.frontLoc replaceObjectAtIndex: index 

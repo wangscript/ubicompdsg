@@ -724,11 +724,15 @@ void generateLogFormat() {
 	
 	NSMutableString *textCSV = [NSMutableString stringWithCapacity: 20];
 	NSMutableString *textLog = [NSMutableString stringWithCapacity: 20];
+	NSString *bundleName = [[NSString alloc] initWithString: [[[NSBundle mainBundle] infoDictionary] objectForKey: @"CFBundleDisplayName"]];
 	
-	[textLog appendFormat: @"### %s %@ ###\n", TASK_NAME, taskDateString];
+	[textLog appendFormat: @"### %@ %@ ###\n", bundleName , taskDateString];
+	
+	
 	
 	for (int i=0; i < TASK_TOTAL_ROUND ; i++){
-		[textCSV appendFormat: @"%s,%@,%d,%.3f,%.3f,%.3f,%.3f,%d\n",TASK_NAME,taskDateString, i+1, taskCompleteTime[i], fingersOnFrontTotalTime, fingersOnBackTotalTime, fingersOnDeviceTotalTime,movement[i]];
+		[textCSV appendFormat: @"%@,%@,%d,%.3f,%.3f,%.3f,%.3f,%d\n",bundleName
+					,taskDateString, i+1, taskCompleteTime[i], fingersOnFrontTotalTime, fingersOnBackTotalTime, fingersOnDeviceTotalTime,movement[i]];
 		[textLog appendFormat: @"%d\t%.3f   movement = %d\n", i+1, taskCompleteTime[i], movement[i]];
 	}
 	

@@ -29,6 +29,9 @@ using namespace std;
 NSString *FILENAME;
 //rotate
 GLfloat matrixrotate[16];
+int movement[100];
+int movementOne;
+
 bool objectHovered = FALSE;
 
 // ============= Shared variable between each task project ============= //
@@ -229,12 +232,16 @@ void generateLogFormat() {
 	
 	NSMutableString *textCSV = [NSMutableString stringWithCapacity: 20];
 	NSMutableString *textLog = [NSMutableString stringWithCapacity: 20];
+	NSString *bundleName = [[NSString alloc] initWithString: [[[NSBundle mainBundle] infoDictionary] objectForKey: @"CFBundleDisplayName"]];
 	
-	[textLog appendFormat: @"### %s %@ ###\n", TASK_NAME, taskDateString];
+	[textLog appendFormat: @"### %@ %@ ###\n", bundleName , taskDateString];
+	
+	
 	
 	for (int i=0; i < TASK_TOTAL_ROUND ; i++){
-		[textCSV appendFormat: @"%s,%@,%d,%.3f,%.3f,%.3f,%.3f\n",TASK_NAME, taskDateString, i+1, taskCompleteTime[i], fingersOnFrontTotalTime, fingersOnBackTotalTime, fingersOnDeviceTotalTime];
-		[textLog appendFormat: @"%d\t%.3f\n", i+1, taskCompleteTime[i]];
+		[textCSV appendFormat: @"%@,%@,%d,%.3f,%.3f,%.3f,%.3f,%d\n",bundleName
+		 ,taskDateString, i+1, taskCompleteTime[i], fingersOnFrontTotalTime, fingersOnBackTotalTime, fingersOnDeviceTotalTime,movement[i]];
+		[textLog appendFormat: @"%d\t%.3f   movement = %d\n", i+1, taskCompleteTime[i], movement[i]];
 	}
 	
 	[textLog appendFormat: @"\nTotal time:        %.3f\nFingers on front:  %.3f\nFingers on back:   %.3f\nFingers on device: %.3f\n\n", 
@@ -264,10 +271,11 @@ void templateRender( void ) {
 				generatePosition();
 				sprintf(displayStr, "Round: %d", taskState);
 				taskStartTime = lastTime = nowTime;
+				movementOne = 0;
 				break;
 			case TASK_TOTAL_ROUND + 1:
 				taskCompleteTime[taskState-2] = nowTime - lastTime;
-				
+				movement[taskState-2] = movementOne;
 				double tmp;
 				tmp = 0;
 				for (int k=0 ; k<TASK_TOTAL_ROUND ; k++) tmp += taskCompleteTime[k];
@@ -281,7 +289,10 @@ void templateRender( void ) {
 			default:
 				selection = nil;
 				generatePosition();
-
+				taskCompleteTime[taskState-2] = nowTime - lastTime;
+				movement[taskState-2] = movementOne;
+				printf("movement = %d\n",movementOne);
+				movementOne = 0;
 				sprintf(displayStr, "Round: %d", taskState);	   
 				taskCompleteTime[taskState-2] = nowTime - lastTime;
 				lastTime = nowTime;
