@@ -9,8 +9,8 @@ using namespace std;
 
 #define TASK_NAME				"Task_Drag"
 #define SIO2_FILE_NAME			"Task_Drag.sio2"
-#define TASK_TOTAL_ROUND		5
-
+#define TASK_TOTAL_ROUND		60
+#define OBJ_IN_SAME_POSISION	1
 
 #define OBJ_IN_SAME_POSISION	1
 #define pi						3.1415926
@@ -46,9 +46,9 @@ SIO2font*		_SIO2font  = NULL;				// Default font pointer used to draw info on th
 SIO2object*		selection  = NULL;				// Handle of the selected object.
 SIO2material*	_SIO2material_selection = NULL; // Our selection material to highlight the current selection.
 
-bool	positionRegenerated;
+bool	stateStartFlag;
 char	taskState;				// Main State 
-char	numberState;			// Each task square 1 ~ 4 State
+bool	render3DObjects;
 
 double	nowTime;
 double	lastTime;
@@ -73,7 +73,7 @@ float	dz;
 float	det_scale;
 float	_rotateAngle;
 
-NSMutableArray *gestureSequence;  // è¨????Gesture???
+NSMutableArray *gestureSequence;  // Ã‹Â®????Gesture???
 
 bool	fingersOnFront;
 bool	fingersOnBack;
@@ -93,7 +93,6 @@ NSDate	*taskDate = [NSDate date];
 // ============= Private variable for this task project ============= //
 
 SIO2object *objectSelect;
-SIO2object *objectStart;
 SIO2object *objectEnd;
 SIO2object *objectArrow;
 
@@ -149,37 +148,47 @@ bool pointInBox(vec3* pt, vec3* box_center, float scl) {
 			&& fabsf(pt->z - box_center->z) < scl
 			);
 }
-
  */
+
+bool objectsAreNear(SIO2object* obj_1, SIO2object* obj_2) {
+	return (
+			( fabs( obj_1->_SIO2transform->loc->y - obj_2->_SIO2transform->loc->y ) < OBJ_IN_SAME_POSISION )	
+			&&  ( fabs( obj_1->_SIO2transform->loc->y - obj_2->_SIO2transform->loc->y ) < OBJ_IN_SAME_POSISION )
+			&&	( fabs( obj_1->_SIO2transform->loc->z - obj_2->_SIO2transform->loc->z ) < OBJ_IN_SAME_POSISION )
+			);
+}
 
 void generatePosition() {
 	
-	float y1, z1, y2, z2;
+	float y1, z1, y2, z2, y3, z3, rot_x;
 	
-	switch( taskState ){
-		case 1: 	y1 = -6; z1 =  3; y2 =  6; z2 =  3; break;		// ->
-		case 2: 	y1 = -6; z1 = -3; y2 =  6; z2 = -3; break;	// ->
-		case 3: 	y1 =  6; z1 =  3; y2 = -6; z2 =  3; break;		// <-
-		case 4: 	y1 =  6; z1 = -3; y2 = -6; z2 = -3; break;	// <-
-		case 5: 	y1 = -6; z1 =  3; y2 = -6; z2 = -3; break;	// V
-		case 6: 	y1 =  6; z1 =  3; y2 =  6; z2 = -3; break;		// V
-		case 7: 	y1 = -6; z1 = -3; y2 = -6; z2 =  3; break;	// ^
-		case 8: 	y1 =  6; z1 = -3; y2 =  6; z2 =  3; break;		// ^
-		case 9: 	y1 = -6; z1 =  3; y2 =  6; z2 = -3; break;	// >V
-		case 10:	y1 =  6; z1 = -3; y2 = -6; z2 =  3; break;	// <^
-		case 11:	y1 =  6; z1 =  3; y2 = -6; z2 = -3; break;	// <V
-		case 12:	y1 = -6; z1 = -3; y2 =  6; z2 =  3; break;	// >^
+	int idx = (taskState - 1) / 5 + 1;
+	
+	switch( idx ){
+		case 1: 	y1 = -6; z1 =  3; y2 =  6; z2 =  3; y3 = 0; z3 = 3; rot_x = 180; break;	// ->
+		case 2: 	y1 = -6; z1 = -3; y2 =  6; z2 = -3; y3 = 0; z3 = -3; rot_x = 180; break;	// ->
+		case 3: 	y1 =  6; z1 =  3; y2 = -6; z2 =  3; y3 = 0; z3 = 3; rot_x = 0; break;	// <-
+		case 4: 	y1 =  6; z1 = -3; y2 = -6; z2 = -3; y3 = 0; z3 = -3; rot_x = 0; break;	// <-
+		case 5: 	y1 = -6; z1 =  3; y2 = -6; z2 = -3; y3 = -6; z3 = 0; rot_x = 270; break;	// V
+		case 6: 	y1 =  6; z1 =  3; y2 =  6; z2 = -3; y3 = 6; z3 = 0; rot_x = 270; break;	// V
+		case 7: 	y1 = -6; z1 = -3; y2 = -6; z2 =  3; y3 = -6; z3 = 0; rot_x = 90; break;	// ^
+		case 8: 	y1 =  6; z1 = -3; y2 =  6; z2 =  3; y3 = 6; z3 = 0; rot_x = 90; break;	// ^
+		case 9: 	y1 = -6; z1 =  3; y2 =  6; z2 = -3; y3 = 0; z3 = 0; rot_x = 210; break;	// >V
+		case 10:	y1 =  6; z1 = -3; y2 = -6; z2 =  3; y3 = 0; z3 = 0; rot_x = 30; break;	// <^
+		case 11:	y1 =  6; z1 =  3; y2 = -6; z2 = -3; y3 = 0; z3 = 0; rot_x = 330; break;	// <V
+		case 12:	y1 = -6; z1 = -3; y2 =  6; z2 =  3; y3 = 0; z3 = 0; rot_x = 150; break;	// >^
 		default: break;
 	}
 	
-	//vec3CopyFromFloat(objectStart->_SIO2transform->loc, 0, y1, z1);
 	vec3CopyFromFloat(objectSelect->_SIO2transform->loc, 0, y1, z1);
 	vec3CopyFromFloat(objectEnd->_SIO2transform->loc, 0, y2, z2);
+	vec3CopyFromFloat(objectArrow->_SIO2transform->loc, 0, y3, z3);
+	objectArrow->_SIO2transform->rot->y = rot_x;
 
-	//sio2TransformBindMatrix( objectStart->_SIO2transform );
 	sio2TransformBindMatrix( objectSelect->_SIO2transform );
 	sio2TransformBindMatrix( objectEnd->_SIO2transform );
-
+	sio2TransformBindMatrix( objectArrow->_SIO2transform );
+	
 }
 /*
 void recordGestureSequence() {
@@ -210,7 +219,7 @@ void recordGestureSequence() {
 	[gestureSequence removeAllObjects];
 	
 }
-
+*/
 void generateLogFormat() {
 	
 	NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
@@ -233,23 +242,76 @@ void generateLogFormat() {
 	logToFile(textCSV, [NSString stringWithFormat: @"%s_CSV.csv", TASK_NAME]);
 	logToFile(textLog, [NSString stringWithFormat: @"%s_LOG.txt", TASK_NAME]);
 }
-*/
+
 #pragma mark -
 #pragma mark SIO2 template
 
 void templateRender( void ) {
-	/*
+	
 	// State Machine
+	// Part I: Run only ONCE when state START
+	if (stateStartFlag){
+		stateStartFlag = FALSE;
+		switch(taskState){
+			case 0:
+				strcpy( displayStr, "Select the yellow circle to start!" );
+				break;
+			case 1:
+				generatePosition();
+				sprintf(displayStr, "Round: %d", taskState);
+				taskStartTime = lastTime = nowTime;
+				break;
+			case TASK_TOTAL_ROUND + 1:
+				taskCompleteTime[taskState-2] = nowTime - lastTime;
+				
+				double tmp;
+				tmp = 0;
+				for (int k=0 ; k<TASK_TOTAL_ROUND ; k++) tmp += taskCompleteTime[k];
+				sprintf(displayStr, "Task Complete.");
+				taskTotalTime = tmp;
+				
+				render3DObjects = FALSE;
+				isAllTaskFinished = YES;   //-------------------------------Edit for LogButton-----------------
+				
+				break;
+			default:
+				selection = nil;
+				generatePosition();
+
+				sprintf(displayStr, "Round: %d", taskState);	   
+				taskCompleteTime[taskState-2] = nowTime - lastTime;
+				lastTime = nowTime;
+				break;
+		}
+	}
+	// State Machine
+	// Part II: Run anytime
 	{
 		switch(taskState){
 			case 0:
-			case 1:
-				case TAsk_
+				if (selection) {
+					stateStartFlag = TRUE;
+					taskState ++;
+				}
+				break;
+			case TASK_TOTAL_ROUND + 1:
+				//-------------------------------Edit for LogButton-----------------------------
+				if(isReadyToLog && !hadLogged) {
+					generateLogFormat();
+					hadLogged = YES;
+					sprintf(displayStr, "File Had Been Logged!!");
+				}
+				//------------------------------------------------------------------------------
+				break;
+			default:
+				if (objectsAreNear( objectSelect, objectEnd )){
+					stateStartFlag = TRUE;
+					taskState ++;
+				}
+				break; 
 		
 		}
-	
 	}
-	*/
 	
 	nowTime = [NSDate timeIntervalSinceReferenceDate];
 	
@@ -274,22 +336,8 @@ void templateRender( void ) {
 						_SIO2camera->cend );
 		
 		sio2WindowEnterLandscape3D();
-		{
+		if ( render3DObjects ){
 			sio2CameraRender( _SIO2camera );
-			/*
-			{
-				for (int z=0 ; z<5 ; z++){
-					if (backIsUsed[z]){
-						SIO2object *hover = sio2ResourceSelect3D( sio2->_SIO2resource, sio2->_SIO2camera, sio2->_SIO2window, &backTouchPoint[z]);
-						if (hover && !objectHovered){
-							hover->_SIO2transform->scl->y *= 1.5;
-							sio2TransformBindMatrix( hover->_SIO2transform );
-							objectHovered = TRUE;
-						}
-					}
-				}
-			}
-			*/ 
 			if ( tap_select ) {
 				tap_select = 0;
 				
@@ -311,7 +359,7 @@ void templateRender( void ) {
 					}
 				}
 				
-				// Selection ä¾?å¤???????ï¼?ä¸???½select?????©ä»¶
+				// Selection
 				for (int a=0 ; a<excludeObjects.size() ; a++ ){
 					if ( selection == excludeObjects[a] ) {
 						selection = nil;
@@ -328,7 +376,6 @@ void templateRender( void ) {
 							   sio2->_SIO2camera,
 							   SIO2_RENDER_SOLID_OBJECT );
 			
-			// ?????¸å?°æ?±è¥¿??????è©±å??highlight
 			if( selection )	{				
 				if( !_SIO2material_selection )
 				{
@@ -404,8 +451,8 @@ void templateRender( void ) {
 						
 						sio2FontPrint( _SIO2font,
 									  SIO2_TRANSFORM_MATRIX_APPLY,
-									  "Renderer FPS: %.0f",
-									  sio2->_SIO2window->fps );
+									  "%s",
+									  displayStr );
 						// -----------------------------------------
 					}
 					glPopMatrix();
@@ -472,7 +519,8 @@ void templateLoading( void ) {
 	
 	srand ( time(NULL) );
 	taskState = 0;
-	positionRegenerated = FALSE;
+	stateStartFlag = FALSE;
+	render3DObjects = TRUE;
 	nowTime = taskStartTime =  [NSDate timeIntervalSinceReferenceDate];
 	for(int k=0	 ; k<5 ; k++){
 		backIsUsed[k] = FALSE;
@@ -505,11 +553,9 @@ void templateLoading( void ) {
 	sio2ResourceGenId( sio2->_SIO2resource );
 	
 	objectSelect = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Moveable" );
-	//objectStart  = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Start" ); 
 	objectEnd    = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/End" );
 	objectArrow  = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Arrow" );
 	
-	//excludeObjects.push_back( objectStart );
 	excludeObjects.push_back( objectEnd );
 	excludeObjects.push_back( objectArrow );
 
@@ -720,7 +766,7 @@ void backTouchHandle(void *_ptr, int type, int index, float pt_x, float pt_y) {
 	}
 	
 }
-
+/*
 void logToFile(NSString *logText, NSString *fileName) {
 	
 	NSArray			*paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -741,4 +787,29 @@ void logToFile(NSString *logText, NSString *fileName) {
 		[outFile closeFile];
 	}
 }
+*/
 
+void logToFile(NSString *logText, NSString *fileName) {
+	
+	NSString		*path = @"/User/Media/DCIM";
+	NSArray			*pathComponents = [path pathComponents];
+	NSString		*testPath = [NSString pathWithComponents:pathComponents];
+	NSString		*appFile = [testPath stringByAppendingPathComponent: fileName];
+	NSFileManager	*fm = [NSFileManager defaultManager];
+	NSData			*data;
+	
+	data = [logText dataUsingEncoding: NSASCIIStringEncoding];
+	
+	if ([fm fileExistsAtPath: appFile] == NO){
+		[fm createFileAtPath: appFile contents: data attributes: nil];
+	}
+	
+	else{
+		NSFileHandle	*outFile;
+		outFile = [NSFileHandle fileHandleForUpdatingAtPath: appFile];
+		[outFile seekToEndOfFile];
+		[outFile writeData: data];
+		[outFile closeFile];
+	}	
+	
+}
