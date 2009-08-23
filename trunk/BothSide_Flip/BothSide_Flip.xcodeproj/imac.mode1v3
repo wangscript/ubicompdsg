@@ -333,7 +333,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>88332A34104042E7003532C0</string>
+										<string>88D55AF810415A1F0037F822</string>
 										<key>history</key>
 										<array>
 											<string>887E48561032972500A3011E</string>
@@ -356,8 +356,8 @@
 											<string>881CEEE9103BDB560045C367</string>
 											<string>881CEEEA103BDB560045C367</string>
 											<string>88F53E5010401B28004EF865</string>
-											<string>88332A30104042E7003532C0</string>
-											<string>88332A31104042E7003532C0</string>
+											<string>88D55AF410415A1F0037F822</string>
+											<string>88D55AF510415A1F0037F822</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -384,8 +384,8 @@
 											<string>886992EE103A84D2000723F1</string>
 											<string>881CEEF4103BDB560045C367</string>
 											<string>88F53E5210401B28004EF865</string>
-											<string>88332A32104042E7003532C0</string>
-											<string>88332A33104042E7003532C0</string>
+											<string>88D55AF610415A1F0037F822</string>
+											<string>88D55AF710415A1F0037F822</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -443,9 +443,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>88332A35104042E7003532C0</string>
+				<string>88D55AF910415A1F0037F822</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>88332A36104042E7003532C0</string>
+				<string>88D55AFA10415A1F0037F822</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -579,11 +579,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>88332A37104042E7003532C0</string>
-		<string>88332A38104042E7003532C0</string>
-		<string>1C78EAAD065D492600B07095</string>
-		<string>1CD10A99069EF8BA00B06720</string>
-		<string>88043F7E10298B5A00AF24D5</string>
 		<string>/Users/imac/Desktop/DSG_SVN/BothSide_Flip/BothSide_Flip.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
