@@ -16,10 +16,12 @@
 using namespace std;
 
 #define TASK_NAME				"Both_Flip"
-#define SIO2_FILE_NAME			"Task_Flip.sio2"
+#define SIO2_FILE_NAME			"Visual01.sio2"
 #define TASK_TOTAL_ROUND		20
 #define OBJ_IN_SAME_POSISION	1
 #define pi						3.1415926
+
+
 
 
 // ============= Shared variable between each task project ============= //
@@ -57,8 +59,12 @@ double	taskStartTime;
 double	taskTotalTime;
 double	taskCompleteTime[TASK_TOTAL_ROUND];
 
-bool	backIsUsed[5];
-vec2	backTouchPoint[5];
+//For Visual Feed Back:
+bool			backIsUsed[5];
+bool			backEnlarge[5];
+SIO2object*		backHoverOn[5];
+vec2			backTouchPoint[5];
+
 
 char	displayStr[ SIO2_MAX_CHAR ] = {""};
 
@@ -126,49 +132,7 @@ void rotateEnableHandle(int dir) {
 }
 
 void randomRotateDirection() {
-	float px, py, pz , rx , ry ,rz;
-	int randnumber;
-	/*while( TRUE ){
-		randnumber = rand() % 4;
-		printf("randnumber = %d\n",randnumber);
-		if( randnumber != nowTargetIndex){
-			nowTargetIndex = randnumber;
-			break;
-		}
-	}*/
-	
-	if( taskState >= 1 && taskState <= 5)
-		nowTargetIndex = 0;
-	if( taskState >= 6 && taskState <= 10)
-		nowTargetIndex = 1;
-	if( taskState >= 11 && taskState <= 15)
-		nowTargetIndex = 2;
-	if( taskState >= 16 && taskState <= 20)
-		nowTargetIndex = 3;
-		
-		
-	printf("nowTargetIndex = %d\n",nowTargetIndex);
-	switch( nowTargetIndex ) {
-		case 0:	px = -3.3; py = -2.7; pz = 0; rx = 90; ry =  90; rz = 90; break; // 上
-		case 1:	px = -3.3; py = -2.7; pz = 0; rx = 90; ry = 180; rz = 90; break; // 右
-		case 2:	px = -3.3; py =  2.7; pz = 0; rx = 90; ry = 270; rz = 90; break; // 下
-		case 3:	px = -3.3; py =  2.7; pz = 0; rx = 90; ry =   0; rz = 90; break; // 左
-	}
-	
-	taskRotateDirection[taskState - 1] = nowTargetIndex;
-	
-	arrowObject->_SIO2transform->loc->x = px;
-	arrowObject->_SIO2transform->loc->y = py;
-	arrowObject->_SIO2transform->loc->z = pz;
-	arrowObject->_SIO2transform->rot->x = rx;
-	arrowObject->_SIO2transform->rot->y = ry;
-	arrowObject->_SIO2transform->rot->z = rz;
-	
-	
-	sio2TransformBindMatrix( arrowObject->_SIO2transform );
-	
-	
-	rotateEnableHandle( (int) nowTargetIndex );
+
 }
 
 void templateRender( void ) {
@@ -186,6 +150,8 @@ void templateRender( void ) {
 	if( !_SIO2camera ){ return; }
 	
 	sio2->_SIO2camera = _SIO2camera; // Bind the camera pointer.
+	
+		
 	
 	
 	//-------------------------------Edit for LogButton-----------------------------
@@ -218,37 +184,12 @@ void templateRender( void ) {
 		
 		switch(taskState){
 			case 0:
-				vec3Copy(lastRotation, rotateObject->_SIO2transform->rot);
-			
-				arrowObject->_SIO2transform->loc->y = 0;
-				//printf("arrowObject->x = %lf , arrowObject->y = %lf\n",arrowObject->_SIO2transform->loc->x,arrowObject->_SIO2transform->loc->y);
-				sio2TransformBindMatrix(arrowObject->_SIO2transform);
-				strcpy( displayStr, "Select the die to START!" );
 				break;
 			case 1:
-				//nowTargetIndex = 1;
-				sprintf(displayStr, "Round: %d", taskState);
-				taskStartTime = lastTime = nowTime;
-				movementOne = 0;
-				randomRotateDirection();
 				break;
 			case TASK_TOTAL_ROUND + 1:
-				taskCompleteTime[taskState-2] = nowTime - lastTime;
-				movement[taskState-2] = movementOne;
-				taskTotalTime = 0;
-				for (int k=0 ; k<TASK_TOTAL_ROUND ; k++) taskTotalTime += taskCompleteTime[k];
-				sprintf(displayStr, "Task Complete.");
-				isAllTaskFinished = YES;   //-------------------------------Edit for LogButton-----------------
 				break;
 			default:
-				//nowTargetIndex = 1;
-				sprintf(displayStr, "Round: %d", taskState);	   
-				taskCompleteTime[taskState-2] = nowTime - lastTime;
-				movement[taskState-2] = movementOne;
-				printf("movement = %d\n",movementOne);
-				movementOne = 0;
-				lastTime = nowTime;
-				randomRotateDirection();
 				break;
 		}
 	}
@@ -305,6 +246,58 @@ void templateRender( void ) {
 			sio2WindowEnterLandscape3D();
 			{
 				sio2CameraRender( _SIO2camera );
+				
+				// ----------------------------- Visual Feedback -------------------------------
+				
+				// The Back-Side Touch:
+				int vIndex;
+				for(vIndex = 0; vIndex < 5; vIndex++)
+				{
+					if( backIsUsed[vIndex] && !backHoverOn[vIndex])
+					{//Check if the touch point is hovering on sth:
+						vec2* thePos = sio2Vec2Init();
+						thePos->x = backTouchPoint[vIndex].x;
+						thePos->y = 480 - backTouchPoint[vIndex].y;
+						SIO2object* tempObject = sio2ResourceSelect3D( sio2->_SIO2resource,
+																	  sio2->_SIO2camera,
+																	  sio2->_SIO2window,
+																	  thePos);
+						if(tempObject != NULL)
+						{ //Enlarge the object:
+							tempObject->_SIO2transform->scl->x *= 1.1;
+							tempObject->_SIO2transform->scl->y *= 1.1;
+							tempObject->_SIO2transform->scl->z *= 1.1;
+							sio2TransformBindMatrix( tempObject->_SIO2transform  );
+							backHoverOn[vIndex] = tempObject;
+						}
+						
+					}
+					else if(backIsUsed[vIndex])
+					{//Check if the touch point is still hovering on sth:
+						vec2* thePos = sio2Vec2Init();
+						thePos->x = backTouchPoint[vIndex].x;
+						thePos->y = 480 - backTouchPoint[vIndex].y;
+						SIO2object* tempObject = sio2ResourceSelect3D( sio2->_SIO2resource,
+																	  sio2->_SIO2camera,
+																	  sio2->_SIO2window,
+																	  thePos);
+						
+						if(!tempObject)
+						{ //the touch point is not hovering on sth:
+							backHoverOn[vIndex]->_SIO2transform->scl->x /= 1.10;
+							backHoverOn[vIndex]->_SIO2transform->scl->y /= 1.10;
+							backHoverOn[vIndex]->_SIO2transform->scl->z /= 1.10;
+							sio2TransformBindMatrix( backHoverOn[vIndex]->_SIO2transform  );
+							backHoverOn[vIndex] = NULL;
+						}
+						
+					}
+					
+					
+					
+				}
+				
+				// ------------------------------------------------------------------------------
 				
 				if ( tap_select && selection != rotateObject) {
 					tap_select = 0;
@@ -426,8 +419,11 @@ void templateLoading( void ) {
 	positionRegenerated = FALSE;
 	lastRotation = sio2Vec3Init();
 	nowTime = taskStartTime =  [NSDate timeIntervalSinceReferenceDate];
+	
 	for(int k=0 ; k<5 ; k++){
-		backIsUsed[k] = FALSE;
+		backIsUsed[k]  = FALSE;
+		backEnlarge[k] = FALSE;
+		backHoverOn[k] = NULL;
 	}
 	
 	_SIO2material_selection = NULL;
@@ -554,6 +550,7 @@ void templateScreenTouchMove( void *_ptr ) {
 void templateScreenAccelerometer( void *_ptr ){
 	
 }
+
 void templateChangeObjectScale( void *_ptr, float det_scale) {
 	
 	SIO2object *_SIO2object = selection;
@@ -577,6 +574,7 @@ void templateChangeObjectScale( void *_ptr, float det_scale) {
 	
 	
 }
+
 void templateRotateObject( void *_ptr , int rotateDirection, int theDirState ) {
 	
 	rotateDirectionHere = rotateDirection-1;
@@ -708,6 +706,14 @@ void backTouchHandle(void *_ptr, int type, int index, float pt_x, float pt_y) {
 			break;
 		case 3: // Delete a point
 			backIsUsed[index] = FALSE;
+			
+			if(backHoverOn[index])
+			{ //Shrink the obj had been hovered on:
+				backHoverOn[index]->_SIO2transform->scl->x /= 1.10;
+				backHoverOn[index]->_SIO2transform->scl->y /= 1.10;
+				backHoverOn[index]->_SIO2transform->scl->z /= 1.10;
+				backHoverOn[index] = NULL;
+			}
 			break;
 	}
 	
