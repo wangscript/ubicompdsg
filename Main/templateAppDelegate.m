@@ -194,6 +194,7 @@
 {
 	logButton.hidden = NO;
 	filename.hidden = NO;
+	[filename becomeFirstResponder];
 }
 
 @end

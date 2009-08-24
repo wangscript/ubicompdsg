@@ -382,7 +382,7 @@ void templateRender( void ) {
 				glClear( GL_COLOR_BUFFER_BIT ); // Clear the color buffer
 				sio2MaterialReset();            // Reset the material states
 				
-				if(sio2->_SIO2window->n_touch != 0) {
+				//if(sio2->_SIO2window->n_touch != 0) {
 					if (GRAB_WITH_BACK_TOUCH) {
 						selection = sio2ResourceSelect3D( sio2->_SIO2resource,
 														 sio2->_SIO2camera,
@@ -395,7 +395,7 @@ void templateRender( void ) {
 														 sio2->_SIO2window,
 														 sio2->_SIO2window->touch[0]);
 					}
-				}
+				//}
 				
 				// Selection
 				for (int a=0 ; a<excludeObjects.size() ; a++ ){
@@ -721,19 +721,19 @@ void templateMoveObject( void *_ptr ,float _detX, float _detY, float _detZ ) {
 	{
 		// Apply a rotation based on the touch movement.
 		SIO2camera *_SIO2camera = ( SIO2camera * )sio2ResourceGet( sio2->_SIO2resource, SIO2_CAMERA,"camera/Camera");
-		float k = sio2Distance(_SIO2camera->_SIO2transform->loc, _SIO2object->_SIO2transform->loc) * 0.00017;
+		float k = sio2Distance(_SIO2camera->_SIO2transform->loc, _SIO2object->_SIO2transform->loc) * 0.00018;
 		
 		// Moving object in Z axis
 		if(fabsf(_detX) > 0.01)
 		{
-			if(_SIO2object->_SIO2transform->loc->z + _detX * k < 100 && _SIO2object->_SIO2transform->loc->z + _detX * k > -100)
+			if(_SIO2object->_SIO2transform->loc->z + _detX * k < 4.5 && _SIO2object->_SIO2transform->loc->z + _detX * k > -4.5)
 	    	{
 				_SIO2object->_SIO2transform->loc->z += _detX * k;
 		    }
      	}
 		if(fabsf(_detY) > 0.01)
 		{
-			if(_SIO2object->_SIO2transform->loc->y + _detY * k < 100 && _SIO2object->_SIO2transform->loc->y + _detY * k > -100)
+			if(_SIO2object->_SIO2transform->loc->y + _detY * k < 6.5 && _SIO2object->_SIO2transform->loc->y + _detY * k > -6.5)
 			{
 				_SIO2object->_SIO2transform->loc->y += _detY * k;
 			}

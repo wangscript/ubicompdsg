@@ -322,7 +322,7 @@
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* templateAppDelegate.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = templateAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* templateAppDelegate.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = templateAppDelegate.m; sourceTree = "<group>"; };
-		1D6058910D05DD3D006BFB54 /* DragHybrid.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DragHybrid.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D6058910D05DD3D006BFB54 /* DragBack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DragBack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		28AD733E0D9D9553002E5188 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 		28FD14FC0DC6FC130079059D /* EAGLView.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = EAGLView.h; sourceTree = "<group>"; };
@@ -947,7 +947,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D6058910D05DD3D006BFB54 /* DragHybrid.app */,
+				1D6058910D05DD3D006BFB54 /* DragBack.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -965,7 +965,7 @@
 				E0E310FA0E5EA54900F6D25F /* vorbis */,
 				E0E310DE0E5EA54900F6D25F /* zlib */,
 				881EE52A1041656500BD9CCF /* data */,
-				88CE4C4E10358A95009CDD6C /* Drag_Hybrid */,
+				88CE4C4E10358A95009CDD6C /* Drag_Back */,
 				29B97315FDCFA39411CA2CEA /* Drag_Main */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
@@ -1029,7 +1029,7 @@
 			path = ../data;
 			sourceTree = "<group>";
 		};
-		88CE4C4E10358A95009CDD6C /* Drag_Hybrid */ = {
+		88CE4C4E10358A95009CDD6C /* Drag_Back */ = {
 			isa = PBXGroup;
 			children = (
 				8D1107310486CEB800E47090 /* Info.plist */,
@@ -1037,7 +1037,7 @@
 				28FD14FC0DC6FC130079059D /* EAGLView.h */,
 				28FD14FD0DC6FC130079059D /* EAGLView.mm */,
 			);
-			name = Drag_Hybrid;
+			name = Drag_Back;
 			sourceTree = "<group>";
 		};
 		E0E310AC0E5EA54900F6D25F /* sio2 */ = {
@@ -1673,9 +1673,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1D6058900D05DD3D006BFB54 /* DragHybrid */ = {
+		1D6058900D05DD3D006BFB54 /* DragBack */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "DragHybrid" */;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "DragBack" */;
 			buildPhases = (
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
@@ -1685,9 +1685,9 @@
 			);
 			dependencies = (
 			);
-			name = DragHybrid;
+			name = DragBack;
 			productName = template;
-			productReference = 1D6058910D05DD3D006BFB54 /* DragHybrid.app */;
+			productReference = 1D6058910D05DD3D006BFB54 /* DragBack.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1695,14 +1695,14 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
-			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Drag_Hybrid" */;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Drag_BackSide" */;
 			compatibilityVersion = "Xcode 3.1";
 			hasScannedForEncodings = 1;
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1D6058900D05DD3D006BFB54 /* DragHybrid */,
+				1D6058900D05DD3D006BFB54 /* DragBack */,
 			);
 		};
 /* End PBXProject section */
@@ -2052,7 +2052,7 @@
 					"-falign-loops=16",
 					"-fvisibility=default",
 				);
-				PRODUCT_NAME = DragHybrid;
+				PRODUCT_NAME = DragBack;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = dynamic;
 			};
@@ -2082,7 +2082,7 @@
 					"-falign-loops=16",
 					"-fvisibility=default",
 				);
-				PRODUCT_NAME = DragHybrid;
+				PRODUCT_NAME = DragBack;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = dynamic;
 			};
@@ -2129,7 +2129,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "DragHybrid" */ = {
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "DragBack" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,
@@ -2138,7 +2138,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Drag_Hybrid" */ = {
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Drag_BackSide" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
