@@ -22,6 +22,7 @@
 		889B3A141030590300204ACA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 889B3A131030590300204ACA /* SystemConfiguration.framework */; };
 		889B3A461030591300204ACA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 889B3A451030591300204ACA /* CoreGraphics.framework */; };
 		88CE4CB91035937A009CDD6C /* Task_Drag.sio2 in Resources */ = {isa = PBXBuildFile; fileRef = 88CE4CB81035937A009CDD6C /* Task_Drag.sio2 */; };
+		88FACB551042D89400CFE225 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 88FACB541042D89400CFE225 /* Icon.png */; };
 		E073A29A100D3660004A0982 /* sio2_camera.cc in Sources */ = {isa = PBXBuildFile; fileRef = E073A255100D3660004A0982 /* sio2_camera.cc */; };
 		E073A29B100D3660004A0982 /* sio2_emitter.cc in Sources */ = {isa = PBXBuildFile; fileRef = E073A258100D3660004A0982 /* sio2_emitter.cc */; };
 		E073A29C100D3660004A0982 /* sio2_font.cc in Sources */ = {isa = PBXBuildFile; fileRef = E073A25A100D3660004A0982 /* sio2_font.cc */; };
@@ -265,7 +266,6 @@
 		E0E313480E5EA54A00F6D25F /* jcdctmgr.c in Sources */ = {isa = PBXBuildFile; fileRef = E0E311B90E5EA54900F6D25F /* jcdctmgr.c */; };
 		E0E313490E5EA54A00F6D25F /* jcapistd.c in Sources */ = {isa = PBXBuildFile; fileRef = E0E311BA0E5EA54900F6D25F /* jcapistd.c */; };
 		E0E3134A0E5EA54A00F6D25F /* jcapimin.c in Sources */ = {isa = PBXBuildFile; fileRef = E0E311BB0E5EA54900F6D25F /* jcapimin.c */; };
-		E0E313F60E5EA78B00F6D25F /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E0E313F40E5EA78B00F6D25F /* Icon.png */; };
 		E0E313F70E5EA78B00F6D25F /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = E0E313F50E5EA78B00F6D25F /* Default.png */; };
 		E0F6ABBB0F23FFF100DA0338 /* png.c in Sources */ = {isa = PBXBuildFile; fileRef = E0F6ABA80F23FFF100DA0338 /* png.c */; };
 		E0F6ABBC0F23FFF100DA0338 /* pngerror.c in Sources */ = {isa = PBXBuildFile; fileRef = E0F6ABAB0F23FFF100DA0338 /* pngerror.c */; };
@@ -341,6 +341,7 @@
 		889B3A131030590300204ACA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		889B3A451030591300204ACA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		88CE4CB81035937A009CDD6C /* Task_Drag.sio2 */ = {isa = PBXFileReference; lastKnownFileType = file; name = Task_Drag.sio2; path = ../data/Task_Drag.sio2; sourceTree = SOURCE_ROOT; };
+		88FACB541042D89400CFE225 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E073A254100D3660004A0982 /* sio2_action.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = sio2_action.h; path = ../src/sio2/sio2_action.h; sourceTree = SOURCE_ROOT; };
 		E073A255100D3660004A0982 /* sio2_camera.cc */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = sio2_camera.cc; path = ../src/sio2/sio2_camera.cc; sourceTree = SOURCE_ROOT; };
@@ -847,7 +848,6 @@
 		E0E311B90E5EA54900F6D25F /* jcdctmgr.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; name = jcdctmgr.c; path = ../src/jpeg/jcdctmgr.c; sourceTree = SOURCE_ROOT; };
 		E0E311BA0E5EA54900F6D25F /* jcapistd.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; name = jcapistd.c; path = ../src/jpeg/jcapistd.c; sourceTree = SOURCE_ROOT; };
 		E0E311BB0E5EA54900F6D25F /* jcapimin.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; name = jcapimin.c; path = ../src/jpeg/jcapimin.c; sourceTree = SOURCE_ROOT; };
-		E0E313F40E5EA78B00F6D25F /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		E0E313F50E5EA78B00F6D25F /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		E0F6ABA80F23FFF100DA0338 /* png.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = png.c; path = ../src/png/png.c; sourceTree = SOURCE_ROOT; };
 		E0F6ABA90F23FFF100DA0338 /* png.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = png.h; path = ../src/png/png.h; sourceTree = SOURCE_ROOT; };
@@ -976,6 +976,7 @@
 		29B97315FDCFA39411CA2CEA /* Drag_Main */ = {
 			isa = PBXGroup;
 			children = (
+				88FACB541042D89400CFE225 /* Icon.png */,
 				E0E310880E5EA40200F6D25F /* template.mm */,
 				E0E310870E5EA40200F6D25F /* template.h */,
 			);
@@ -1011,7 +1012,6 @@
 				1D3623250D0F684500981E51 /* templateAppDelegate.m */,
 				29B97316FDCFA39411CA2CEA /* main.mm */,
 				E0E310860E5EA3C300F6D25F /* main.h */,
-				E0E313F40E5EA78B00F6D25F /* Icon.png */,
 				E0E313F50E5EA78B00F6D25F /* Default.png */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
 			);
@@ -1713,10 +1713,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
-				E0E313F60E5EA78B00F6D25F /* Icon.png in Resources */,
 				E0E313F70E5EA78B00F6D25F /* Default.png in Resources */,
 				88CE4CB91035937A009CDD6C /* Task_Drag.sio2 in Resources */,
 				881EECB41041666E00BD9CCF /* default16x16.tga in Resources */,
+				88FACB551042D89400CFE225 /* Icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
