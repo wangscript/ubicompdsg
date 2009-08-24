@@ -412,6 +412,8 @@ BOOL isDebug = YES;
 									 0			  // useless
 									 );
 		fingersOnBack = TRUE;
+		
+		[self dragBegan: point];
 	}
 	
 	TouchPoint *tp1, *tp2, *tp3, *tp4;
@@ -607,7 +609,7 @@ BOOL isDebug = YES;
 		[self cameraDiveBegan:tp1._point andPoint:tp2._point];
 	}
 	*/
-	
+	/*
 	// Algmented Part for DRAG: ----------------------------------------------------------------------
 	if( !dragState && newestDragFrontIdx[0]<5 && newestDragBackIdx[0]<5) {
 		tp1 = [self.frontLoc objectAtIndex: newestDragFrontIdx[0]];
@@ -626,7 +628,7 @@ BOOL isDebug = YES;
 			//_StrtSystemTime = time(NULL);
 		}	
 	}
-	
+	*/
 	return index;
 }
 
@@ -666,36 +668,9 @@ BOOL isDebug = YES;
 	{
 		tp1 = [self.frontLoc objectAtIndex: dragPairIdx[0]];
 		tp2 = [self.backLoc  objectAtIndex: dragPairIdx[1]];
-		
-//		if ( tp2._point.x < tp1._point.x + DRAG_MOVING_LIMIT && tp2._point.x > tp1._point.x - DRAG_MOVING_LIMIT && 
-//			 tp2._point.y < tp1._point.y + DRAG_MOVING_LIMIT && tp2._point.y > tp1._point.y - DRAG_MOVING_LIMIT ) {
-			
-			//分別Drag和Flip: 當Drag一段距離後就把_FlipState reset:
-			if(flipState){
-				double v1_X = tp1._point.x - dragStartPts[0].x;
-				double v1_Y = tp1._point.y - dragStartPts[0].y;
-				double v2_X = tp2._point.x - dragStartPts[1].x;
-				double v2_Y = tp2._point.y - dragStartPts[1].y;
-				
-				if (sqrt((v1_X*v1_X)+(v1_Y*v1_Y)) + sqrt((v2_X*v2_X)+(v2_Y*v2_Y)) > CANCEL_LENGTH ){
-					
-					if ( (v1_X*v2_X + v1_Y*v2_Y)/( sqrt( (v1_X*v1_X)+(v1_Y*v1_Y) )*sqrt( (v2_X*v2_X)+(v2_Y*v2_Y) ) ) > 0 ) 
-					{ 
-						[self flipEnded];
-					}
-					
-				}
-				
-				else [self dragMoved:tp2._point];
-
-			}
-			
-			else [self dragMoved:tp2._point];
-
-//		}
-		
-//		else [self dragEnded];
-	}	
+		[self dragMoved:tp2._point];
+	}
+	/*
 	// Algmented Part for FLIP: ----------------------------------------------------------------------------------------------
 	if(flipState)
 	{
@@ -736,6 +711,7 @@ BOOL isDebug = YES;
 			[self flipMoved:tp1._point];
 		}
 	}
+	
 	// Algmented Part for STRETCH: -------------------------------------------------------------------------------------------
 	if(strtState && !isStrtHalt)
 	{//NOTE: 判斷stretch的move只需要判斷正面的那兩點
@@ -770,7 +746,7 @@ BOOL isDebug = YES;
 		tp2 = [self.frontLoc objectAtIndex: cameraDiveIdx[1]];
 		[self cameraDiveMoved: tp1._point andPoint: tp2._point];
 	}
-	
+	*/
 
 	return i;
 }
