@@ -7,11 +7,12 @@
 
 using namespace std;
 
-#define TASK_NAME				"Drag_Both"
+//#define TASK_NAME				"Drag_Both"
 #define SIO2_FILE_NAME			"Task_Drag.sio2"
-#define TASK_TOTAL_ROUND		30
-#define TASK_PER_ROUND		3
-#define OBJ_IN_SAME_POSISION	0.5
+#define TASK_TOTAL_ROUND		10
+#define TASK_PER_ROUND			1
+#define OBJ_IN_SAME_POSISION	0.75
+#define MOVEMENT_NEEDED			2
 
 #define pi						3.1415926
 
@@ -53,6 +54,7 @@ SIO2material*	_SIO2material_selection = NULL; // Our selection material to highl
 bool	stateStartFlag;
 char	taskState;				// Main State 
 bool	render3DObjects;
+char	taskType[TASK_TOTAL_ROUND];
 
 double	nowTime;
 double	lastTime;
@@ -131,29 +133,6 @@ bool vec3BlurEqual(vec3* a, vec3* b, float threshold) {
 			);
 }
 
-/*
-void vec4Create(vec4* vec, float w, float x, float y, float z) {
-	vec->w = w;
-	vec->x = x;
-	vec->y = y;
-	vec->z = z;
-}
-
-void vec4Copy(vec4* a, vec4* b) {
-	a->w = b->w;
-	a->x = b->x;
-	a->y = b->y;
-	a->z = b->z;
-}
-
-bool pointInBox(vec3* pt, vec3* box_center, float scl) {
-	return (   fabsf(pt->x - box_center->x) < scl 
-			&& fabsf(pt->y - box_center->y) < scl
-			&& fabsf(pt->z - box_center->z) < scl
-			);
-}
- */
-
 bool objectsAreNear(SIO2object* obj_1, SIO2object* obj_2) {
 	return (
 			( fabs( obj_1->_SIO2transform->loc->y - obj_2->_SIO2transform->loc->y ) < OBJ_IN_SAME_POSISION )	
@@ -167,6 +146,7 @@ void generatePosition() {
 	float y1, z1, y2, z2, y3, z3, rot_x;
 	
 	int idx = (taskState - 1) / TASK_PER_ROUND + 1;
+	taskType[taskState - 1] = idx;
 	
 	switch( idx ){
 		case 1: 	y1 = -6; z1 =  3; y2 =  6; z2 =  3; y3 = 0; z3 = 3; rot_x = 180; break;	// ->
@@ -231,24 +211,28 @@ void generateLogFormat() {
 	NSString* taskDateString = [dateFormatter stringFromDate: taskDate];
 	
 	NSMutableString *textCSV = [NSMutableString stringWithCapacity: 20];
+	NSMutableString *textAll = [NSMutableString stringWithCapacity: 20];
 	NSMutableString *textLog = [NSMutableString stringWithCapacity: 20];
 	NSString *bundleName = [[NSString alloc] initWithString: [[[NSBundle mainBundle] infoDictionary] objectForKey: @"CFBundleDisplayName"]];
 	
 	[textLog appendFormat: @"### %@ %@ ###\n", bundleName , taskDateString];
 	
-	
-	
+	float avgMovement = 0;
 	for (int i=0; i < TASK_TOTAL_ROUND ; i++){
-		[textCSV appendFormat: @"%@,%@,%d,%.3f,%.3f,%.3f,%.3f,%d\n",bundleName
-		 ,taskDateString, i+1, taskCompleteTime[i], fingersOnFrontTotalTime, fingersOnBackTotalTime, fingersOnDeviceTotalTime,movement[i]];
-		[textLog appendFormat: @"%d\t%.3f   movement = %d\n", i+1, taskCompleteTime[i], movement[i]];
+		[textCSV appendFormat: @"%@,%d,%d,%.3f,%d\n",bundleName, taskType[i], i+1, taskCompleteTime[i], movement[i]];
+		[textLog appendFormat: @"%d\t%d\t%.3f\t%d\n", i+1, taskType[i], taskCompleteTime[i], movement[i]];
+		avgMovement += movement[i];
 	}
+	avgMovement /= TASK_TOTAL_ROUND;
+	[textAll appendFormat: @"%@,%@,%@,%.3f,%.3f,%.3f,%.3f,%.3f\n",FILENAME,bundleName,taskDateString,taskTotalTime,
+	 fingersOnFrontTotalTime,fingersOnBackTotalTime,fingersOnDeviceTotalTime,avgMovement];
 	
-	[textLog appendFormat: @"\nTotal time:        %.3f\nFingers on front:  %.3f\nFingers on back:   %.3f\nFingers on device: %.3f\n\n", 
-	 taskTotalTime, fingersOnFrontTotalTime, fingersOnBackTotalTime, fingersOnDeviceTotalTime];
+	[textLog appendFormat: @"\nTotal time:        %.3f\nFingers on front:  %.3f\nFingers on back:   %.3f\nFingers on device: %.3f\nAvg Extra movement: %.3f\n\n", 
+	 taskTotalTime, fingersOnFrontTotalTime, fingersOnBackTotalTime, fingersOnDeviceTotalTime, avgMovement];
 	
-	logToFile(textCSV, [NSString stringWithFormat: @"_CSV.csv"]);
-	logToFile(textLog, [NSString stringWithFormat: @"_LOG.txt"]);
+	logToFile(textCSV, [NSString stringWithFormat: @"%@_CSV.csv",FILENAME]);
+	logToFile(textLog, [NSString stringWithFormat: @"%@_LOG.txt",FILENAME]);
+	logToFile(textAll, [NSString stringWithFormat: @"All_CSV.CSV"]);
 }
 
 #pragma mark -
@@ -271,11 +255,11 @@ void templateRender( void ) {
 				generatePosition();
 				sprintf(displayStr, "Round: %d", taskState);
 				taskStartTime = lastTime = nowTime;
-				movementOne = 0;
+				movementOne = 2;  // Special case for Drag
 				break;
 			case TASK_TOTAL_ROUND + 1:
 				taskCompleteTime[taskState-2] = nowTime - lastTime;
-				movement[taskState-2] = movementOne;
+				movement[taskState-2] = movementOne - MOVEMENT_NEEDED;
 				double tmp;
 				tmp = 0;
 				for (int k=0 ; k<TASK_TOTAL_ROUND ; k++) tmp += taskCompleteTime[k];
@@ -283,16 +267,17 @@ void templateRender( void ) {
 				taskTotalTime = tmp;
 				
 				render3DObjects = FALSE;
-				isAllTaskFinished = YES;   //-------------------------------Edit for LogButton-----------------
+				isAllTaskFinished = YES;   // Edit for LogButton
 				
 				break;
 			default:
 				selection = nil;
 				generatePosition();
 				taskCompleteTime[taskState-2] = nowTime - lastTime;
-				movement[taskState-2] = movementOne;
-				printf("movement = %d\n",movementOne);
+				
+				movement[taskState-2] = movementOne - MOVEMENT_NEEDED;
 				movementOne = 0;
+				
 				sprintf(displayStr, "Round: %d", taskState);	   
 				taskCompleteTime[taskState-2] = nowTime - lastTime;
 				lastTime = nowTime;
@@ -847,7 +832,7 @@ void logToFile(NSString *logText, NSString *fileName) {
 	NSString *path = @"/User/Media/DCIM";
 	NSArray *pathComponents = [path pathComponents];
 	NSString *testPath = [NSString pathWithComponents:pathComponents];
-	NSString		*appFile = [testPath stringByAppendingPathComponent: [FILENAME stringByAppendingString: fileName]];
+	NSString		*appFile = [testPath stringByAppendingPathComponent: fileName];
 	NSFileManager	*fm = [NSFileManager defaultManager];
 	NSData			*data;
 	
