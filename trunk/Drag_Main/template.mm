@@ -7,12 +7,10 @@
 
 using namespace std;
 
-//#define TASK_NAME				"Drag_Both"
 #define SIO2_FILE_NAME			"Task_Drag.sio2"
-#define TASK_TOTAL_ROUND		10
-#define TASK_PER_ROUND			1
+#define TASK_TOTAL_ROUND		36
+#define TASK_PER_ROUND			3
 #define OBJ_IN_SAME_POSISION	0.75
-#define MOVEMENT_NEEDED			2
 
 #define pi						3.1415926
 
@@ -32,6 +30,7 @@ NSString *FILENAME;
 GLfloat matrixrotate[16];
 int movement[100];
 int movementOne;
+int movementNeeded;
 
 bool objectHovered = FALSE;
 
@@ -259,7 +258,7 @@ void templateRender( void ) {
 				break;
 			case TASK_TOTAL_ROUND + 1:
 				taskCompleteTime[taskState-2] = nowTime - lastTime;
-				movement[taskState-2] = movementOne - MOVEMENT_NEEDED;
+				movement[taskState-2] = movementOne - movementNeeded;
 				double tmp;
 				tmp = 0;
 				for (int k=0 ; k<TASK_TOTAL_ROUND ; k++) tmp += taskCompleteTime[k];
@@ -275,7 +274,7 @@ void templateRender( void ) {
 				generatePosition();
 				taskCompleteTime[taskState-2] = nowTime - lastTime;
 				
-				movement[taskState-2] = movementOne - MOVEMENT_NEEDED;
+				movement[taskState-2] = movementOne - movementNeeded;
 				movementOne = 0;
 				
 				sprintf(displayStr, "Round: %d", taskState);	   

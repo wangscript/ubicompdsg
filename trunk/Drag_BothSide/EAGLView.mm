@@ -63,7 +63,7 @@ extern GLfloat matrixrotate[16];
 //
 extern int movement[100];
 extern int movementOne;
-
+extern int movementNeeded;
 
 @implementation TouchPoint
 
@@ -183,6 +183,8 @@ BOOL isDebug = YES;
 		isRotateEnded   = YES;
 		oldIsRotateEnded = YES;
 		//-------------------------------------------------------------------
+		
+		movementNeeded = 2;
 	
 	}
 	
