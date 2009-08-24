@@ -276,8 +276,8 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>4</integer>
-									<integer>2</integer>
+									<integer>18</integer>
+									<integer>15</integer>
 									<integer>0</integer>
 								</array>
 							</array>
@@ -312,14 +312,12 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>AppController.m</string>
+								<string>Info.plist</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -327,18 +325,19 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>AppController.m</string>
+										<string>Info.plist</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>885CF87F103821E2003FC06D</string>
+										<string>8873994A104293AD000973CB</string>
 										<key>history</key>
 										<array>
 											<string>885CF875103821E2003FC06D</string>
-											<string>885CF876103821E2003FC06D</string>
 											<string>885CF877103821E2003FC06D</string>
-											<string>885CF878103821E2003FC06D</string>
-											<string>885CF879103821E2003FC06D</string>
+											<string>88D356781042767500B057CA</string>
+											<string>88D356791042767500B057CA</string>
+											<string>88D356C51042869800B057CA</string>
+											<string>88D356C81042869800B057CA</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -404,9 +403,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>885CF880103821E2003FC06D</string>
+				<string>88739942104293AD000973CB</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>885CF881103821E2003FC06D</string>
+				<string>88739943104293AD000973CB</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -540,12 +539,8 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>885CF882103821E2003FC06D</string>
-		<string>885CF883103821E2003FC06D</string>
-		<string>1C78EAAD065D492600B07095</string>
 		<string>1CD10A99069EF8BA00B06720</string>
-		<string>8877E1F810340942006BE189</string>
-		<string>/Users/imac/Desktop/NewDSG/BackSide/BackSide.xcodeproj</string>
+		<string>/Users/imac/Desktop/DSG_SVN/BackSide/BackSide.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
 	<string>232 207 1294 724 0 0 1680 1028 </string>
@@ -569,7 +564,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>Multitouch.m</string>
+								<string></string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -586,8 +581,6 @@
 							<string>323pt</string>
 						</dict>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -627,7 +620,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>8877E1F810340942006BE189</string>
-				<string>885CF86A1038212C003FC06D</string>
+				<string>88D356BD1042869400B057CA</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -669,8 +662,8 @@
 										<string>yes</string>
 										<key>sizes</key>
 										<array>
-											<string>{{0, 0}, {316, 194}}</string>
-											<string>{{316, 0}, {378, 194}}</string>
+											<string>{{0, 0}, {316, 201}}</string>
+											<string>{{316, 0}, {378, 201}}</string>
 										</array>
 									</dict>
 									<key>VerticalSplitView</key>
@@ -685,8 +678,8 @@
 										<string>yes</string>
 										<key>sizes</key>
 										<array>
-											<string>{{0, 0}, {694, 194}}</string>
-											<string>{{0, 194}, {694, 187}}</string>
+											<string>{{0, 0}, {694, 201}}</string>
+											<string>{{0, 201}, {694, 180}}</string>
 										</array>
 									</dict>
 								</dict>
@@ -719,7 +712,7 @@
 										<real>148</real>
 									</array>
 									<key>Frame</key>
-									<string>{{316, 0}, {378, 194}}</string>
+									<string>{{316, 0}, {378, 201}}</string>
 									<key>RubberWindowFrame</key>
 									<string>253 486 694 422 0 0 1680 1028 </string>
 								</dict>
@@ -747,13 +740,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1CD10A99069EF8BA00B06720</string>
-				<string>885CF86B1038212C003FC06D</string>
+				<string>88739944104293AD000973CB</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>885CF86C1038212C003FC06D</string>
-				<string>885CF86D1038212C003FC06D</string>
-				<string>885CF86E1038212C003FC06D</string>
-				<string>885CF86F1038212C003FC06D</string>
-				<string>885CF8701038212C003FC06D</string>
+				<string>88739945104293AD000973CB</string>
+				<string>88739946104293AD000973CB</string>
+				<string>88739947104293AD000973CB</string>
+				<string>88739948104293AD000973CB</string>
+				<string>88739949104293AD000973CB</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -880,6 +873,8 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -915,7 +910,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C78EAAD065D492600B07095</string>
-				<string>885CF8711038212C003FC06D</string>
+				<string>88D356C41042869400B057CA</string>
 				<string>1C78EAAC065D492600B07095</string>
 			</array>
 			<key>ToolbarConfiguration</key>
