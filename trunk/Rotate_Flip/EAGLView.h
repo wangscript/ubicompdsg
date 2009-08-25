@@ -152,5 +152,6 @@ Note that setting the view non-opaque will only work if the EAGL surface has an 
 - (void) decreaseTheDirectionState;
 
 - (void) logButtonPredded:(id) sender;
+- (void) startButtonPredded:(id) sender;
 
 @end
