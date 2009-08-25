@@ -43,6 +43,8 @@ BOOL strtDebug = YES;
 
 #pragma mark -
 extern NSString *FILENAME;
+extern int taskState;
+extern bool positionRegenerated;
 
 extern NSMutableArray	*gestureSequence;
 extern bool				fingersOnFront;
@@ -366,7 +368,6 @@ BOOL isDebug = YES;
 
 - (int)myTouchBegan:(UITouch*)touch andPoint:(CGPoint)point andFront:(BOOL)isFront andNum:(int)num {// TODO:
 	int index;
-	
 	
 	movementOne++;
 	
@@ -1051,5 +1052,19 @@ static int _degree_counter = 0; // Counter for rotate 90 degree
 	FILENAME = [[NSString alloc] initWithString:[appdel.filename text]];
 	NSLog(FILENAME);
 }
+
+
+- (void) startButtonPredded:(id) sender
+{
+	printf("Start Button!\n");
+	positionRegenerated = FALSE;
+	taskState = 1;
+	/*templateAppDelegate* appdel = (templateAppDelegate*)[[UIApplication sharedApplication] delegate];
+	IBOutlet UIButton *button = appdel.startButton;
+	button.hidden = YES;*/
+	[(templateAppDelegate*)[[UIApplication sharedApplication] delegate] hidStartButton ];
+	
+}
+
 
 @end
