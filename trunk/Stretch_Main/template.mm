@@ -7,10 +7,10 @@
 
 using namespace std;
 
-#define SIO2_FILE_NAME			"Task_Drag.sio2"
-#define TASK_TOTAL_ROUND		36
-#define TASK_PER_ROUND			3
-#define OBJ_IN_SAME_POSISION	0.75
+#define SIO2_FILE_NAME			"Task_Stretch.sio2"
+#define TASK_TOTAL_ROUND		10
+#define TASK_PER_ROUND			5
+#define OBJ_IN_SAME_SIZE		0.1
 
 #define pi						3.1415926
 
@@ -61,12 +61,19 @@ double	taskStartTime;
 double	taskTotalTime;
 double	taskCompleteTime[TASK_TOTAL_ROUND];
 
+// Visual Feedback: -------------------------
 bool	backIsUsed[5];
 vec2	backTouchPoint[5];
+SIO2object*		backHoverOn[5];
+int				cameraPosition;
+vector<SIO2object*> frontVisual;
+vector<SIO2object*> backVisual;
+// ------------------------------------------
 
 char	displayStr[ SIO2_MAX_CHAR ] = {""};
 
 vector<SIO2object*> excludeObjects;   // Objects cannot be selected
+
 
 vec2	startLoc1;
 vec2	startLoc2;
@@ -98,8 +105,8 @@ NSDate	*taskDate = [NSDate date];
 // ============= Private variable for this task project ============= //
 
 SIO2object *objectSelect;
+SIO2object *objectSelect2;
 SIO2object *objectEnd;
-SIO2object *objectArrow;
 
 
 vec3		*cameraOrignalPos;
@@ -132,46 +139,43 @@ bool vec3BlurEqual(vec3* a, vec3* b, float threshold) {
 			);
 }
 
-bool objectsAreNear(SIO2object* obj_1, SIO2object* obj_2) {
+bool objectsAreInSameSize(SIO2object* obj_1, SIO2object* obj_2) {
 	return (
-			( fabs( obj_1->_SIO2transform->loc->y - obj_2->_SIO2transform->loc->y ) < OBJ_IN_SAME_POSISION )	
-			&&  ( fabs( obj_1->_SIO2transform->loc->y - obj_2->_SIO2transform->loc->y ) < OBJ_IN_SAME_POSISION )
-			&&	( fabs( obj_1->_SIO2transform->loc->z - obj_2->_SIO2transform->loc->z ) < OBJ_IN_SAME_POSISION )
+			( fabs( obj_1->_SIO2transform->scl->x - obj_2->_SIO2transform->scl->x ) < OBJ_IN_SAME_SIZE )	
+			&&  ( fabs( obj_1->_SIO2transform->scl->y - obj_2->_SIO2transform->scl->y ) < OBJ_IN_SAME_SIZE )
+			&&	( fabs( obj_1->_SIO2transform->scl->z - obj_2->_SIO2transform->scl->z ) < OBJ_IN_SAME_SIZE )
+			);
+}
+
+bool pointInBox(vec3* pt, vec3* box_center, float scl) {
+	return (   fabsf(pt->x - box_center->x) < scl 
+			&& fabsf(pt->y - box_center->y) < scl
+			&& fabsf(pt->z - box_center->z) < scl
 			);
 }
 
 void generatePosition() {
 	
-	float y1, z1, y2, z2, y3, z3, rot_x;
+	float x1, x2, s1, s2, s3;  // 1: Green Cube | 2: Green Cube 2 | 3: Orange Cube;
 	
 	int idx = (taskState - 1) / TASK_PER_ROUND + 1;
 	taskType[taskState - 1] = idx;
 	
 	switch( idx ){
-		case 1: 	y1 = -6; z1 =  3; y2 =  6; z2 =  3; y3 = 0; z3 = 3; rot_x = 180; break;	// ->
-		case 2: 	y1 = -6; z1 = -3; y2 =  6; z2 = -3; y3 = 0; z3 = -3; rot_x = 180; break;	// ->
-		case 3: 	y1 =  6; z1 =  3; y2 = -6; z2 =  3; y3 = 0; z3 = 3; rot_x = 0; break;	// <-
-		case 4: 	y1 =  6; z1 = -3; y2 = -6; z2 = -3; y3 = 0; z3 = -3; rot_x = 0; break;	// <-
-		case 5: 	y1 = -6; z1 =  3; y2 = -6; z2 = -3; y3 = -6; z3 = 0; rot_x = 270; break;	// V
-		case 6: 	y1 =  6; z1 =  3; y2 =  6; z2 = -3; y3 = 6; z3 = 0; rot_x = 270; break;	// V
-		case 7: 	y1 = -6; z1 = -3; y2 = -6; z2 =  3; y3 = -6; z3 = 0; rot_x = 90; break;	// ^
-		case 8: 	y1 =  6; z1 = -3; y2 =  6; z2 =  3; y3 = 6; z3 = 0; rot_x = 90; break;	// ^
-		case 9: 	y1 = -6; z1 =  3; y2 =  6; z2 = -3; y3 = 0; z3 = 0; rot_x = 210; break;	// >V
-		case 10:	y1 =  6; z1 = -3; y2 = -6; z2 =  3; y3 = 0; z3 = 0; rot_x = 30; break;	// <^
-		case 11:	y1 =  6; z1 =  3; y2 = -6; z2 = -3; y3 = 0; z3 = 0; rot_x = 330; break;	// <V
-		case 12:	y1 = -6; z1 = -3; y2 =  6; z2 =  3; y3 = 0; z3 = 0; rot_x = 150; break;	// >^
+		case 1: x1 = 0; x2 = 20; s1 = 1; s2 = 1; s3 = 2; break;
+		case 2: x1 = 20; x2 = 0; s1 = 1; s2 = 2; s3 = 1; break;
+
 		default: break;
 	}
-	
-	vec3CopyFromFloat(objectSelect->_SIO2transform->loc, 0, y1, z1);
-	vec3CopyFromFloat(objectEnd->_SIO2transform->loc, 0, y2, z2);
-	vec3CopyFromFloat(objectArrow->_SIO2transform->loc, 0, y3, z3);
-	objectArrow->_SIO2transform->rot->y = rot_x;
+	objectSelect->_SIO2transform->loc->x = x1;
+	objectSelect2->_SIO2transform->loc->x = x2;
+	vec3CopyFromFloat(objectSelect->_SIO2transform->scl, s1, s1, s1);
+	vec3CopyFromFloat(objectSelect2->_SIO2transform->scl, s2, s2, s2);
+	vec3CopyFromFloat(objectEnd->_SIO2transform->scl, s3, s3, s3);
 
 	sio2TransformBindMatrix( objectSelect->_SIO2transform );
-	sio2TransformBindMatrix( objectEnd->_SIO2transform );
-	sio2TransformBindMatrix( objectArrow->_SIO2transform );
-	
+	sio2TransformBindMatrix( objectSelect2->_SIO2transform );
+	sio2TransformBindMatrix( objectEnd->_SIO2transform );	
 }
 /*
 void recordGestureSequence() {
@@ -316,10 +320,19 @@ void templateRender( void ) {
 				//------------------------------------------------------------------------------
 				break;
 			default:
-				if (objectsAreNear( objectSelect, objectEnd )){
-					stateStartFlag = TRUE;
-					taskState ++;
+				if (taskType[taskState - 1] == 1) {
+					if (objectsAreInSameSize( objectSelect, objectEnd )){
+						stateStartFlag = TRUE;
+						taskState ++;
+					}
 				}
+				else{
+					if (objectsAreInSameSize( objectSelect2, objectEnd )){
+						stateStartFlag = TRUE;
+						taskState ++;
+					}
+				}
+
 				break; 
 		
 		}
@@ -375,6 +388,10 @@ void templateRender( void ) {
 		sio2WindowEnterLandscape3D();
 		if ( render3DObjects ){
 			sio2CameraRender( _SIO2camera );
+
+			// Rendering objects:
+			glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT );
+			
 			if ( tap_select ) {
 				tap_select = 0;
 				
@@ -383,10 +400,12 @@ void templateRender( void ) {
 				
 				//if(sio2->_SIO2window->n_touch != 0) {
 					if (GRAB_WITH_BACK_TOUCH) {
+						
 						selection = sio2ResourceSelect3D( sio2->_SIO2resource,
 														 sio2->_SIO2camera,
 														 sio2->_SIO2window,
 														 selectionPosition);
+						printf("test select selection = %d\n",selection);
 					}
 					else {
 						selection = sio2ResourceSelect3D( sio2->_SIO2resource,
@@ -395,8 +414,16 @@ void templateRender( void ) {
 														 sio2->_SIO2window->touch[0]);
 					}
 				//}
-				
-				// Selection
+
+				// 重疊處理
+				if (selection == objectEnd) {
+					if (pointInBox(objectSelect->_SIO2transform->loc, objectEnd->_SIO2transform->loc, objectEnd->_SIO2transform->scl->x))
+						selection = objectSelect;
+					else if (objectSelect->_SIO2transform->loc->x + objectSelect->_SIO2transform->scl->x < objectEnd->_SIO2transform->loc->x - objectSelect->_SIO2transform->scl->x)
+						selection = objectSelect;
+				}
+
+				// Selection 例外處理：不能select的物件
 				for (int a=0 ; a<excludeObjects.size() ; a++ ){
 					if ( selection == excludeObjects[a] ) {
 						selection = nil;
@@ -405,7 +432,6 @@ void templateRender( void ) {
 				}
 			}
 			
-			glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT );
 			sio2CameraUpdateFrustum( sio2->_SIO2camera );
 			sio2ResourceCull( sio2->_SIO2resource, sio2->_SIO2camera );		
 			sio2ResourceRender( sio2->_SIO2resource,
@@ -413,11 +439,16 @@ void templateRender( void ) {
 							   sio2->_SIO2camera,
 							   SIO2_RENDER_SOLID_OBJECT );
 			
+			if (taskType[taskState - 1] == 2){
+				sio2ResourceRender( sio2->_SIO2resource, sio2->_SIO2window, 
+								   sio2->_SIO2camera, SIO2_RENDER_TRANSPARENT_OBJECT );
+			}
+			
 			if( selection )	{				
 				if( !_SIO2material_selection )
 				{
-					// Initialize the material
-					_SIO2material_selection = sio2MaterialInit( "selection" );
+					//Initialize the material:
+					_SIO2material_selection = sio2MaterialInit("selection");
 					
 					// Initialize some component of the color
 					_SIO2material_selection->diffuse->z = 0.0f;
@@ -425,7 +456,7 @@ void templateRender( void ) {
 					
 					// Change the blending mode
 					_SIO2material_selection->blend = SIO2_MATERIAL_COLOR;
-				}		
+				}
 				
 				// Set to red
 				_SIO2material_selection->diffuse->x = 1.0f;
@@ -433,15 +464,17 @@ void templateRender( void ) {
 				
 				// Render the material
 				sio2MaterialRender( _SIO2material_selection );
-
+				
 				sio2ObjectRender( selection, sio2->_SIO2window, sio2->_SIO2camera, 0, SIO2_TRANSFORM_MATRIX_BIND );
-
 			}
-		
+			
+			if (taskState == 0 || taskType[taskState - 1] == 1){
+				sio2ResourceRender( sio2->_SIO2resource, sio2->_SIO2window, 
+								   sio2->_SIO2camera, SIO2_RENDER_TRANSPARENT_OBJECT );
+			}
+
 			sio2ObjectReset();
-			
 			sio2MaterialReset();
-			
 		}
 		sio2WindowLeaveLandscape3D();
 		
@@ -496,8 +529,6 @@ void templateRender( void ) {
 
 					sio2FontReset();
 					sio2MaterialReset();
-					
-					sio2WindowDebugTouch( sio2->_SIO2window );
 				}
 				sio2WindowLeaveLandscape2D( sio2->_SIO2window );
 			}
@@ -559,9 +590,15 @@ void templateLoading( void ) {
 	stateStartFlag = FALSE;
 	render3DObjects = TRUE;
 	nowTime = taskStartTime =  [NSDate timeIntervalSinceReferenceDate];
-	for(int k=0	 ; k<5 ; k++){
-		backIsUsed[k] = FALSE;
+	
+	//Initialization for visual feedback: -------------------------- 
+	for(int k=0 ; k<5 ; k++){
+		backIsUsed[k]  = FALSE;
+		backHoverOn[k] = NULL;
+		
 	}
+	//---------------------------------------------------------------
+	
 	
 	gestureSequence = [[NSMutableArray alloc] init];
 	
@@ -589,13 +626,12 @@ void templateLoading( void ) {
 	
 	sio2ResourceGenId( sio2->_SIO2resource );
 	
-	objectSelect = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Moveable" );
-	objectEnd    = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/End" );
-	objectArrow  = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Arrow" );
+	objectSelect  = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Cube" );
+	objectSelect2 = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/FCube" );
+	objectEnd     = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/End" );
 	
 	excludeObjects.push_back( objectEnd );
-	excludeObjects.push_back( objectArrow );
-
+	
 	sio2->_SIO2window->_SIO2windowrender = templateRender;
 }
 
@@ -667,8 +703,8 @@ void templateChangeObjectScale( void *_ptr, float det_scale) {
 			_SIO2object->_SIO2transform->scl->z += det_scale;
 		}
 		
-		//sio2TransformBindMatrix( _SIO2object->_SIO2transform  );
-		sio2TransformBindMatrix2(_SIO2object->_SIO2transform,matrixrotate,-1.0f,0.0f,0.0f , 2);
+		sio2TransformBindMatrix( _SIO2object->_SIO2transform  );
+		//sio2TransformBindMatrix2(_SIO2object->_SIO2transform,matrixrotate,-1.0f,0.0f,0.0f , 2);
 	}
 	
 	
