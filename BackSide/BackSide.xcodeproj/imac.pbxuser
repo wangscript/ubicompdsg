@@ -1,19 +1,19 @@
 // !$*UTF8*$!
 {
-	1D6058900D05DD3D006BFB54 /* WiTap */ = {
+	1D6058900D05DD3D006BFB54 /* BackSide */ = {
 		activeExec = 0;
 		executables = (
-			88CCA58B1035671F00A58F2D /* WiTap */,
+			88CCA58B1035671F00A58F2D /* BackSide */,
 		);
 	};
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
 		activeBuildConfigurationName = Debug;
-		activeExecutable = 88CCA58B1035671F00A58F2D /* WiTap */;
+		activeExecutable = 88CCA58B1035671F00A58F2D /* BackSide */;
 		activeSDKPreference = iphoneos2.2.1;
-		activeTarget = 1D6058900D05DD3D006BFB54 /* WiTap */;
+		activeTarget = 1D6058900D05DD3D006BFB54 /* BackSide */;
 		codeSenseManager = 88CCA5A41035673300A58F2D /* Code sense */;
 		executables = (
-			88CCA58B1035671F00A58F2D /* WiTap */,
+			88CCA58B1035671F00A58F2D /* BackSide */,
 		);
 		perUserDictionary = {
 			PBXConfiguration.PBXFileTableDataSource3.PBXErrorsWarningsDataSource = {
@@ -71,7 +71,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					1193,
+					807,
 					60,
 					20,
 					48,
@@ -88,10 +88,11 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 272798634;
-			PBXWorkspaceStateSaveDate = 272798634;
+			PBXPerProjectTemplateStateSaveDate = 272881968;
+			PBXWorkspaceStateSaveDate = 272881968;
 		};
 		perUserProjectItems = {
+			883E9AEF1043D90D00281044 /* PlistBookmark */ = 883E9AEF1043D90D00281044 /* PlistBookmark */;
 			885CF875103821E2003FC06D /* PBXTextBookmark */ = 885CF875103821E2003FC06D /* PBXTextBookmark */;
 			885CF877103821E2003FC06D /* PBXTextBookmark */ = 885CF877103821E2003FC06D /* PBXTextBookmark */;
 			885CF87A103821E2003FC06D /* PBXTextBookmark */ = 885CF87A103821E2003FC06D /* PBXTextBookmark */;
@@ -99,11 +100,10 @@
 			885CF87C103821E2003FC06D /* PBXTextBookmark */ = 885CF87C103821E2003FC06D /* PBXTextBookmark */;
 			885CF87D103821E2003FC06D /* PBXTextBookmark */ = 885CF87D103821E2003FC06D /* PBXTextBookmark */;
 			885CF87E103821E2003FC06D /* PBXTextBookmark */ = 885CF87E103821E2003FC06D /* PBXTextBookmark */;
-			8873994A104293AD000973CB /* PlistBookmark */ = 8873994A104293AD000973CB /* PlistBookmark */;
 			88D356781042767500B057CA /* PBXTextBookmark */ = 88D356781042767500B057CA /* PBXTextBookmark */;
 			88D356791042767500B057CA /* PBXTextBookmark */ = 88D356791042767500B057CA /* PBXTextBookmark */;
 			88D356C51042869800B057CA /* PBXTextBookmark */ = 88D356C51042869800B057CA /* PBXTextBookmark */;
-			88D356C81042869800B057CA /* PlistBookmark */ = 88D356C81042869800B057CA /* PlistBookmark */;
+			88FD9E3C1043D984007CCFA9 /* PlistBookmark */ = 88FD9E3C1043D984007CCFA9 /* PlistBookmark */;
 		};
 		sourceControlManager = 88CCA5A31035673300A58F2D /* Source Control */;
 		userBuildSettings = {
@@ -151,6 +151,17 @@
 			sepNavSelRange = "{3947, 0}";
 			sepNavVisRange = "{2657, 809}";
 		};
+	};
+	883E9AEF1043D90D00281044 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/imac/Desktop/DSG_SVN/BackSide/Info.plist;
+		rLen = 0;
+		rLoc = 2147483647;
 	};
 	885CF875103821E2003FC06D /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -222,18 +233,7 @@
 		vrLen = 653;
 		vrLoc = 3924;
 	};
-	8873994A104293AD000973CB /* PlistBookmark */ = {
-		isa = PlistBookmark;
-		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
-		fallbackIsa = PBXBookmark;
-		isK = 0;
-		kPath = (
-		);
-		name = /Users/imac/Desktop/DSG_SVN/BackSide/Info.plist;
-		rLen = 0;
-		rLoc = 2147483647;
-	};
-	88CCA58B1035671F00A58F2D /* WiTap */ = {
+	88CCA58B1035671F00A58F2D /* BackSide */ = {
 		isa = PBXExecutable;
 		activeArgIndices = (
 		);
@@ -253,7 +253,7 @@
 		executableSystemSymbolLevel = 0;
 		executableUserSymbolLevel = 0;
 		libgmallocEnabled = 0;
-		name = WiTap;
+		name = BackSide;
 		savedGlobals = {
 		};
 		sourceDirectories = (
@@ -300,13 +300,12 @@
 		vrLen = 809;
 		vrLoc = 2657;
 	};
-	88D356C81042869800B057CA /* PlistBookmark */ = {
+	88FD9E3C1043D984007CCFA9 /* PlistBookmark */ = {
 		isa = PlistBookmark;
 		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
 		fallbackIsa = PBXBookmark;
 		isK = 0;
 		kPath = (
-			UIStatusBarHidden,
 		);
 		name = /Users/imac/Desktop/DSG_SVN/BackSide/Info.plist;
 		rLen = 0;
