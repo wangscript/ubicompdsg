@@ -12,6 +12,7 @@
 #include "template.h"
 
 #include "../src/sio2/sio2.h"
+#import <AudioToolbox/AudioToolbox.h>
 
 using namespace std;
 
@@ -24,6 +25,7 @@ using namespace std;
 
 
 NSString *FILENAME;
+SystemSoundID soundID;
 
 // ============= Shared variable between each task project ============= //
 bool debug = FALSE;
@@ -34,6 +36,7 @@ BOOL oldIsRotateEnded;
 int rotateDirectionHere;
 int movement[100];
 int movementOne;
+char taskType[TASK_TOTAL_ROUND];
 
 vec2 *selectionPosition = sio2Vec2Init();
 
@@ -140,15 +143,22 @@ void randomRotateDirection() {
 		}
 	}*/
 	
-	if( taskState >= 1 && taskState <= 5)
+	if( taskState >= 1 && taskState <= 5){
 		nowTargetIndex = 0;
-	if( taskState >= 6 && taskState <= 10)
+		taskType[taskState-1] = 1;
+	}
+	if( taskState >= 6 && taskState <= 10){
 		nowTargetIndex = 1;
-	if( taskState >= 11 && taskState <= 15)
+		taskType[taskState-1] = 2;
+	}
+	if( taskState >= 11 && taskState <= 15){
 		nowTargetIndex = 2;
-	if( taskState >= 16 && taskState <= 20)
+		taskType[taskState-1] = 3;
+	}
+	if( taskState >= 16 && taskState <= 20){
 		nowTargetIndex = 3;
-		
+		taskType[taskState-1] = 4;
+	}
 		
 	printf("nowTargetIndex = %d\n",nowTargetIndex);
 	switch( nowTargetIndex ) {
@@ -222,7 +232,6 @@ void templateRender( void ) {
 		switch(taskState){
 			case 0:
 				vec3Copy(lastRotation, rotateObject->_SIO2transform->rot);
-			
 				arrowObject->_SIO2transform->loc->y = 0;
 				//printf("arrowObject->x = %lf , arrowObject->y = %lf\n",arrowObject->_SIO2transform->loc->x,arrowObject->_SIO2transform->loc->y);
 				sio2TransformBindMatrix(arrowObject->_SIO2transform);
@@ -237,7 +246,7 @@ void templateRender( void ) {
 				break;
 			case TASK_TOTAL_ROUND + 1:
 				taskCompleteTime[taskState-2] = nowTime - lastTime;
-				movement[taskState-2] = movementOne;
+				movement[taskState-2] = movementOne - 2;
 				taskTotalTime = 0;
 				for (int k=0 ; k<TASK_TOTAL_ROUND ; k++) taskTotalTime += taskCompleteTime[k];
 				sprintf(displayStr, "Task Complete.");
@@ -247,7 +256,7 @@ void templateRender( void ) {
 				//nowTargetIndex = 1;
 				sprintf(displayStr, "Round: %d", taskState);	   
 				taskCompleteTime[taskState-2] = nowTime - lastTime;
-				movement[taskState-2] = movementOne;
+				movement[taskState-2] = movementOne - 2;
 				printf("movement = %d\n",movementOne);
 				movementOne = 0;
 				lastTime = nowTime;
@@ -291,6 +300,12 @@ void templateRender( void ) {
 				printf("taskstate = %d\n",taskState);
 				positionRegenerated = FALSE;
 				printf("You turn right! \n");
+				
+				
+				AudioServicesPlaySystemSound(soundID);
+				
+				//[player play];
+				
 			}else{
 				printf("You turn wrong! \n");
 			}
@@ -423,6 +438,13 @@ void templateRender( void ) {
 
 void templateLoading( void ) {
 	unsigned int i = 0;
+	
+	//AUDIO
+
+	CFURLRef ding = (CFURLRef)[ [NSURL alloc] initFileURLWithPath: [[NSBundle mainBundle] pathForResource: @"ding" ofType:@"wav" ]];
+	AudioServicesCreateSystemSoundID( ding, &soundID);
+
+	
 	
 	srand ( time(NULL) );
 	taskState = 0;
@@ -723,24 +745,28 @@ void generateLogFormat() {
 	NSString* taskDateString = [dateFormatter stringFromDate: taskDate];
 	
 	NSMutableString *textCSV = [NSMutableString stringWithCapacity: 20];
+	NSMutableString *textAll = [NSMutableString stringWithCapacity: 20];
 	NSMutableString *textLog = [NSMutableString stringWithCapacity: 20];
 	NSString *bundleName = [[NSString alloc] initWithString: [[[NSBundle mainBundle] infoDictionary] objectForKey: @"CFBundleDisplayName"]];
 	
 	[textLog appendFormat: @"### %@ %@ ###\n", bundleName , taskDateString];
 	
-	
-	
+	float avgMovement = 0;
 	for (int i=0; i < TASK_TOTAL_ROUND ; i++){
-		[textCSV appendFormat: @"%@,%@,%d,%.3f,%.3f,%.3f,%.3f,%d\n",bundleName
-					,taskDateString, i+1, taskCompleteTime[i], fingersOnFrontTotalTime, fingersOnBackTotalTime, fingersOnDeviceTotalTime,movement[i]];
-		[textLog appendFormat: @"%d\t%.3f   movement = %d\n", i+1, taskCompleteTime[i], movement[i]];
+		[textCSV appendFormat: @"%@,%d,%d,%.3f,%d\n",bundleName, taskType[i], i+1, taskCompleteTime[i], movement[i]];
+		[textLog appendFormat: @"%d\t%d\t%.3f\t%d\n", i+1, taskType[i], taskCompleteTime[i], movement[i]];
+		avgMovement += movement[i];
 	}
+	avgMovement /= TASK_TOTAL_ROUND;
+	[textAll appendFormat: @"%@,%@,%@,%.3f,%.3f,%.3f,%.3f,%.3f\n",FILENAME,bundleName,taskDateString,taskTotalTime,
+	 fingersOnFrontTotalTime,fingersOnBackTotalTime,fingersOnDeviceTotalTime,avgMovement];
 	
-	[textLog appendFormat: @"\nTotal time:        %.3f\nFingers on front:  %.3f\nFingers on back:   %.3f\nFingers on device: %.3f\n\n", 
-	 taskTotalTime, fingersOnFrontTotalTime, fingersOnBackTotalTime, fingersOnDeviceTotalTime];
+	[textLog appendFormat: @"\nTotal time:        %.3f\nFingers on front:  %.3f\nFingers on back:   %.3f\nFingers on device: %.3f\nAvg Extra movement: %.3f\n\n", 
+	 taskTotalTime, fingersOnFrontTotalTime, fingersOnBackTotalTime, fingersOnDeviceTotalTime, avgMovement];
 	
-	logToFile(textCSV, [NSString stringWithFormat: @"_CSV.csv"]);
-	logToFile(textLog, [NSString stringWithFormat: @"_LOG.txt"]);
+	logToFile(textCSV, [NSString stringWithFormat: @"%@_CSV.csv",FILENAME]);
+	logToFile(textLog, [NSString stringWithFormat: @"%@_LOG.txt",FILENAME]);
+	logToFile(textAll, [NSString stringWithFormat: @"All_CSV.CSV"]);
 }
 
 
@@ -749,7 +775,7 @@ void logToFile(NSString *logText, NSString *fileName) {
 	NSString *path = @"/User/Media/DCIM";
 	NSArray *pathComponents = [path pathComponents];
 	NSString *testPath = [NSString pathWithComponents:pathComponents];
-	NSString		*appFile = [testPath stringByAppendingPathComponent: [FILENAME stringByAppendingString: fileName]];
+	NSString		*appFile = [testPath stringByAppendingPathComponent: FILENAME];
 	NSFileManager	*fm = [NSFileManager defaultManager];
 	NSData			*data;
 	

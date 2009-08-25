@@ -20,6 +20,7 @@
 @synthesize glView;
 @synthesize filename;
 @synthesize logButton;
+@synthesize startButton;
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application {
 
@@ -194,7 +195,15 @@
 {
 	logButton.hidden = NO;
 	filename.hidden = NO;
-	[filename becomeFirstResponder];
+	[startButton release];
+	
+	//[filename becomeFirstResponder];
+}
+
+
+- (IBAction) hidStartButton
+{
+	startButton.hidden = YES;
 }
 
 @end
