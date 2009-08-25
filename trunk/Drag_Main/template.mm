@@ -941,7 +941,7 @@ void backTouchHandle(void *_ptr, int type, int index, float pt_x, float pt_y) {
 			backTouchPoint[index] = pt;
 			
 			//Reset the position of the plane indicating the back-side finger:
-			SIO2object* obj1 = (SIO2object*) sio2->_SIO2resource->_SIO2object[index+4];
+			SIO2object* obj1 = backVisual[index];
 			if(obj1)
 			{
 				obj1->_SIO2transform->loc->z = 0.057* ( pt.x - 320/2) ;
@@ -951,7 +951,7 @@ void backTouchHandle(void *_ptr, int type, int index, float pt_x, float pt_y) {
 		case 2: // Modify a point
 			
 			//Move the plane indicating the back-side finger:
-			SIO2object* obj2 = (SIO2object*) sio2->_SIO2resource->_SIO2object[index+4];
+			SIO2object* obj2 = backVisual[index];
 			if(obj2)
 			{
 				vec2 d; 
