@@ -16,12 +16,12 @@
 		28FD15000DC6FC520079059D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD14FF0DC6FC520079059D /* OpenGLES.framework */; };
 		28FD15080DC6FC5B0079059D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD15070DC6FC5B0079059D /* QuartzCore.framework */; };
 		881EECB41041666E00BD9CCF /* default16x16.tga in Resources */ = {isa = PBXBuildFile; fileRef = 881EECB31041666E00BD9CCF /* default16x16.tga */; };
+		886B0EE11043DF78005E1D9F /* Task_Stretch.sio2 in Resources */ = {isa = PBXBuildFile; fileRef = 886B0EE01043DF78005E1D9F /* Task_Stretch.sio2 */; };
 		889B398A103055BA00204ACA /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 889B3985103055BA00204ACA /* BrowserViewController.m */; };
 		889B398B103055BA00204ACA /* Picker.m in Sources */ = {isa = PBXBuildFile; fileRef = 889B3987103055BA00204ACA /* Picker.m */; };
 		889B398C103055BA00204ACA /* TCPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 889B3989103055BA00204ACA /* TCPServer.m */; };
 		889B3A141030590300204ACA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 889B3A131030590300204ACA /* SystemConfiguration.framework */; };
 		889B3A461030591300204ACA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 889B3A451030591300204ACA /* CoreGraphics.framework */; };
-		88CE4CB91035937A009CDD6C /* Task_Drag.sio2 in Resources */ = {isa = PBXBuildFile; fileRef = 88CE4CB81035937A009CDD6C /* Task_Drag.sio2 */; };
 		88FACB551042D89400CFE225 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 88FACB541042D89400CFE225 /* Icon.png */; };
 		E073A29A100D3660004A0982 /* sio2_camera.cc in Sources */ = {isa = PBXBuildFile; fileRef = E073A255100D3660004A0982 /* sio2_camera.cc */; };
 		E073A29B100D3660004A0982 /* sio2_emitter.cc in Sources */ = {isa = PBXBuildFile; fileRef = E073A258100D3660004A0982 /* sio2_emitter.cc */; };
@@ -332,6 +332,7 @@
 		29B97316FDCFA39411CA2CEA /* main.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = main.mm; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* template_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = template_Prefix.pch; sourceTree = "<group>"; };
 		881EECB31041666E00BD9CCF /* default16x16.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = default16x16.tga; sourceTree = "<group>"; };
+		886B0EE01043DF78005E1D9F /* Task_Stretch.sio2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Task_Stretch.sio2; sourceTree = "<group>"; };
 		889B3984103055BA00204ACA /* BrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserViewController.h; sourceTree = "<group>"; };
 		889B3985103055BA00204ACA /* BrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserViewController.m; sourceTree = "<group>"; };
 		889B3986103055BA00204ACA /* Picker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Picker.h; sourceTree = "<group>"; };
@@ -340,7 +341,6 @@
 		889B3989103055BA00204ACA /* TCPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPServer.m; sourceTree = "<group>"; };
 		889B3A131030590300204ACA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		889B3A451030591300204ACA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		88CE4CB81035937A009CDD6C /* Task_Drag.sio2 */ = {isa = PBXFileReference; lastKnownFileType = file; name = Task_Drag.sio2; path = ../data/Task_Drag.sio2; sourceTree = SOURCE_ROOT; };
 		88FACB541042D89400CFE225 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E073A254100D3660004A0982 /* sio2_action.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = sio2_action.h; path = ../src/sio2/sio2_action.h; sourceTree = SOURCE_ROOT; };
@@ -716,8 +716,8 @@
 		E0C436310EDBB10000B663CE /* ocintrin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ocintrin.h; path = ../src/theora/ocintrin.h; sourceTree = SOURCE_ROOT; };
 		E0E30D6A0E5EA2FA00F6D25F /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		E0E310860E5EA3C300F6D25F /* main.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = main.h; sourceTree = "<group>"; };
-		E0E310870E5EA40200F6D25F /* template.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = template.h; path = ../Drag_Main/template.h; sourceTree = "<group>"; };
-		E0E310880E5EA40200F6D25F /* template.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = template.mm; path = ../Drag_Main/template.mm; sourceTree = "<group>"; };
+		E0E310870E5EA40200F6D25F /* template.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = template.h; sourceTree = "<group>"; };
+		E0E310880E5EA40200F6D25F /* template.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = template.mm; sourceTree = "<group>"; };
 		E0E310DF0E5EA54900F6D25F /* zconf.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; name = zconf.h; path = ../src/zlib/zconf.h; sourceTree = SOURCE_ROOT; };
 		E0E310E00E5EA54900F6D25F /* zlib.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; name = zlib.h; path = ../src/zlib/zlib.h; sourceTree = SOURCE_ROOT; };
 		E0E310E10E5EA54900F6D25F /* zutil.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; name = zutil.c; path = ../src/zlib/zutil.c; sourceTree = SOURCE_ROOT; };
@@ -965,7 +965,7 @@
 				E0E310FA0E5EA54900F6D25F /* vorbis */,
 				E0E310DE0E5EA54900F6D25F /* zlib */,
 				881EE52A1041656500BD9CCF /* data */,
-				88CE4C4E10358A95009CDD6C /* Drag_BothSide */,
+				88CE4C4E10358A95009CDD6C /* Stretch_BothSide */,
 				29B97315FDCFA39411CA2CEA /* Stretch_Main */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
@@ -1022,14 +1022,14 @@
 		881EE52A1041656500BD9CCF /* data */ = {
 			isa = PBXGroup;
 			children = (
-				88CE4CB81035937A009CDD6C /* Task_Drag.sio2 */,
+				886B0EE01043DF78005E1D9F /* Task_Stretch.sio2 */,
 				881EECB31041666E00BD9CCF /* default16x16.tga */,
 			);
 			name = data;
 			path = ../data;
 			sourceTree = "<group>";
 		};
-		88CE4C4E10358A95009CDD6C /* Drag_BothSide */ = {
+		88CE4C4E10358A95009CDD6C /* Stretch_BothSide */ = {
 			isa = PBXGroup;
 			children = (
 				8D1107310486CEB800E47090 /* Info.plist */,
@@ -1037,7 +1037,7 @@
 				28FD14FC0DC6FC130079059D /* EAGLView.h */,
 				28FD14FD0DC6FC130079059D /* EAGLView.mm */,
 			);
-			name = Drag_BothSide;
+			name = Stretch_BothSide;
 			sourceTree = "<group>";
 		};
 		E0E310AC0E5EA54900F6D25F /* sio2 */ = {
@@ -1714,9 +1714,9 @@
 			files = (
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
 				E0E313F70E5EA78B00F6D25F /* Default.png in Resources */,
-				88CE4CB91035937A009CDD6C /* Task_Drag.sio2 in Resources */,
 				881EECB41041666E00BD9CCF /* default16x16.tga in Resources */,
 				88FACB551042D89400CFE225 /* Icon.png in Resources */,
+				886B0EE11043DF78005E1D9F /* Task_Stretch.sio2 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
