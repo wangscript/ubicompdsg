@@ -1,6 +1,0 @@
-Trying to add new property 'svn:ignore' with value '*.mode1v3
-*.pbxuser
-build
-',
-but property already exists with value 'build
-'.

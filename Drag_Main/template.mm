@@ -481,10 +481,12 @@ void templateRender( void ) {
 				
 				//if(sio2->_SIO2window->n_touch != 0) {
 					if (GRAB_WITH_BACK_TOUCH) {
+						
 						selection = sio2ResourceSelect3D( sio2->_SIO2resource,
 														 sio2->_SIO2camera,
 														 sio2->_SIO2window,
 														 selectionPosition);
+						printf("test select selection = %d\n",selection);
 					}
 					else {
 						selection = sio2ResourceSelect3D( sio2->_SIO2resource,
