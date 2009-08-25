@@ -1,0 +1,8 @@
+material( "material/Material.001" )
+{
+	d( 1 1 0 )
+	sp( 1 1 1 )
+	a( 1 )
+	sh( 12 )
+	fr( 0.5 )
+}
