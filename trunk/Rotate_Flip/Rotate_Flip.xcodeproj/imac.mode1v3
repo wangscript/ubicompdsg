@@ -232,8 +232,6 @@
 			<key>Layout</key>
 			<array>
 				<dict>
-					<key>BecomeActive</key>
-					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -281,7 +279,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>27</integer>
+									<integer>29</integer>
 									<integer>26</integer>
 									<integer>0</integer>
 								</array>
@@ -317,12 +315,14 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>Icon.png</string>
+								<string>EAGLView.mm</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -330,11 +330,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>Icon.png</string>
+										<string>EAGLView.mm</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>8895FAA71042DA7F00022DAC</string>
+										<string>883E9A831043B4F500281044</string>
 										<key>history</key>
 										<array>
 											<string>887E48561032972500A3011E</string>
@@ -356,9 +356,9 @@
 											<string>881CEEE9103BDB560045C367</string>
 											<string>881CEEEA103BDB560045C367</string>
 											<string>88F53E5010401B28004EF865</string>
-											<string>88D55AF410415A1F0037F822</string>
 											<string>88FACB941042D97500CFE225</string>
-											<string>88FACB971042D97500CFE225</string>
+											<string>883E9A811043B4F500281044</string>
+											<string>88D55AF410415A1F0037F822</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -384,6 +384,7 @@
 											<string>886992EE103A84D2000723F1</string>
 											<string>881CEEF4103BDB560045C367</string>
 											<string>88F53E5210401B28004EF865</string>
+											<string>883E9A821043B4F500281044</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -441,9 +442,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>8895FA901042D9EC00022DAC</string>
+				<string>883E9A841043B4F500281044</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>8895FA911042D9EC00022DAC</string>
+				<string>883E9A851043B4F500281044</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -577,11 +578,7 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>8895FAA81042DA7F00022DAC</string>
-		<string>8895FAA91042DA7F00022DAC</string>
-		<string>88043F7E10298B5A00AF24D5</string>
 		<string>1CD10A99069EF8BA00B06720</string>
-		<string>1C78EAAD065D492600B07095</string>
 		<string>/Users/imac/Desktop/DSG_SVN/Rotate_Flip/Rotate_Flip.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
@@ -782,13 +779,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1CD10A99069EF8BA00B06720</string>
-				<string>8895FA921042D9EC00022DAC</string>
+				<string>883E9A861043B4F500281044</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>8895FA931042D9EC00022DAC</string>
-				<string>8895FA941042D9EC00022DAC</string>
-				<string>8895FA951042D9EC00022DAC</string>
-				<string>8895FA961042D9EC00022DAC</string>
-				<string>8895FA971042D9EC00022DAC</string>
+				<string>883E9A871043B4F500281044</string>
+				<string>883E9A881043B4F500281044</string>
+				<string>883E9A891043B4F500281044</string>
+				<string>883E9A8A1043B4F500281044</string>
+				<string>883E9A8B1043B4F500281044</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
