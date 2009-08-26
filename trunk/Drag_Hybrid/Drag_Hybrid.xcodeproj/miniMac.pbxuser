@@ -91,39 +91,19 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 272972277;
-			PBXWorkspaceStateSaveDate = 272972277;
+			PBXPerProjectTemplateStateSaveDate = 272975121;
+			PBXWorkspaceStateSaveDate = 272975121;
 		};
 		perUserProjectItems = {
-			7D1673C21045399300B97F77 /* PBXTextBookmark */ = 7D1673C21045399300B97F77 /* PBXTextBookmark */;
-			7D1673D510453A0D00B97F77 /* PBXTextBookmark */ = 7D1673D510453A0D00B97F77 /* PBXTextBookmark */;
 			7D95AF5B10417CB1001FA344 /* PBXTextBookmark */ = 7D95AF5B10417CB1001FA344 /* PBXTextBookmark */;
 			7D95AF5D10417CB1001FA344 /* PBXTextBookmark */ = 7D95AF5D10417CB1001FA344 /* PBXTextBookmark */;
 			7D95AF5E10417CB1001FA344 /* PBXTextBookmark */ = 7D95AF5E10417CB1001FA344 /* PBXTextBookmark */;
+			7DBF049F1045408900049E7B /* PBXTextBookmark */ = 7DBF049F1045408900049E7B /* PBXTextBookmark */;
+			7DBF04DA104545DC00049E7B /* PBXTextBookmark */ = 7DBF04DA104545DC00049E7B /* PBXTextBookmark */;
 		};
 		sourceControlManager = 7D95AF281041792D001FA344 /* Source Control */;
 		userBuildSettings = {
 		};
-	};
-	7D1673C21045399300B97F77 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 28FD14FD0DC6FC130079059D /* EAGLView.mm */;
-		name = "EAGLView.mm: 1502";
-		rLen = 0;
-		rLoc = 43742;
-		rType = 0;
-		vrLen = 914;
-		vrLoc = 43421;
-	};
-	7D1673D510453A0D00B97F77 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 28FD14FD0DC6FC130079059D /* EAGLView.mm */;
-		name = "EAGLView.mm: 1502";
-		rLen = 0;
-		rLoc = 43742;
-		rType = 0;
-		vrLen = 916;
-		vrLoc = 43419;
 	};
 	7D95AF2210417929001FA344 /* DragBoth */ = {
 		isa = PBXExecutable;
@@ -191,6 +171,26 @@
 		rType = 0;
 		vrLen = 768;
 		vrLoc = 937;
+	};
+	7DBF049F1045408900049E7B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 28FD14FD0DC6FC130079059D /* EAGLView.mm */;
+		name = "EAGLView.mm: 1502";
+		rLen = 0;
+		rLoc = 43742;
+		rType = 0;
+		vrLen = 916;
+		vrLoc = 43419;
+	};
+	7DBF04DA104545DC00049E7B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 28FD14FD0DC6FC130079059D /* EAGLView.mm */;
+		name = "EAGLView.mm: 1502";
+		rLen = 0;
+		rLoc = 43742;
+		rType = 0;
+		vrLen = 916;
+		vrLoc = 43419;
 	};
 	E0E310870E5EA40200F6D25F /* template.h */ = {
 		uiCtxt = {

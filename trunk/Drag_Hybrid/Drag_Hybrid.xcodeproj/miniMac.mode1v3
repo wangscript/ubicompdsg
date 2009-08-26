@@ -334,11 +334,11 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>7D1673D510453A0D00B97F77</string>
+										<string>7DBF04DA104545DC00049E7B</string>
 										<key>history</key>
 										<array>
 											<string>7D95AF5B10417CB1001FA344</string>
-											<string>7D1673C21045399300B97F77</string>
+											<string>7DBF049F1045408900049E7B</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -401,9 +401,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>7D1673D310453A0100B97F77</string>
+				<string>7DBF04CE1045451800049E7B</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>7D1673D410453A0100B97F77</string>
+				<string>7DBF04CF1045451800049E7B</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -537,6 +537,11 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
+		<string>7DBF04DB104545DC00049E7B</string>
+		<string>7DBF04DC104545DC00049E7B</string>
+		<string>1C78EAAD065D492600B07095</string>
+		<string>1CD10A99069EF8BA00B06720</string>
+		<string>7D95AF4D10417BE5001FA344</string>
 		<string>/Users/miniMac/Desktop/DSG_SVN/Drag_Hybrid/Drag_Hybrid.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
@@ -617,7 +622,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>7D95AF4D10417BE5001FA344</string>
-				<string>7D1673AB1045391D00B97F77</string>
+				<string>7DBF04D01045451800049E7B</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -659,8 +664,8 @@
 										<string>yes</string>
 										<key>sizes</key>
 										<array>
-											<string>{{0, 0}, {316, 201}}</string>
-											<string>{{316, 0}, {378, 201}}</string>
+											<string>{{0, 0}, {316, 203}}</string>
+											<string>{{316, 0}, {378, 203}}</string>
 										</array>
 									</dict>
 									<key>VerticalSplitView</key>
@@ -675,8 +680,8 @@
 										<string>yes</string>
 										<key>sizes</key>
 										<array>
-											<string>{{0, 0}, {694, 201}}</string>
-											<string>{{0, 201}, {694, 180}}</string>
+											<string>{{0, 0}, {694, 203}}</string>
+											<string>{{0, 203}, {694, 178}}</string>
 										</array>
 									</dict>
 								</dict>
@@ -709,7 +714,7 @@
 										<real>148</real>
 									</array>
 									<key>Frame</key>
-									<string>{{316, 0}, {378, 201}}</string>
+									<string>{{316, 0}, {378, 203}}</string>
 									<key>RubberWindowFrame</key>
 									<string>42 710 694 422 0 0 1920 1178 </string>
 								</dict>
@@ -737,13 +742,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1CD10A99069EF8BA00B06720</string>
-				<string>7D1673C31045399300B97F77</string>
+				<string>7DBF04D3104545D900049E7B</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>7D1673C41045399300B97F77</string>
-				<string>7D1673C51045399300B97F77</string>
-				<string>7D1673C61045399300B97F77</string>
-				<string>7D1673C71045399300B97F77</string>
-				<string>7D1673C81045399300B97F77</string>
+				<string>7DBF04D4104545D900049E7B</string>
+				<string>7DBF04D5104545D900049E7B</string>
+				<string>7DBF04D6104545D900049E7B</string>
+				<string>7DBF04D7104545D900049E7B</string>
+				<string>7DBF04D8104545D900049E7B</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -899,7 +904,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C78EAAD065D492600B07095</string>
-				<string>7D1673AC1045391D00B97F77</string>
+				<string>7DBF04D9104545D900049E7B</string>
 				<string>1C78EAAC065D492600B07095</string>
 			</array>
 			<key>ToolbarConfiguration</key>
@@ -909,7 +914,7 @@
 			<key>WindowToolGUID</key>
 			<string>1C78EAAD065D492600B07095</string>
 			<key>WindowToolIsVisible</key>
-			<true/>
+			<false/>
 		</dict>
 		<dict>
 			<key>Identifier</key>

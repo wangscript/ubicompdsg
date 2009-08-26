@@ -886,7 +886,7 @@ BOOL isDebug = YES;
 		
 		//if(isDebug) printf("===== The Dirstate is: %d ======\n", theDirState);
 		
-		if( yDistance < 50.0 ){
+		if( yDistance < 100.0 ){
 			if(changeInX>0){
 				if(isDebug) printf("====================== ROtate UP ============\n");
 				rotateDirection = ROTATE_UP;
@@ -912,7 +912,7 @@ BOOL isDebug = YES;
 			}
 			
 		}
-		else if( xDistance < 100.0){
+		else if( xDistance < 50.0){
 			
 			if(changeInY > 0){
 				if(isDebug) printf("====================== ROtate RIGHT ============\n");
