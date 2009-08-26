@@ -43,6 +43,8 @@ BOOL strtDebug = YES;
 
 #pragma mark -
 extern NSString *FILENAME;
+extern char taskState;
+extern bool stateStartFlag;
 
 extern NSMutableArray	*gestureSequence;
 extern bool				fingersOnFront;
@@ -1504,11 +1506,19 @@ static int _degree_counter = 0; // Counter for rotate 90 degree
 
 - (void) logButtonPredded:(id) sender
 {
-	isReadyToLog = YES;
-	printf("Start Log!\n");
-	templateAppDelegate* appdel = (templateAppDelegate*)[[UIApplication sharedApplication] delegate];
-	FILENAME = [[NSString alloc] initWithString:[appdel.filename text]];
-	NSLog(FILENAME);
+ 	printf("taskState = %d\n",taskState);
+	if(taskState == 0){
+		printf("Start!\n");
+		stateStartFlag = TRUE;
+		taskState = 1;
+		[(templateAppDelegate*)[[UIApplication sharedApplication] delegate] hidLogButton];
+	}else{
+		isReadyToLog = YES;
+		printf("Start Log!\n");
+		templateAppDelegate* appdel = (templateAppDelegate*)[[UIApplication sharedApplication] delegate];
+		FILENAME = [[NSString alloc] initWithString:[appdel.filename text]];
+		NSLog(FILENAME);
+	}
 }
 
 @end
