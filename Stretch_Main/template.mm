@@ -4,6 +4,7 @@
 #include "template.h"
 
 #include "../src/sio2/sio2.h"
+#import <AudioToolbox/AudioToolbox.h>
 
 using namespace std;
 
@@ -26,6 +27,8 @@ using namespace std;
 #pragma mark -
 
 NSString *FILENAME;
+SystemSoundID soundID;
+
 //rotate
 GLfloat matrixrotate[16];
 int movement[100];
@@ -330,6 +333,7 @@ void templateRender( void ) {
 					if (objectsAreInSameSize( objectSelect2, objectEnd )){
 						stateStartFlag = TRUE;
 						taskState ++;
+						AudioServicesPlaySystemSound(soundID);
 					}
 				}
 
@@ -579,6 +583,12 @@ void templatePrintProgress( void )
 }
 
 void templateLoading( void ) {
+	
+	//AUDIO
+	
+	CFURLRef ding = (CFURLRef)[ [NSURL alloc] initFileURLWithPath: [[NSBundle mainBundle] pathForResource: @"ding" ofType:@"wav" ]];
+	AudioServicesCreateSystemSoundID( ding, &soundID);
+	
 	
 	//ADD by YO: for selection from Back-Side touch:
 	selectionPosition = sio2Vec2Init();
