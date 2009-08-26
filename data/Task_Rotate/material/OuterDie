@@ -1,8 +1,0 @@
-material( "material/OuterDie" )
-{
-	d( 1 0 0 )
-	sp( 1 0.39 0.39 )
-	a( 1 )
-	sh( 12 )
-	fr( 0.5 )
-}
