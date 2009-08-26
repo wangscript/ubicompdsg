@@ -23,7 +23,6 @@ using namespace std;
 #define pi						3.1415926
 
 
-
 NSString *FILENAME;
 SystemSoundID soundID;
 
