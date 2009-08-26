@@ -624,7 +624,7 @@ BOOL isDebug = YES;
 			//dragStartPts[0] = tp1._point;
 			//dragStartPts[1] = tp2._point;
 			
-			[self dragBegan: tp1._point];
+			[self dragBegan: tp2._point];
 			
 			//_StrtSystemTime = time(NULL);
 		}	
