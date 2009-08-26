@@ -227,7 +227,7 @@ void generateLogFormat() {
 	
 	float avgMovement = 0;
 	for (int i=0; i < TASK_TOTAL_ROUND ; i++){
-		[textCSV appendFormat: @"%@,%d,%d,%.3f,%d\n",bundleName, taskType[i], i+1, taskCompleteTime[i], movement[i]];
+		[textCSV appendFormat: @"%@ ,%d,%d,%.3f,%d\n",bundleName, taskType[i], i+1, taskCompleteTime[i], movement[i]];
 		[textLog appendFormat: @"%d\t%d\t%.3f\t%d\n", i+1, taskType[i], taskCompleteTime[i], movement[i]];
 		avgMovement += movement[i];
 	}
