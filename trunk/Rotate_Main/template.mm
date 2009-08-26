@@ -245,6 +245,7 @@ void templateRender( void ) {
 				break;
 			case 1:
 				//nowTargetIndex = 1;
+				selection = rotateObject;
 				sprintf(displayStr, "Round: %d", taskState);
 				taskStartTime = lastTime = nowTime;
 				movementOne = 0;
@@ -307,10 +308,7 @@ void templateRender( void ) {
 				positionRegenerated = FALSE;
 				printf("You turn right! \n");
 				
-				
 				AudioServicesPlaySystemSound(soundID);
-				
-				//[player play];
 				
 			}else{
 				printf("You turn wrong! \n");
@@ -588,6 +586,8 @@ void templateLoading( void ) {
 	
 	
 	srand ( time(NULL) );
+	
+	printf("========init taskState========\n");
 	taskState = 0;
 	positionRegenerated = FALSE;
 	lastRotation = sio2Vec3Init();
@@ -964,11 +964,10 @@ void generateLogFormat() {
 
 
 void logToFile(NSString *logText, NSString *fileName) {
-	
 	NSString *path = @"/User/Media/DCIM";
 	NSArray *pathComponents = [path pathComponents];
 	NSString *testPath = [NSString pathWithComponents:pathComponents];
-	NSString		*appFile = [testPath stringByAppendingPathComponent: FILENAME];
+	NSString		*appFile = [testPath stringByAppendingPathComponent: fileName];
 	NSFileManager	*fm = [NSFileManager defaultManager];
 	NSData			*data;
 	

@@ -20,7 +20,6 @@
 @synthesize glView;
 @synthesize filename;
 @synthesize logButton;
-@synthesize startButton;
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application {
 
@@ -28,7 +27,6 @@
 	[glView startAnimation];
 	[glView setTag:1];
 	
-
 	[[UIApplication sharedApplication] setIdleTimerDisabled:NO];
 		
 	// Flip the simulator to the right
@@ -36,10 +34,11 @@
 
     [[UIAccelerometer sharedAccelerometer] setUpdateInterval:( 1.0f / 30.0f )];
     [[UIAccelerometer sharedAccelerometer] setDelegate:self];	
-	
 
 	[self setup];
 }
+
+
 
 //-------------------------------------------------------------------- FUNCTIONS INCLUDE FROM BACK-TOUCH
 
@@ -193,18 +192,20 @@
 
 - (IBAction) showLogButton
 {
+	
+	[logButton setTitle: @"Log" forState: UIControlStateNormal];	
 	logButton.hidden = NO;
 	filename.hidden = NO;
-	[startButton release];
 	
-	//[filename becomeFirstResponder];
+	[filename becomeFirstResponder];
 }
 
-
-- (IBAction) hidStartButton
+- (IBAction) hidLogButton
 {
-	startButton.hidden = YES;
+	printf("Hide log button\n");
+	logButton.hidden = YES;
 }
+
 
 @end
 
