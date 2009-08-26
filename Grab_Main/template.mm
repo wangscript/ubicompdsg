@@ -9,8 +9,8 @@
 using namespace std;
 
 #define SIO2_FILE_NAME			"Task_Grab.sio2"
-#define TASK_TOTAL_ROUND		36
-#define TASK_PER_ROUND			3
+#define TASK_TOTAL_ROUND		32
+#define TASK_PER_ROUND			4
 #define OBJ_IN_SAME_POSISION	0.75
 
 #define pi						3.1415926
@@ -150,37 +150,33 @@ bool objectsAreNear(SIO2object* obj_1, SIO2object* obj_2) {
 }
 
 void generatePosition() {
-	/*
-	float y1, z1, y2, z2, y3, z3, rot_x;
+	
+	float y1, z1, yy, zz, size;
 	
 	int idx = (taskState - 1) / TASK_PER_ROUND + 1;
 	taskType[taskState - 1] = idx;
 	
+	
 	switch( idx ){
-		case 1: 	y1 = -6; z1 =  3; y2 =  6; z2 =  3; y3 = 0; z3 = 3; rot_x = 180; break;	// ->
-		case 2: 	y1 = -6; z1 = -3; y2 =  6; z2 = -3; y3 = 0; z3 = -3; rot_x = 180; break;	// ->
-		case 3: 	y1 =  6; z1 =  3; y2 = -6; z2 =  3; y3 = 0; z3 = 3; rot_x = 0; break;	// <-
-		case 4: 	y1 =  6; z1 = -3; y2 = -6; z2 = -3; y3 = 0; z3 = -3; rot_x = 0; break;	// <-
-		case 5: 	y1 = -6; z1 =  3; y2 = -6; z2 = -3; y3 = -6; z3 = 0; rot_x = 270; break;	// V
-		case 6: 	y1 =  6; z1 =  3; y2 =  6; z2 = -3; y3 = 6; z3 = 0; rot_x = 270; break;	// V
-		case 7: 	y1 = -6; z1 = -3; y2 = -6; z2 =  3; y3 = -6; z3 = 0; rot_x = 90; break;	// ^
-		case 8: 	y1 =  6; z1 = -3; y2 =  6; z2 =  3; y3 = 6; z3 = 0; rot_x = 90; break;	// ^
-		case 9: 	y1 = -6; z1 =  3; y2 =  6; z2 = -3; y3 = 0; z3 = 0; rot_x = 210; break;	// >V
-		case 10:	y1 =  6; z1 = -3; y2 = -6; z2 =  3; y3 = 0; z3 = 0; rot_x = 30; break;	// <^
-		case 11:	y1 =  6; z1 =  3; y2 = -6; z2 = -3; y3 = 0; z3 = 0; rot_x = 330; break;	// <V
-		case 12:	y1 = -6; z1 = -3; y2 =  6; z2 =  3; y3 = 0; z3 = 0; rot_x = 150; break;	// >^
+		case 1: y1 = -3; z1 = 1.5; size = 1.5; break;
+		case 2: y1 = -3; z1 = 1.5; size = 1; break;
+		case 3: y1 = -3; z1 = 1.5; size = 0.5; break;
+		case 4: y1 = -3; z1 = 1.5; size = 0.25; break;
+		case 5: y1 = -6; z1 = 3; size = 1; break;
+		case 6: y1 = 0; z1 = 3; size = 1; break;
+		case 7: y1 = -6; z1 = 0; size = 1; break;
+		case 8: y1 = 0; z1 = 0; size = 1; break;	
 		default: break;
 	}
 	
-	vec3CopyFromFloat(objectSelect->_SIO2transform->loc, 0, y1, z1);
-	vec3CopyFromFloat(objectEnd->_SIO2transform->loc, 0, y2, z2);
-	vec3CopyFromFloat(objectArrow->_SIO2transform->loc, 0, y3, z3);
-	objectArrow->_SIO2transform->rot->y = rot_x;
+	yy = y1 + (float)(rand() % 600) / 100;
+	zz = z1 - (float)(rand() % 300) / 100;
+	
+	vec3CopyFromFloat(objectSelect->_SIO2transform->loc, 0, yy, zz);
+	vec3CopyFromFloat(objectSelect->_SIO2transform->scl, size, size, 0);
 
 	sio2TransformBindMatrix( objectSelect->_SIO2transform );
-	sio2TransformBindMatrix( objectEnd->_SIO2transform );
-	sio2TransformBindMatrix( objectArrow->_SIO2transform );
-	*/
+	
 }
 /*
 void recordGestureSequence() {
@@ -257,9 +253,12 @@ void templateRender( void ) {
 		
 		switch(taskState){
 			case 0:
-				strcpy( displayStr, "" );
+				render3DObjects = FALSE;
+				strcpy( displayStr, "Tab START!" );
 				break;
 			case 1:
+				selection = nil;
+				render3DObjects = TRUE;
 				generatePosition();
 				sprintf(displayStr, "Round: %d", taskState);
 				taskStartTime = lastTime = nowTime;
@@ -310,10 +309,7 @@ void templateRender( void ) {
 	{
 		switch(taskState){
 			case 0:
-				if (selection) {
-					stateStartFlag = TRUE;
-					taskState ++;
-				}
+
 				break;
 			case TASK_TOTAL_ROUND + 1:
 				//-------------------------------Edit for LogButton-----------------------------
@@ -325,13 +321,11 @@ void templateRender( void ) {
 				//------------------------------------------------------------------------------
 				break;
 			default:
-				/*
-				if (objectsAreNear( objectSelect, objectEnd )){
+				if (selection == objectSelect){
 					stateStartFlag = TRUE;
-				 AudioServicesPlaySystemSound(soundID);
+					AudioServicesPlaySystemSound(soundID);
 					taskState ++;
 				}
-				 */
 				break; 
 		
 		}
@@ -728,7 +722,7 @@ void templateLoading( void ) {
 	
 	sio2ResourceGenId( sio2->_SIO2resource );
 	
-	objectSelect = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Square" );
+	objectSelect = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Circle" );
 	//objectEnd    = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/End" );
 	//objectArrow  = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Arrow" );
 	
