@@ -68,4 +68,8 @@ void templateMoveCamera( void *_ptr ,float _detX, float _detY, float _detZ );
 void backTouchHandle(void *_ptr, int type, int index, float pt_x, float pt_y);
 
 void logToFile(NSString *logText, NSString *fileName);
+
+void RenderTransparentObject( void * o );
+
+
 #endif
