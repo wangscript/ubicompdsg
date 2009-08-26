@@ -29,7 +29,7 @@
 	};
 	28FD14FD0DC6FC130079059D /* EAGLView.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1651, 22620}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1651, 23300}}";
 			sepNavSelRange = "{25099, 0}";
 			sepNavVisRange = "{1826, 810}";
 		};
@@ -93,8 +93,8 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 272975335;
-			PBXWorkspaceStateSaveDate = 272975335;
+			PBXPerProjectTemplateStateSaveDate = 272984550;
+			PBXWorkspaceStateSaveDate = 272984550;
 		};
 		perUserProjectItems = {
 			7D1673451045369900B97F77 /* PBXTextBookmark */ = 7D1673451045369900B97F77 /* PBXTextBookmark */;
@@ -103,10 +103,10 @@
 			7D8A7F3410453236001FCF26 /* PBXTextBookmark */ = 7D8A7F3410453236001FCF26 /* PBXTextBookmark */;
 			7D918AF1103C3DDB00A1DC44 /* PlistBookmark */ = 7D918AF1103C3DDB00A1DC44 /* PlistBookmark */;
 			7D918AF4103C3DDB00A1DC44 /* PlistBookmark */ = 7D918AF4103C3DDB00A1DC44 /* PlistBookmark */;
-			7DBF04FA104549C100049E7B /* PBXTextBookmark */ = 7DBF04FA104549C100049E7B /* PBXTextBookmark */;
-			7DBF04FB104549C100049E7B /* PBXTextBookmark */ = 7DBF04FB104549C100049E7B /* PBXTextBookmark */;
-			7DBF04FC104549C100049E7B /* PBXTextBookmark */ = 7DBF04FC104549C100049E7B /* PBXTextBookmark */;
-			7DBF04FD104549C100049E7B /* PBXTextBookmark */ = 7DBF04FD104549C100049E7B /* PBXTextBookmark */;
+			7DBF059F10456A2000049E7B /* PBXTextBookmark */ = 7DBF059F10456A2000049E7B /* PBXTextBookmark */;
+			7DBF05A010456A2000049E7B /* PBXTextBookmark */ = 7DBF05A010456A2000049E7B /* PBXTextBookmark */;
+			7DBF05A110456A2000049E7B /* PBXTextBookmark */ = 7DBF05A110456A2000049E7B /* PBXTextBookmark */;
+			7DBF05A210456A2000049E7B /* PBXTextBookmark */ = 7DBF05A210456A2000049E7B /* PBXTextBookmark */;
 		};
 		sourceControlManager = 7D918A4D103C115600A1DC44 /* Source Control */;
 		userBuildSettings = {
@@ -214,37 +214,7 @@
 		rLen = 0;
 		rLoc = 2147483647;
 	};
-	7DBF04FA104549C100049E7B /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E0E310880E5EA40200F6D25F /* template.mm */;
-		name = "template.mm: 299";
-		rLen = 0;
-		rLoc = 8412;
-		rType = 0;
-		vrLen = 1257;
-		vrLoc = 8095;
-	};
-	7DBF04FB104549C100049E7B /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 28FD14FD0DC6FC130079059D /* EAGLView.mm */;
-		name = "EAGLView.mm: 47";
-		rLen = 55;
-		rLoc = 1134;
-		rType = 0;
-		vrLen = 1139;
-		vrLoc = 288;
-	};
-	7DBF04FC104549C100049E7B /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E0E310880E5EA40200F6D25F /* template.mm */;
-		name = "template.mm: 299";
-		rLen = 0;
-		rLoc = 8412;
-		rType = 0;
-		vrLen = 1257;
-		vrLoc = 8095;
-	};
-	7DBF04FD104549C100049E7B /* PBXTextBookmark */ = {
+	7DBF059F10456A2000049E7B /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 28FD14FD0DC6FC130079059D /* EAGLView.mm */;
 		name = "EAGLView.mm: 915";
@@ -253,6 +223,36 @@
 		rType = 0;
 		vrLen = 810;
 		vrLoc = 1826;
+	};
+	7DBF05A010456A2000049E7B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E0E310880E5EA40200F6D25F /* template.mm */;
+		name = "template.mm: 299";
+		rLen = 0;
+		rLoc = 8412;
+		rType = 0;
+		vrLen = 1257;
+		vrLoc = 8095;
+	};
+	7DBF05A110456A2000049E7B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 28FD14FD0DC6FC130079059D /* EAGLView.mm */;
+		name = "EAGLView.mm: 915";
+		rLen = 0;
+		rLoc = 25099;
+		rType = 0;
+		vrLen = 810;
+		vrLoc = 1826;
+	};
+	7DBF05A210456A2000049E7B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E0E310880E5EA40200F6D25F /* template.mm */;
+		name = "template.mm: 948";
+		rLen = 0;
+		rLoc = 29343;
+		rType = 0;
+		vrLen = 2061;
+		vrLoc = 28218;
 	};
 	8D1107310486CEB800E47090 /* Info.plist */ = {
 		uiCtxt = {
@@ -275,9 +275,9 @@
 	};
 	E0E310880E5EA40200F6D25F /* template.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1651, 20040}}";
-			sepNavSelRange = "{8412, 0}";
-			sepNavVisRange = "{8095, 1257}";
+			sepNavIntBoundsRect = "{{0, 0}, {1651, 19520}}";
+			sepNavSelRange = "{29343, 0}";
+			sepNavVisRange = "{28218, 2061}";
 		};
 	};
 }
