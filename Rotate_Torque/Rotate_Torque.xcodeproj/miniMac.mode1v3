@@ -278,8 +278,8 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>17</integer>
-									<integer>15</integer>
+									<integer>12</integer>
+									<integer>10</integer>
 									<integer>0</integer>
 								</array>
 							</array>
@@ -321,7 +321,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>template.mm</string>
+								<string>EAGLView.mm</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -329,17 +329,17 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>template.mm</string>
+										<string>EAGLView.mm</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>7D1673FE10453B3900B97F77</string>
+										<string>7DBF04FD104549C100049E7B</string>
 										<key>history</key>
 										<array>
 											<string>7D918AF1103C3DDB00A1DC44</string>
 											<string>7D8A7F3410453236001FCF26</string>
-											<string>7D1673FA10453B3900B97F77</string>
-											<string>7D1673FB10453B3900B97F77</string>
+											<string>7DBF04FA104549C100049E7B</string>
+											<string>7DBF04FB104549C100049E7B</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -347,8 +347,7 @@
 											<string>7D18371D103EA0780067F566</string>
 											<string>7D8A7EC110452BA3001FCF26</string>
 											<string>7D1673451045369900B97F77</string>
-											<string>7D1673FC10453B3900B97F77</string>
-											<string>7D1673FD10453B3900B97F77</string>
+											<string>7DBF04FC104549C100049E7B</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -406,9 +405,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>7D1673FF10453B3900B97F77</string>
+				<string>7DBF04FE104549C100049E7B</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>7D16740010453B3900B97F77</string>
+				<string>7DBF04FF104549C100049E7B</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -542,7 +541,11 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
+		<string>7DBF0508104549C100049E7B</string>
+		<string>7DBF0509104549C100049E7B</string>
 		<string>1CD10A99069EF8BA00B06720</string>
+		<string>7D918A8F103C222D00A1DC44</string>
+		<string>1C78EAAD065D492600B07095</string>
 		<string>/Users/miniMac/Desktop/DSG_SVN/Rotate_Torque/Rotate_Torque.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
@@ -623,7 +626,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>7D918A8F103C222D00A1DC44</string>
-				<string>7D8A7EE710452CA4001FCF26</string>
+				<string>7DBF0500104549C100049E7B</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -743,13 +746,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1CD10A99069EF8BA00B06720</string>
-				<string>7D16740110453B3900B97F77</string>
+				<string>7DBF0501104549C100049E7B</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>7D16740210453B3900B97F77</string>
-				<string>7D16740310453B3900B97F77</string>
-				<string>7D16740410453B3900B97F77</string>
-				<string>7D16740510453B3900B97F77</string>
-				<string>7D16740610453B3900B97F77</string>
+				<string>7DBF0502104549C100049E7B</string>
+				<string>7DBF0503104549C100049E7B</string>
+				<string>7DBF0504104549C100049E7B</string>
+				<string>7DBF0505104549C100049E7B</string>
+				<string>7DBF0506104549C100049E7B</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -903,7 +906,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C78EAAD065D492600B07095</string>
-				<string>7D8A7EEE10452CA4001FCF26</string>
+				<string>7DBF0507104549C100049E7B</string>
 				<string>1C78EAAC065D492600B07095</string>
 			</array>
 			<key>ToolbarConfiguration</key>
