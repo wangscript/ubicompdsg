@@ -326,6 +326,7 @@ void templateRender( void ) {
 				if (taskType[taskState - 1] == 1) {
 					if (objectsAreInSameSize( objectSelect, objectEnd )){
 						stateStartFlag = TRUE;
+						AudioServicesPlaySystemSound(soundID);
 						taskState ++;
 					}
 				}
