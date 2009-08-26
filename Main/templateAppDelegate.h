@@ -25,7 +25,6 @@
 	BOOL				_inReady;
 	BOOL				_outReady;
 	IBOutlet UIButton  *logButton;
-	IBOutlet UIButton  *startButton;
 	IBOutlet UITextField *filename;
 			   
 	int myNumber;
@@ -36,13 +35,12 @@
 //- (void) transmitTouch: (CGPoint)point andNum: (int)num andType: (int)type;
 //- (void) transmitTouchAtSameTime: (int*)touchIdx andCount: (int)count;
 
-- (IBAction) showLogButton; 
-- (IBAction) hidStartButton; 
+- (IBAction) showLogButton;
+- (IBAction) hidLogButton;
 
 @property (nonatomic, retain) UIWindow *_window;
 @property (nonatomic, retain) EAGLView *glView;
 @property (nonatomic, retain) IBOutlet UIButton  *logButton;
-@property (nonatomic, retain) IBOutlet UIButton  *startButton;
 @property (nonatomic, retain) IBOutlet UITextField *filename;
 
 //- (void) send:(const uint32_t)message;

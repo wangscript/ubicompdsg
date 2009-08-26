@@ -43,7 +43,7 @@ BOOL strtDebug = YES;
 
 #pragma mark -
 extern NSString *FILENAME;
-extern int taskState;
+extern char taskState;
 extern bool positionRegenerated;
 
 extern NSMutableArray	*gestureSequence;
@@ -56,8 +56,6 @@ extern bool             isAllTaskFinished;
 extern bool             isReadyToLog;
 
 extern vec2				*selectionPosition;
-
-
 
 //
 extern int movement[100];
@@ -1046,24 +1044,20 @@ static int _degree_counter = 0; // Counter for rotate 90 degree
 
 - (void) logButtonPredded:(id) sender
 {
-	isReadyToLog = YES;
-	printf("Start Log!\n");
-	templateAppDelegate* appdel = (templateAppDelegate*)[[UIApplication sharedApplication] delegate];
-	FILENAME = [[NSString alloc] initWithString:[appdel.filename text]];
-	NSLog(FILENAME);
-}
-
-
-- (void) startButtonPredded:(id) sender
-{
-	printf("Start Button!\n");
-	positionRegenerated = FALSE;
-	taskState = 1;
-	/*templateAppDelegate* appdel = (templateAppDelegate*)[[UIApplication sharedApplication] delegate];
-	IBOutlet UIButton *button = appdel.startButton;
-	button.hidden = YES;*/
-	[(templateAppDelegate*)[[UIApplication sharedApplication] delegate] hidStartButton ];
+	printf("taskState = %d\n",taskState);
 	
+	if(taskState == 0){
+		printf("Start!\n");
+		positionRegenerated = FALSE;
+		taskState = 1;
+		[(templateAppDelegate*)[[UIApplication sharedApplication] delegate] hidLogButton];
+	}else{
+	     isReadyToLog = YES;
+		printf("Start Log!\n");
+		templateAppDelegate* appdel = (templateAppDelegate*)[[UIApplication sharedApplication] delegate];
+		FILENAME = [[NSString alloc] initWithString:[appdel.filename text]];
+		NSLog(FILENAME);
+	}
 }
 
 

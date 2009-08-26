@@ -231,8 +231,6 @@
 			<key>Layout</key>
 			<array>
 				<dict>
-					<key>BecomeActive</key>
-					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -314,6 +312,8 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -331,12 +331,12 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>7D8A7D8B1043E675001FCF26</string>
+										<string>7D8A7EB010452B93001FCF26</string>
 										<key>history</key>
 										<array>
 											<string>7D95AF5B10417CB1001FA344</string>
 											<string>7D4B809F10418C7D00323537</string>
-											<string>7D8A7D8A1043E675001FCF26</string>
+											<string>7D8A7D8B1043E675001FCF26</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -400,9 +400,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>7D8A7D8C1043E675001FCF26</string>
+				<string>7D8A7EB110452B93001FCF26</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>7D8A7D8D1043E675001FCF26</string>
+				<string>7D8A7EB210452B93001FCF26</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -661,8 +661,8 @@
 										<string>yes</string>
 										<key>sizes</key>
 										<array>
-											<string>{{0, 0}, {316, 201}}</string>
-											<string>{{316, 0}, {378, 201}}</string>
+											<string>{{0, 0}, {316, 202}}</string>
+											<string>{{316, 0}, {378, 202}}</string>
 										</array>
 									</dict>
 									<key>VerticalSplitView</key>
@@ -677,8 +677,8 @@
 										<string>yes</string>
 										<key>sizes</key>
 										<array>
-											<string>{{0, 0}, {694, 201}}</string>
-											<string>{{0, 201}, {694, 180}}</string>
+											<string>{{0, 0}, {694, 202}}</string>
+											<string>{{0, 202}, {694, 179}}</string>
 										</array>
 									</dict>
 								</dict>
@@ -711,7 +711,7 @@
 										<real>148</real>
 									</array>
 									<key>Frame</key>
-									<string>{{316, 0}, {378, 201}}</string>
+									<string>{{316, 0}, {378, 202}}</string>
 									<key>RubberWindowFrame</key>
 									<string>42 710 694 422 0 0 1920 1178 </string>
 								</dict>
@@ -739,13 +739,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1CD10A99069EF8BA00B06720</string>
-				<string>7D8A7D8E1043E675001FCF26</string>
+				<string>7D8A7EB310452B93001FCF26</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>7D8A7D8F1043E675001FCF26</string>
-				<string>7D8A7D901043E675001FCF26</string>
-				<string>7D8A7D911043E675001FCF26</string>
-				<string>7D8A7D921043E675001FCF26</string>
-				<string>7D8A7D931043E675001FCF26</string>
+				<string>7D8A7EB410452B93001FCF26</string>
+				<string>7D8A7EB510452B93001FCF26</string>
+				<string>7D8A7EB610452B93001FCF26</string>
+				<string>7D8A7EB710452B93001FCF26</string>
+				<string>7D8A7EB810452B93001FCF26</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
