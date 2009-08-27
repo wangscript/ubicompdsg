@@ -403,10 +403,10 @@ void templateRender( void ) {
 				
 				sio2CameraUpdateFrustum( sio2->_SIO2camera );
 				sio2ResourceCull( sio2->_SIO2resource, sio2->_SIO2camera );		
-				sio2ResourceRender( sio2->_SIO2resource,
-								   sio2->_SIO2window,
-								   sio2->_SIO2camera,
-								   SIO2_RENDER_SOLID_OBJECT);
+				
+				RenderSolidObject( rotateObject );
+				for( int j=0; j<5; j++)
+					RenderSolidObject( backVisual[ j ] );
 				
 				// Make Selection: ------------------------------------------------------------------
 				for(int i=0; i<5; i++)
@@ -472,12 +472,13 @@ void templateRender( void ) {
 				}				
 
 				
-				sio2CameraUpdateFrustum( sio2->_SIO2camera );
+				/*sio2CameraUpdateFrustum( sio2->_SIO2camera );
 				sio2ResourceCull( sio2->_SIO2resource, sio2->_SIO2camera );		
 				sio2ResourceRender( sio2->_SIO2resource,
 								   sio2->_SIO2window,
 								   sio2->_SIO2camera,
-								   SIO2_RENDER_SOLID_OBJECT  );
+								   SIO2_RENDER_SOLID_OBJECT  );*/
+				
 				//Visual Feedback for Selection ( including initializing the selection material):
 				if(selection)
 				{
@@ -503,10 +504,13 @@ void templateRender( void ) {
 					
 					sio2ObjectRender( selection, sio2->_SIO2window, sio2->_SIO2camera, 0, SIO2_TRANSFORM_MATRIX_BIND );
 				}
-				sio2ResourceRender( sio2->_SIO2resource,
-								   sio2->_SIO2window,
-								   sio2->_SIO2camera,
-								   SIO2_RENDER_TRANSPARENT_OBJECT);				
+				
+				
+				
+				RenderTransparentObject( arrowObject );
+				for( int j=0; j<5; j++)
+					RenderTransparentObject( frontVisual[ j ] );
+				
 				sio2ObjectReset();
 				sio2MaterialReset();
 			}
@@ -886,33 +890,34 @@ void backTouchHandle(void *_ptr, int type, int index, float pt_x, float pt_y) {
 	
 	switch (type) {
 		case 1: // Add a point
-			backIsUsed[index] = TRUE;
-			backTouchPoint[index] = pt;
-			
-			//Reset the position of the plane indicating the back-side finger:
-			SIO2object* obj1 = backVisual[index];
-			if(obj1)
 			{
-				obj1->_SIO2transform->loc->z = 0.057* ( pt.x - 320/2) ;
-				obj1->_SIO2transform->loc->y = 0.057* ( pt.y - 480/2);
+				backIsUsed[index] = TRUE;
+				backTouchPoint[index] = pt;
+				
+				//Reset the position of the plane indicating the back-side finger:
+				SIO2object* obj1 = backVisual[index];
+				if(obj1)
+				{
+					obj1->_SIO2transform->loc->z = 0.057* ( pt.x - 320/2) ;
+					obj1->_SIO2transform->loc->y = 0.057* ( pt.y - 480/2);
+				}
 			}
 			break;
 		case 2: // Modify a point
-			
-			//Move the plane indicating the back-side finger:
-			SIO2object* obj2 = backVisual[index];
-			if(obj2)
-			{
-				vec2 d; 
-				d.x = pt.x - backTouchPoint[index].x;
-				d.y = pt.y - backTouchPoint[index].y;
+			{//Move the plane indicating the back-side finger:
+				SIO2object* obj2 = backVisual[index];
+				if(obj2)
+				{
+					vec2 d; 
+					d.x = pt.x - backTouchPoint[index].x;
+					d.y = pt.y - backTouchPoint[index].y;
+					
+					obj2->_SIO2transform->loc->z += d.x*0.057;
+					obj2->_SIO2transform->loc->y += d.y*0.057;
+				}
 				
-				obj2->_SIO2transform->loc->z += d.x*0.057;
-				obj2->_SIO2transform->loc->y += d.y*0.057;
-			}
-			
-			backTouchPoint[index] = pt;
-			
+				backTouchPoint[index] = pt;
+			}	
 			break;
 		case 3: // Delete a point
 			backIsUsed[index] = FALSE;
@@ -983,5 +988,86 @@ void logToFile(NSString *logText, NSString *fileName) {
 		[outFile writeData: data];
 		[outFile closeFile];
 	}	
+	
+}
+
+#pragma mark -
+#pragma mark HELP FUNCTION FOR VISUAL FEEDBACK
+
+void RenderTransparentObject ( void* obj )
+{
+	unsigned int j,
+	n_transp = 0;
+	
+	void *ptr,
+	**_SIO2transp = NULL;		
+	SIO2object* theObject = (SIO2object* ) obj;
+	
+	
+	if( (theObject->type & SIO2_OBJECT_TRANSPARENT ) && theObject->dst )
+	{
+		++n_transp;
+		_SIO2transp = ( void ** ) realloc( _SIO2transp,
+										  n_transp * sizeof( void * ) );
+		
+		_SIO2transp[ n_transp - 1 ] = theObject;
+	}
+	
+	
+	
+	
+	int i = 0;
+	while( i != n_transp )
+	{
+		j = 0;
+		while( j != ( n_transp - 1 ) )
+		{
+			SIO2object *a = ( SIO2object * )_SIO2transp[ j     ],
+			*b = ( SIO2object * )_SIO2transp[ j + 1 ];
+			
+			if( a->dst < b->dst )
+			{
+				ptr = _SIO2transp[ j + 1 ];
+				_SIO2transp[ j + 1 ] = _SIO2transp[ j ];
+				_SIO2transp[ j     ] = ptr;
+			}
+			++j;
+		}
+		
+		++i;
+	}
+	
+	
+	i = 0;
+	while( i != n_transp )
+	{
+		sio2ObjectRender( ( SIO2object * )_SIO2transp[ i ],
+						 sio2->_SIO2window,			
+						 sio2->_SIO2camera,
+						 !( SIO2_RENDER_TRANSPARENT_OBJECT & SIO2_RENDER_NO_MATERIAL ),
+						 !( SIO2_RENDER_TRANSPARENT_OBJECT & SIO2_RENDER_NO_MATRIX ) );
+		++i;
+	}
+	
+	
+	if( _SIO2transp )
+	{
+		free( _SIO2transp );
+		_SIO2transp = NULL;
+	}
+}
+
+void RenderSolidObject( void* obj)
+{
+	SIO2object *_SIO2object = ( SIO2object * )obj;
+	
+	if( ( _SIO2object->type & SIO2_OBJECT_SOLID ) && _SIO2object->dst )
+	{
+		sio2ObjectRender( _SIO2object,
+						 sio2->_SIO2window,			
+						 sio2->_SIO2camera,
+						 !( SIO2_RENDER_SOLID_OBJECT & SIO2_RENDER_NO_MATERIAL ),
+						 !( SIO2_RENDER_SOLID_OBJECT & SIO2_RENDER_NO_MATRIX ) );
+	}
 	
 }

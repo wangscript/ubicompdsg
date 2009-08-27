@@ -70,4 +70,8 @@ void logToFile(NSString *logText, NSString *fileName);
 
 void generateLogFormat();
 
+void RenderTransparentObject ( void* obj );
+
+void RenderSolidObject( void* obj );
+
 #endif
