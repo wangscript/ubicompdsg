@@ -334,19 +334,18 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>7DBF0590104569C000049E7B</string>
+										<string>7D977E331047D956001D3E44</string>
 										<key>history</key>
 										<array>
 											<string>7D95AF5B10417CB1001FA344</string>
 											<string>7DBF058C104569C000049E7B</string>
-											<string>7DBF058D104569C000049E7B</string>
+											<string>7DBF0590104569C000049E7B</string>
 										</array>
 										<key>prevStack</key>
 										<array>
 											<string>7D95AF5D10417CB1001FA344</string>
 											<string>7D95AF5E10417CB1001FA344</string>
 											<string>7DBF058E104569C000049E7B</string>
-											<string>7DBF058F104569C000049E7B</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -404,9 +403,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>7DBF0591104569C000049E7B</string>
+				<string>7D977E341047D956001D3E44</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>7DBF0592104569C000049E7B</string>
+				<string>7D977E351047D956001D3E44</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -540,6 +539,11 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
+		<string>7D977E361047D956001D3E44</string>
+		<string>7D977E371047D956001D3E44</string>
+		<string>1C78EAAD065D492600B07095</string>
+		<string>1CD10A99069EF8BA00B06720</string>
+		<string>7D95AF4D10417BE5001FA344</string>
 		<string>/Users/miniMac/Desktop/DSG_SVN/Drag_Hybrid/Drag_Hybrid.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
@@ -620,7 +624,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>7D95AF4D10417BE5001FA344</string>
-				<string>7DBF04D01045451800049E7B</string>
+				<string>7D977E2B1047D954001D3E44</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -740,13 +744,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1CD10A99069EF8BA00B06720</string>
-				<string>7DBF04D3104545D900049E7B</string>
+				<string>7D977E2C1047D954001D3E44</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>7DBF04D4104545D900049E7B</string>
-				<string>7DBF04D5104545D900049E7B</string>
-				<string>7DBF04D6104545D900049E7B</string>
-				<string>7DBF04D7104545D900049E7B</string>
-				<string>7DBF04D8104545D900049E7B</string>
+				<string>7D977E2D1047D954001D3E44</string>
+				<string>7D977E2E1047D954001D3E44</string>
+				<string>7D977E2F1047D954001D3E44</string>
+				<string>7D977E301047D954001D3E44</string>
+				<string>7D977E311047D954001D3E44</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -902,7 +906,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C78EAAD065D492600B07095</string>
-				<string>7DBF04D9104545D900049E7B</string>
+				<string>7D977E321047D954001D3E44</string>
 				<string>1C78EAAC065D492600B07095</string>
 			</array>
 			<key>ToolbarConfiguration</key>
