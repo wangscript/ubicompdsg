@@ -91,18 +91,18 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 273143774;
-			PBXWorkspaceStateSaveDate = 273143774;
+			PBXPerProjectTemplateStateSaveDate = 273144067;
+			PBXWorkspaceStateSaveDate = 273144067;
 		};
 		perUserProjectItems = {
 			7D16747410453CD500B97F77 /* PBXTextBookmark */ = 7D16747410453CD500B97F77 /* PBXTextBookmark */;
 			7D95AF5D10417CB1001FA344 /* PBXTextBookmark */ = 7D95AF5D10417CB1001FA344 /* PBXTextBookmark */;
 			7D977DD31047D7FA001D3E44 /* PBXTextBookmark */ = 7D977DD31047D7FA001D3E44 /* PBXTextBookmark */;
+			7D977E161047D92A001D3E44 /* PBXTextBookmark */ = 7D977E161047D92A001D3E44 /* PBXTextBookmark */;
 			7DBF051110455B4700049E7B /* PBXTextBookmark */ = 7DBF051110455B4700049E7B /* PBXTextBookmark */;
 			7DBF051210455B4700049E7B /* PBXBookmark */ = 7DBF051210455B4700049E7B /* PBXBookmark */;
 			7DBF051410455B4700049E7B /* PBXTextBookmark */ = 7DBF051410455B4700049E7B /* PBXTextBookmark */;
 			7DBF051510455B4700049E7B /* PBXBookmark */ = 7DBF051510455B4700049E7B /* PBXBookmark */;
-			7DBF051610455B4700049E7B /* PBXTextBookmark */ = 7DBF051610455B4700049E7B /* PBXTextBookmark */;
 		};
 		sourceControlManager = 7D95AF281041792D001FA344 /* Source Control */;
 		userBuildSettings = {
@@ -175,6 +175,16 @@
 		vrLen = 1838;
 		vrLoc = 6664;
 	};
+	7D977E161047D92A001D3E44 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E0E310880E5EA40200F6D25F /* template.mm */;
+		name = "template.mm: 243";
+		rLen = 0;
+		rLoc = 8133;
+		rType = 0;
+		vrLen = 1838;
+		vrLoc = 6664;
+	};
 	7DBF051110455B4700049E7B /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 28FD14FC0DC6FC130079059D /* EAGLView.h */;
@@ -203,16 +213,6 @@
 		isa = PBXBookmark;
 		fRef = 88FACB541042D89400CFE225 /* Icon.png */;
 	};
-	7DBF051610455B4700049E7B /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = E0E310880E5EA40200F6D25F /* template.mm */;
-		name = "template.mm: 230";
-		rLen = 0;
-		rLoc = 7117;
-		rType = 0;
-		vrLen = 1960;
-		vrLoc = 5953;
-	};
 	E0E310870E5EA40200F6D25F /* template.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1518, 1580}}";
@@ -222,7 +222,7 @@
 	};
 	E0E310880E5EA40200F6D25F /* template.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1541.92, 20380}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1541.92, 20520}}";
 			sepNavSelRange = "{8133, 0}";
 			sepNavVisRange = "{6664, 1838}";
 		};
