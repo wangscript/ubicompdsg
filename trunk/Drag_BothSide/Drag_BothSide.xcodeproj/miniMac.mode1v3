@@ -333,13 +333,13 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>7DBF051610455B4700049E7B</string>
+										<string>7D977DD31047D7FA001D3E44</string>
 										<key>history</key>
 										<array>
 											<string>7D16747410453CD500B97F77</string>
 											<string>7DBF051110455B4700049E7B</string>
 											<string>7DBF051210455B4700049E7B</string>
-											<string>7DBF051310455B4700049E7B</string>
+											<string>7DBF051610455B4700049E7B</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -403,9 +403,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>7DBF051710455B4700049E7B</string>
+				<string>7D977DD41047D7FA001D3E44</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>7DBF051810455B4700049E7B</string>
+				<string>7D977DD51047D7FA001D3E44</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -539,11 +539,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>7DBF052110455B4700049E7B</string>
-		<string>7DBF052210455B4700049E7B</string>
-		<string>1CD10A99069EF8BA00B06720</string>
-		<string>7D95AF4D10417BE5001FA344</string>
-		<string>1C78EAAD065D492600B07095</string>
 		<string>/Users/miniMac/Desktop/DSG_SVN/Drag_BothSide/Drag_BothSide.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
