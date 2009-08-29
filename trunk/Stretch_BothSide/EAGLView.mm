@@ -164,6 +164,8 @@ BOOL isDebug = YES;
 		strtState  = NO;
 		strtExpand = NO;
 		isStrtHalt = NO;
+		
+		isBeforeHalt = NO;
 
 		newestSingleIdx    = 5;
 		newestDoubleIdx[0] = 5;
@@ -421,7 +423,7 @@ BOOL isDebug = YES;
 	TouchPoint *tp1, *tp2, *tp3, *tp4;
 	// Algmemted Part for STRETCH: -------------------------------------------------------------------
 	if(!strtState) 
-	{   
+	{   /*
 		//CASE1: 其中一組DragPair已經產生：
 	    if(dragState && newestDragFrontIdx[0]<5 && newestDragFrontIdx[1]<5 && newestDragBackIdx[0]<5 && newestDragBackIdx[1]<5)
 		{
@@ -464,8 +466,9 @@ BOOL isDebug = YES;
 				[self strtBegan:tp1._point andPoint:tp3._point ];
 			}
 		}
+	 */
 		//CASE3: 尚未有FlipPair或DragPair生成:
-		else if(newestDragFrontIdx[0]<5 && newestDragFrontIdx[1]<5 && newestDragBackIdx[0]<5 && newestDragBackIdx[1]<5) 
+		if(newestDragFrontIdx[0]<5 && newestDragFrontIdx[1]<5 && newestDragBackIdx[0]<5 && newestDragBackIdx[1]<5) 
 		{
 			tp1 = [self.frontLoc objectAtIndex: newestDragFrontIdx[0]];
 			tp2 = [self.frontLoc objectAtIndex: newestDragFrontIdx[1]];
@@ -529,6 +532,26 @@ BOOL isDebug = YES;
 			}
 		
 	
+	}
+	if (strtState && isBeforeHalt &&  newestDragFrontIdx[0] < 5){
+		
+		if (strtPairIdx[0] == 5){
+			strtPairIdx[0] = newestDragFrontIdx[0];
+			tp3 = [self.frontLoc objectAtIndex:strtPairIdx[2]];
+		}
+		else if (strtPairIdx[2] == 5){
+			strtPairIdx[2] = newestDragFrontIdx[0];
+			tp3 = [self.frontLoc objectAtIndex:strtPairIdx[0]];
+		}
+		
+		if(isDebug) printf("Started from Stretch BeforeHalted ---------------\n");
+		
+		tp1 = [self.frontLoc objectAtIndex: newestDragFrontIdx[0]];	
+			
+			
+		tempStrtDistance = sqrt(pow(tp1._point.x - tp3._point.x, 2)+pow(tp1._point.y - tp3._point.y, 2));
+			
+		isBeforeHalt = NO;
 	}
 	// Algmented Part for DRAG: ----------------------------------------------------------------------
 	if(!strtState && !dragState && newestDragFrontIdx[0]<5 && newestDragBackIdx[0]<5) 
@@ -723,7 +746,7 @@ BOOL isDebug = YES;
 		}
 	}
 	// Algmented Part for STRETCH: -------------------------------------------------------------------------------------------
-	if(strtState && !isStrtHalt)
+	if(strtState && !isStrtHalt && !isBeforeHalt)
 	{//NOTE: 判斷stretch的move只需要判斷正面的那兩點
 		tp1 = [self.frontLoc objectAtIndex: strtPairIdx[0]];
 		tp2 = [self.frontLoc  objectAtIndex: strtPairIdx[2]];
@@ -772,7 +795,19 @@ BOOL isDebug = YES;
 				if (strtState && strtPairIdx[0] == num && !isStrtHalt ) [self strtHaltWithIndex:0];
 				if (strtState && strtPairIdx[2] == num && !isStrtHalt ) [self strtHaltWithIndex:2];				
 				if (strtState && strtPairIdx[0] == i && isStrtHalt ) [self strtEnded];
-				
+				//=======================================================
+				if (strtState && strtPairIdx[0] == i && !isStrtHalt){
+					strtPairIdx[0] = 5;
+					if (strtPairIdx[2] != 5) isBeforeHalt = YES;
+					else [self strtEnded];
+					
+				}
+				else if (strtState && strtPairIdx[2] == i && !isStrtHalt){
+					strtPairIdx[2] = 5;
+					if (strtPairIdx[0] != 5) isBeforeHalt = YES;
+					else [self strtEnded];
+				}
+				//=======================================================
 				if (newestDragFrontIdx[0] == i) newestDragFrontIdx[0] = 5;
 				if (newestDragFrontIdx[1] == i) newestDragFrontIdx[1] = 5;
 				if (newestFlipFrontIdx    == i) newestFlipFrontIdx    = 5;
@@ -1208,6 +1243,7 @@ BOOL isDebug = YES;
 	strtPairIdx[2] = 5;
 	strtPairIdx[3] = 5;
 	isStrtHalt = YES;
+	isBeforeHalt = NO;
 }
 
 
@@ -1216,6 +1252,8 @@ BOOL isDebug = YES;
 	strtState  = NO;
 	strtExpand = NO;
 	isStrtHalt = NO;
+	isBeforeHalt = NO;
+	
 	newestDragFrontIdx[0] = 5;
 	newestDragFrontIdx[1] = 5;
 	newestDragBackIdx[0]  = 5;

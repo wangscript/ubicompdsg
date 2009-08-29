@@ -54,6 +54,8 @@ Note that setting the view non-opaque will only work if the EAGL surface has an 
 	BOOL strtExpand;
 	BOOL isStrtHalt;
 	
+	BOOL isBeforeHalt;
+	
 	int  newestDragFrontIdx[2];
 	int  newestDragBackIdx[2];
 	int  newestFlipFrontIdx;
