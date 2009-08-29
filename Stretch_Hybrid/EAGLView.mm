@@ -298,18 +298,15 @@ BOOL isDebug = YES;
 	self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:animationInterval target:self selector:@selector(drawView) userInfo:nil repeats:YES];
 }
 
-
 - (void)stopAnimation {
 	self.animationTimer = nil;
 }
-
 
 - (void)setAnimationTimer:(NSTimer *)newTimer {
 	[animationTimer invalidate];
 	animationTimer = newTimer;
 }
-
-
+ 
 - (void)setAnimationInterval:(NSTimeInterval)interval {
 	
 	animationInterval = interval;
@@ -318,7 +315,6 @@ BOOL isDebug = YES;
 		[self startAnimation];
 	}
 }
-
 
 - (void)dealloc {
 	
@@ -577,7 +573,7 @@ BOOL isDebug = YES;
 	}
 	// -----------------------------------------------------------------------------------------------
 
-	
+	/*
 	
 	// 當只有偵測到一個指頭：
 	if( sio2->_SIO2window->n_touch == 1 && !cameraDiveState && newestSingleIdx<5 )
@@ -609,6 +605,7 @@ BOOL isDebug = YES;
 		cameraDiveIdx[1] = newestDoubleIdx[1];
 		[self cameraDiveBegan:tp1._point andPoint:tp2._point];
 	}
+	*/
 	
 	return index;
 }
@@ -744,7 +741,7 @@ BOOL isDebug = YES;
 	    strtPrevDistance = strtNewDistance;
 	}
 	// -----------------------------------------------------------------------------------------------------------------------
-	
+	/*
 	if(cameraMoveState)
 	{
 		tp1 = [self.frontLoc objectAtIndex: cameraMoveIdx];
@@ -756,7 +753,7 @@ BOOL isDebug = YES;
 		tp2 = [self.frontLoc objectAtIndex: cameraDiveIdx[1]];
 		[self cameraDiveMoved: tp1._point andPoint: tp2._point];
 	}
-	
+	*/
 
 	return i;
 }
