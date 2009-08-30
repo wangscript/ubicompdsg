@@ -1002,7 +1002,7 @@ void RenderTransparentObject ( void* obj )
 	void *ptr,
 	**_SIO2transp = NULL;		
 	SIO2object* theObject = (SIO2object* ) obj;
-	
+	theObject->dst = 1.0f;
 	
 	if( (theObject->type & SIO2_OBJECT_TRANSPARENT ) && theObject->dst )
 	{
@@ -1060,6 +1060,7 @@ void RenderTransparentObject ( void* obj )
 void RenderSolidObject( void* obj)
 {
 	SIO2object *_SIO2object = ( SIO2object * )obj;
+	_SIO2object->dst = 1.0f;
 	
 	if( ( _SIO2object->type & SIO2_OBJECT_SOLID ) && _SIO2object->dst )
 	{
