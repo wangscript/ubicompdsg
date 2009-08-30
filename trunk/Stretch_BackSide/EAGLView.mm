@@ -414,10 +414,12 @@ BOOL isDebug = YES;
 		fingersOnBack = TRUE;
 	}
 	
-	TouchPoint *tp1, *tp2, *tp3, *tp4;
+	TouchPoint *tp1, *tp2;
+	
+	/*
 	// Algmemted Part for STRETCH: -------------------------------------------------------------------
 	if(!strtState) 
-	{   /*
+	{   
 		//CASE1: 其中一組DragPair已經產生：
 	    if(dragState && newestDragFrontIdx[0]<5 && newestDragFrontIdx[1]<5 && newestDragBackIdx[0]<5 && newestDragBackIdx[1]<5)
 		{
@@ -460,7 +462,7 @@ BOOL isDebug = YES;
 				[self strtBegan:tp1._point andPoint:tp3._point ];
 			}
 		}
-	 */
+	 
 		//CASE3: 尚未有FlipPair或DragPair生成:
 		if(newestDragFrontIdx[0]<5 && newestDragFrontIdx[1]<5 && newestDragBackIdx[0]<5 && newestDragBackIdx[1]<5) 
 		{
@@ -498,9 +500,6 @@ BOOL isDebug = YES;
 				strtPairIdx[3] = newestDragBackIdx[0];	
 				[self strtBegan:tp3._point andPoint:tp4._point];
 			}
-			
-			
-				
 				
 		}
 	}
@@ -608,6 +607,34 @@ BOOL isDebug = YES;
 	}
 	*/
 	
+	if (!strtState && newestDragBackIdx[0] < 5 && newestDragBackIdx[1] < 5){
+		tp1 = [self.backLoc objectAtIndex: newestDragBackIdx[0]];
+		tp2 = [self.backLoc objectAtIndex: newestDragBackIdx[1]];
+		strtPairIdx[0] = newestDragBackIdx[0];
+		strtPairIdx[1] = newestDragBackIdx[1];
+		
+		[self strtBegan: tp1._point andPoint: tp2._point];
+	}
+	else if (!strtState && newestDragBackIdx[0] < 5){
+		tp1 = [self.backLoc objectAtIndex: newestDragBackIdx[0]];
+		[self dragBegan: tp1._point];
+	}
+	
+	if (strtState && isStrtHalt && newestDragBackIdx[0] < 5 && newestDragBackIdx[1] < 5){
+		printf("Started from Stretch Halted\n");
+		tp1 = [self.backLoc objectAtIndex: newestDragBackIdx[0]];
+		
+		strtPairIdx[0] = newestDragBackIdx[0];
+		strtPairIdx[1] = newestDragBackIdx[1];
+		
+		tp2 = [self.backLoc objectAtIndex: newestDragBackIdx[1]];
+		
+		tempStrtDistance = sqrt(pow(tp1._point.x - tp2._point.x, 2)+pow(tp1._point.y - tp2._point.y, 2));
+		
+		isStrtHalt = NO;
+	}
+	
+	
 	return index;
 }
 
@@ -641,7 +668,7 @@ BOOL isDebug = YES;
 									 );
 		i = num;
 	}
-	
+	/*
 	// Algmented Part For DRAG: ----------------------------------------------------------------------------------------------
 	if(dragState) 
 	{
@@ -682,6 +709,7 @@ BOOL isDebug = YES;
 	}	
 	// Algmented Part for FLIP: ----------------------------------------------------------------------------------------------
 	if(flipState)
+	 */
 	{
 		tp1 = [self.frontLoc objectAtIndex: flipPairIdx[0]];
 		tp2 = [self.backLoc  objectAtIndex: flipPairIdx[1]];
@@ -723,8 +751,8 @@ BOOL isDebug = YES;
 	// Algmented Part for STRETCH: -------------------------------------------------------------------------------------------
 	if(strtState && !isStrtHalt)
 	{//NOTE: 判斷stretch的move只需要判斷正面的那兩點
-		tp1 = [self.backLoc objectAtIndex: strtPairIdx[1]];
-		tp2 = [self.backLoc  objectAtIndex: strtPairIdx[3]];
+		tp1 = [self.backLoc objectAtIndex: strtPairIdx[0]];
+		tp2 = [self.backLoc  objectAtIndex: strtPairIdx[1]];
 		
 		double strtNewDistance;
 		strtNewDistance = pow( tp1._point.x - tp2._point.x, 2 ) + pow( tp1._point.y - tp2._point.y, 2);
@@ -787,7 +815,7 @@ BOOL isDebug = YES;
 		for(i = 0 ; i < 5 ; i++){
 			tempPtr = [self.frontLoc objectAtIndex:i];
 			if(tempPtr._touch == touch){
-				
+				/*
 				if (strtState && strtPairIdx[0] == num && !isStrtHalt ) [self strtHaltWithIndex:0];
 				if (strtState && strtPairIdx[2] == num && !isStrtHalt ) [self strtHaltWithIndex:2];				
 				if (strtState && strtPairIdx[0] == i && isStrtHalt ) [self strtEnded];
@@ -801,7 +829,7 @@ BOOL isDebug = YES;
 				if( newestSingleIdx    == i) newestSingleIdx    = 5;
 				if( newestDoubleIdx[0] == i) newestDoubleIdx[0] = 5;
 				if( newestDoubleIdx[1] == i) newestDoubleIdx[1] = 5;
-					
+				*/
 				 isUsed[i]=FALSE;
 				//return i;
 				break;
@@ -813,16 +841,26 @@ BOOL isDebug = YES;
 		fingersOnFront = hasFingers;
 	}
 	else{
-		
+		/*
 		if (dragState && dragPairIdx[1] == num) [self dragEnded];
 		if (flipState && flipPairIdx[1] == num) [self flipEnded];
 		if (strtState && strtPairIdx[1] == num && !isStrtHalt ) [self strtHaltWithIndex:1];
 		if (strtState && strtPairIdx[3] == num && !isStrtHalt ) [self strtHaltWithIndex:3];
 		if (strtState && strtPairIdx[1] == num && isStrtHalt ) [self strtEnded];
-		
+		*/
 		if (newestDragBackIdx[0] == num) newestDragBackIdx[0] = 5;
 		if (newestDragBackIdx[1] == num) newestDragBackIdx[1] = 5;
-		if (newestFlipBackIdx    == num) newestFlipBackIdx    = 5;
+		//if (newestFlipBackIdx    == num) newestFlipBackIdx    = 5;
+		
+		if(strtState && strtPairIdx[0] == num && !isStrtHalt){
+			if (strtPairIdx[1] == 5) [self strtEnded];
+			else [self strtHaltWithIndex:0];
+		}
+		else if(strtState && strtPairIdx[1] == num && !isStrtHalt){
+			if (strtPairIdx[0] == 5) [self strtEnded];
+			else [self strtHaltWithIndex:1];
+		}
+		if (strtState && strtPairIdx[0] == num && isStrtHalt) [self strtEnded];
 		
 		mysio2ResourceDispatchEvents( sio2->_SIO2resource,
 									 sio2->_SIO2window,
@@ -1181,7 +1219,7 @@ BOOL isDebug = YES;
 - (void) strtBegan:(CGPoint)point1 andPoint:(CGPoint)point2 {  	
 	if(!ENABLE_OBJECT_STRETCH) return;
 	
-	if(isDebug) printf("Stretch Began\n");
+	printf("Stretch Began\n");
 	strtState = YES;
 	// Also Reset _DragState and _FlipState: 
 	if(dragState) [self dragEnded];
@@ -1192,9 +1230,9 @@ BOOL isDebug = YES;
 
 - (void) strtMoved:(CGPoint)point1 andPoint:(CGPoint)point2 {
 	if(strtExpand) 
-		if(isDebug) printf("Stretch Expand\n");
+		printf("Stretch Expand\n");
 	else
-		if(isDebug) printf("Stretch Shrink\n");
+		printf("Stretch Shrink\n");
 	
 	double theDistance = sqrt( pow(point1.x - point2.x, 2) + pow(point1.y - point2.y, 2) );
 	double scaleIndex = theDistance - tempStrtDistance;
@@ -1218,20 +1256,19 @@ BOOL isDebug = YES;
 }
 
 - (void) strtHaltWithIndex:(int)idx {
-	if(isDebug) printf("Stretch Halted\n");
-	if( idx == 0 || idx == 1)
-	{
-		strtPairIdx[0] = strtPairIdx[2];
-		strtPairIdx[1] = strtPairIdx[3];
+	printf("Stretch Halted\n");
+	
+	if (idx == 0) {
+		strtPairIdx[0] = strtPairIdx[1];
 	}
-	strtPairIdx[2] = 5;
-	strtPairIdx[3] = 5;
+	strtPairIdx[1] = 5;
+	
 	isStrtHalt = YES;
 }
 
 
 - (void) strtEnded {
-	if(isDebug) printf("Stretch End\n");
+	printf("Stretch End\n");
 	strtState  = NO;
 	strtExpand = NO;
 	isStrtHalt = NO;
