@@ -12,6 +12,7 @@ using namespace std;
 #define TASK_TOTAL_ROUND		32
 #define TASK_PER_ROUND			4
 #define OBJ_IN_SAME_POSISION	0.75
+#define RANDOM_LOC_DISTANCE		3
 
 #define pi						3.1415926
 
@@ -151,7 +152,7 @@ bool objectsAreNear(SIO2object* obj_1, SIO2object* obj_2) {
 
 void generatePosition() {
 	
-	float y1, z1, yy, zz, size;
+	float y1, z1, y_old, z_old, yy, zz, size;
 	
 	int idx = (taskState - 1) / TASK_PER_ROUND + 1;
 	taskType[taskState - 1] = idx;
@@ -168,9 +169,18 @@ void generatePosition() {
 		case 8: y1 = 0; z1 = 0; size = 1; break;	
 		default: break;
 	}
-	
-	yy = y1 + (float)(rand() % 600) / 100;
-	zz = z1 - (float)(rand() % 300) / 100;
+	if (taskState == 1){
+		yy = y1 + (float)(rand() % 600) / 100;
+		zz = z1 - (float)(rand() % 300) / 100;
+	}
+	else {
+		y_old = objectSelect->_SIO2transform->loc->y;
+		z_old = objectSelect->_SIO2transform->loc->z;
+		do {
+			yy = y1 + (float)(rand() % 600) / 100;
+			zz = z1 - (float)(rand() % 300) / 100;
+		} while((pow(y_old - yy, 2) + pow(z_old - zz, 2)) < pow(RANDOM_LOC_DISTANCE, 2));
+	}
 	
 	vec3CopyFromFloat(objectSelect->_SIO2transform->loc, 0, yy, zz);
 	vec3CopyFromFloat(objectSelect->_SIO2transform->scl, size, size, 0);
