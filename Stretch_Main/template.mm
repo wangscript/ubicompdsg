@@ -255,9 +255,11 @@ void templateRender( void ) {
 		
 		switch(taskState){
 			case 0:
+				render3DObjects = FALSE;
 				strcpy( displayStr, "Select the yellow circle to start!" );
 				break;
 			case 1:
+				render3DObjects = TRUE;
 				generatePosition();
 				sprintf(displayStr, "Round: %d", taskState);
 				taskStartTime = lastTime = nowTime;
@@ -667,7 +669,7 @@ void templateLoading( void ) {
 	srand ( time(NULL) );
 	taskState = 0;
 	stateStartFlag = FALSE;
-	render3DObjects = TRUE;
+	render3DObjects = FALSE;
 	nowTime = taskStartTime =  [NSDate timeIntervalSinceReferenceDate];
 	
 	//Initialization for visual feedback: -------------------------- 
