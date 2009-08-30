@@ -68,8 +68,8 @@ bool	backIsUsed[5];
 vec2	backTouchPoint[5];
 SIO2object*		backHoverOn[5];
 int				cameraPosition;
-vector<SIO2object*> frontVisual;
-vector<SIO2object*> backVisual;
+SIO2object*     frontVisual[5];
+SIO2object*     backVisual[5];
 // ------------------------------------------
 
 char	displayStr[ SIO2_MAX_CHAR ] = {""};
@@ -470,13 +470,7 @@ void templateRender( void ) {
 					RenderSolidObject( backVisual[k]);
 			}
 			
-			// Make Selection: ------------------------------------------------------------------
-			for(int i=0; i<5; i++)
-			{
-				SIO2object* obj = frontVisual[i];
-				obj->_SIO2transform->loc->x = cameraPosition - 200;
-				sio2TransformBindMatrix( obj ->_SIO2transform );
-			}	
+			// Make Selection: ------------------------------------------------------------------	
 			
 			if ( tap_select ) {
 				tap_select = 0;
@@ -526,13 +520,11 @@ void templateRender( void ) {
 				}
 				else
 				{
-					obj->_SIO2transform->loc->y = cameraPosition + 200;
+					obj->_SIO2transform->loc->y = cameraPosition - 5;
 					sio2TransformBindMatrix( obj ->_SIO2transform );
 				}
 			}
 			
-			sio2CameraUpdateFrustum( sio2->_SIO2camera );
-			sio2ResourceCull( sio2->_SIO2resource, sio2->_SIO2camera );		
 			RenderSolidObject(objectSelect);
 			for(int k=0; k<5; k++)
 			{
@@ -565,10 +557,14 @@ void templateRender( void ) {
 				
 				sio2ObjectRender( selection, sio2->_SIO2window, sio2->_SIO2camera, 0, SIO2_TRANSFORM_MATRIX_BIND );
 			}
-			sio2ResourceRender( sio2->_SIO2resource,
-							   sio2->_SIO2window,
-							   sio2->_SIO2camera,
-							   SIO2_RENDER_TRANSPARENT_OBJECT);
+			
+			RenderTransparentObject(objectArrow);
+			RenderTransparentObject(objectEnd);
+			for(int k=0; k< sio2->_SIO2window->n_touch; k++)
+			{
+				RenderTransparentObject( frontVisual[ k ]);
+			}
+			
 			sio2ObjectReset();
 			sio2MaterialReset();
 		}
@@ -746,16 +742,16 @@ void templateLoading( void ) {
 	excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneF4" ));
 	excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneF5" ));
 	
-	frontVisual.push_back((SIO2object*)sio2ResourceGet(sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneF1"));
-	frontVisual.push_back((SIO2object*)sio2ResourceGet(sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneF2"));
-	frontVisual.push_back((SIO2object*)sio2ResourceGet(sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneF3"));
-	frontVisual.push_back((SIO2object*)sio2ResourceGet(sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneF4"));
-	frontVisual.push_back((SIO2object*)sio2ResourceGet(sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneF5"));
-	backVisual.push_back( (SIO2object*)sio2ResourceGet(sio2->_SIO2resource, SIO2_OBJECT, "object/Plane"));
-	backVisual.push_back( (SIO2object*)sio2ResourceGet(sio2->_SIO2resource, SIO2_OBJECT, "object/Plane2"));
-	backVisual.push_back( (SIO2object*)sio2ResourceGet(sio2->_SIO2resource, SIO2_OBJECT, "object/Plane3"));
-	backVisual.push_back( (SIO2object*)sio2ResourceGet(sio2->_SIO2resource, SIO2_OBJECT, "object/Plane4"));
-	backVisual.push_back( (SIO2object*)sio2ResourceGet(sio2->_SIO2resource, SIO2_OBJECT, "object/Plane5"));
+	frontVisual[0] = (SIO2object*)sio2ResourceGet(sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneF1");
+	frontVisual[1] = (SIO2object*)sio2ResourceGet(sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneF2");
+	frontVisual[2] = (SIO2object*)sio2ResourceGet(sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneF3");
+	frontVisual[3] = (SIO2object*)sio2ResourceGet(sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneF4");
+	frontVisual[4] = (SIO2object*)sio2ResourceGet(sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneF5");
+	backVisual [0] = (SIO2object*)sio2ResourceGet(sio2->_SIO2resource, SIO2_OBJECT, "object/Plane");
+	backVisual [1] = (SIO2object*)sio2ResourceGet(sio2->_SIO2resource, SIO2_OBJECT, "object/Plane2");
+	backVisual [2] = (SIO2object*)sio2ResourceGet(sio2->_SIO2resource, SIO2_OBJECT, "object/Plane3");
+	backVisual [3] = (SIO2object*)sio2ResourceGet(sio2->_SIO2resource, SIO2_OBJECT, "object/Plane4");
+	backVisual [4] = (SIO2object*)sio2ResourceGet(sio2->_SIO2resource, SIO2_OBJECT, "object/Plane5");
 	
 	sio2->_SIO2window->_SIO2windowrender = templateRender;
 }
@@ -1112,8 +1108,8 @@ void RenderTransparentObject ( void* obj )
 void RenderSolidObject( void* obj)
 {
 	SIO2object *_SIO2object = ( SIO2object * )obj;
-	
-	if( ( _SIO2object->type & SIO2_OBJECT_SOLID ) && _SIO2object->dst )
+	_SIO2object->dst = 1.0f;
+
 	{
 		sio2ObjectRender( _SIO2object,
 						 sio2->_SIO2window,			
