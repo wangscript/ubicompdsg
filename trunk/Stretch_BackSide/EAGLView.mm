@@ -620,7 +620,7 @@ BOOL isDebug = YES;
 		[self dragBegan: tp1._point];
 	}
 	
-	if (strtState && isStrtHalt && newestDragBackIdx[0] < 5 && newestDragBackIdx[1] < 5){
+	if (isStrtHalt && newestDragBackIdx[0] < 5 && newestDragBackIdx[1] < 5){
 		printf("Started from Stretch Halted\n");
 		tp1 = [self.backLoc objectAtIndex: newestDragBackIdx[0]];
 		
@@ -848,7 +848,16 @@ BOOL isDebug = YES;
 		if (strtState && strtPairIdx[3] == num && !isStrtHalt ) [self strtHaltWithIndex:3];
 		if (strtState && strtPairIdx[1] == num && isStrtHalt ) [self strtEnded];
 		*/
-		if (newestDragBackIdx[0] == num) newestDragBackIdx[0] = 5;
+		if (newestDragBackIdx[0] == num && newestDragBackIdx[1] != 5) 
+		{ 
+			newestDragBackIdx[0] = newestDragBackIdx[1];
+		    newestDragBackIdx[1] = 5;
+		}
+		else if( newestDragBackIdx[0] == num && newestDragBackIdx[1] == 5)
+		{
+			newestDragBackIdx[0] = 5;
+		}
+		
 		if (newestDragBackIdx[1] == num) newestDragBackIdx[1] = 5;
 		//if (newestFlipBackIdx    == num) newestFlipBackIdx    = 5;
 		
@@ -1101,8 +1110,8 @@ BOOL isDebug = YES;
 - (void) dragEnded {
 	if (isDebug) printf("Drag End\n");
 	dragState = NO;
-	newestDragBackIdx[0] = 5;
-	newestDragBackIdx[1] = 5;
+	//newestDragBackIdx[0] = 5;
+	//newestDragBackIdx[1] = 5;
 	newestDragFrontIdx[0] = 5;
 	newestDragFrontIdx[1] = 5;
 	tempDragPoint = CGPointMake(0,0);
