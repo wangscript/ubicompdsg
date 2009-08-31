@@ -9,8 +9,11 @@
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
 		activeBuildConfigurationName = Debug;
 		activeExecutable = 393E2EAC1035916A00C5422A /* template */;
-		activeSDKPreference = iphonesimulator2.2.1;
+		activeSDKPreference = iphoneos2.2.1;
 		activeTarget = 1D6058900D05DD3D006BFB54 /* template */;
+		addToTargets = (
+			1D6058900D05DD3D006BFB54 /* template */,
+		);
 		breakpoints = (
 		);
 		codeSenseManager = 393E2ECC1035917000C5422A /* Code sense */;
@@ -23,7 +26,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					869,
+					1233,
 					20,
 					48,
 					43,
@@ -45,6 +48,7 @@
 		};
 		perUserProjectItems = {
 			39137B8C104BD1E600B4D3F7 /* PBXTextBookmark */ = 39137B8C104BD1E600B4D3F7 /* PBXTextBookmark */;
+			39137B98104BD37500B4D3F7 /* PBXTextBookmark */ = 39137B98104BD37500B4D3F7 /* PBXTextBookmark */;
 			393E2EF1103593C900C5422A = 393E2EF1103593C900C5422A /* PBXTextBookmark */;
 			393E2EF2103593C900C5422A = 393E2EF2103593C900C5422A /* PBXTextBookmark */;
 			393E2EF5103593C900C5422A = 393E2EF5103593C900C5422A /* PBXTextBookmark */;
@@ -69,7 +73,7 @@
 	};
 	32CA4F630368D1EE00C91783 /* template_Prefix.pch */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1047, 556}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1411, 680}}";
 			sepNavSelRange = "{0, 0}";
 			sepNavVisRange = "{0, 177}";
 		};
@@ -79,10 +83,20 @@
 		fRef = E0E310880E5EA40200F6D25F /* template.mm */;
 		name = "template.mm: 266";
 		rLen = 22;
-		rLoc = 7490;
+		rLoc = 7489;
 		rType = 0;
 		vrLen = 925;
 		vrLoc = 7635;
+	};
+	39137B98104BD37500B4D3F7 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E0E310880E5EA40200F6D25F /* template.mm */;
+		name = "template.mm: 12";
+		rLen = 0;
+		rLoc = 179;
+		rType = 0;
+		vrLen = 982;
+		vrLoc = 10349;
 	};
 	393E2EAC1035916A00C5422A /* template */ = {
 		isa = PBXExecutable;
@@ -205,7 +219,7 @@
 		fRef = E0E310880E5EA40200F6D25F /* template.mm */;
 		name = "template.mm: 495";
 		rLen = 0;
-		rLoc = 15295;
+		rLoc = 15304;
 		rType = 0;
 		vrLen = 1028;
 		vrLoc = 12836;
@@ -232,7 +246,7 @@
 		fRef = E0E310880E5EA40200F6D25F /* template.mm */;
 		name = "template.mm: 268";
 		rLen = 22;
-		rLoc = 7490;
+		rLoc = 7489;
 		rType = 0;
 		vrLen = 984;
 		vrLoc = 7658;
@@ -244,11 +258,26 @@
 			sepNavVisRange = "{54515, 475}";
 		};
 	};
+	E073A288100D3660004A0982 /* sio2_transform.cc */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1411, 8702}}";
+			sepNavSelRange = "{8873, 0}";
+			sepNavVisRange = "{7863, 605}";
+		};
+	};
+	E0E310870E5EA40200F6D25F /* template.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1401, 1444}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 836}";
+			sepNavWindowFrame = "{{15, 115}, {1460, 908}}";
+		};
+	};
 	E0E310880E5EA40200F6D25F /* template.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1444, 14364}}";
-			sepNavSelRange = "{7490, 22}";
-			sepNavVisRange = "{7635, 925}";
+			sepNavIntBoundsRect = "{{0, 0}, {1411, 14972}}";
+			sepNavSelRange = "{17009, 0}";
+			sepNavVisRange = "{16299, 1188}";
 		};
 	};
 }

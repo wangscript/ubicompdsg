@@ -15,6 +15,7 @@
 		28FD14FE0DC6FC130079059D /* EAGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 28FD14FD0DC6FC130079059D /* EAGLView.mm */; };
 		28FD15000DC6FC520079059D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD14FF0DC6FC520079059D /* OpenGLES.framework */; };
 		28FD15080DC6FC5B0079059D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD15070DC6FC5B0079059D /* QuartzCore.framework */; };
+		39137BA4104BD79700B4D3F7 /* seqtest.sio2 in Resources */ = {isa = PBXBuildFile; fileRef = 39137BA3104BD79700B4D3F7 /* seqtest.sio2 */; };
 		889B398A103055BA00204ACA /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 889B3985103055BA00204ACA /* BrowserViewController.m */; };
 		889B398B103055BA00204ACA /* Picker.m in Sources */ = {isa = PBXBuildFile; fileRef = 889B3987103055BA00204ACA /* Picker.m */; };
 		889B398C103055BA00204ACA /* TCPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 889B3989103055BA00204ACA /* TCPServer.m */; };
@@ -331,6 +332,7 @@
 		28FD15070DC6FC5B0079059D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = main.mm; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* template_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = template_Prefix.pch; sourceTree = "<group>"; };
+		39137BA3104BD79700B4D3F7 /* seqtest.sio2 */ = {isa = PBXFileReference; lastKnownFileType = file; name = seqtest.sio2; path = ../data/seqtest.sio2; sourceTree = SOURCE_ROOT; };
 		889B3984103055BA00204ACA /* BrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserViewController.h; sourceTree = "<group>"; };
 		889B3985103055BA00204ACA /* BrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserViewController.m; sourceTree = "<group>"; };
 		889B3986103055BA00204ACA /* Picker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Picker.h; sourceTree = "<group>"; };
@@ -1002,6 +1004,7 @@
 				88FD063D1036BF7B00AF93D2 /* default16x16.tga */,
 				E0E313F40E5EA78B00F6D25F /* Icon.png */,
 				889B3A6E103059BA00204ACA /* Task_Seq.sio2 */,
+				39137BA3104BD79700B4D3F7 /* seqtest.sio2 */,
 				E0E313F50E5EA78B00F6D25F /* Default.png */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
 				8D1107310486CEB800E47090 /* Info.plist */,
@@ -1714,6 +1717,7 @@
 				E0E313F70E5EA78B00F6D25F /* Default.png in Resources */,
 				889B3A6F103059BA00204ACA /* Task_Seq.sio2 in Resources */,
 				88FD063E1036BF7B00AF93D2 /* default16x16.tga in Resources */,
+				39137BA4104BD79700B4D3F7 /* seqtest.sio2 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
