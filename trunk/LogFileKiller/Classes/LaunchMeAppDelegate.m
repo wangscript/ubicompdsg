@@ -143,7 +143,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 				[fm removeItemAtPath:appFile error:nil];
 				NSLog(@"Delete: %@", zz);
 			}
-				
 		}
 			
 		//NSLog(@"%@",aa);

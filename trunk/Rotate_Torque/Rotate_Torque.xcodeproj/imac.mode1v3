@@ -333,7 +333,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>88EDD66E1042DB09003549B3</string>
+										<string>88FBA106104BE32B005970FB</string>
 										<key>history</key>
 										<array>
 											<string>887E48561032972500A3011E</string>
@@ -356,7 +356,7 @@
 											<string>881CEEEA103BDB560045C367</string>
 											<string>881CEEEB103BDB560045C367</string>
 											<string>8864A4691042D9E0007EF797</string>
-											<string>8895FAAA1042DA7F00022DAC</string>
+											<string>88EDD66E1042DB09003549B3</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -438,9 +438,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>88EDD6701042DB09003549B3</string>
+				<string>88FBA094104BE279005970FB</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>88EDD6711042DB09003549B3</string>
+				<string>88FBA095104BE279005970FB</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -574,12 +574,12 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>88EDD67A1042DB09003549B3</string>
-		<string>88EDD67B1042DB09003549B3</string>
-		<string>88043F7E10298B5A00AF24D5</string>
-		<string>1CD10A99069EF8BA00B06720</string>
-		<string>/Users/imac/Desktop/DSG_SVN/Rotate_Torque/Rotate_Torque.xcodeproj</string>
+		<string>88FBA108104BE32B005970FB</string>
+		<string>88FBA09F104BE279005970FB</string>
 		<string>1C78EAAD065D492600B07095</string>
+		<string>1CD10A99069EF8BA00B06720</string>
+		<string>88043F7E10298B5A00AF24D5</string>
+		<string>/Users/imac/Desktop/DSG_SVN/Rotate_Torque/Rotate_Torque.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
 	<string>6 111 1680 917 0 0 1680 1028 </string>
@@ -659,7 +659,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>88043F7E10298B5A00AF24D5</string>
-				<string>88EDD6721042DB09003549B3</string>
+				<string>88FBA096104BE279005970FB</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -779,13 +779,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1CD10A99069EF8BA00B06720</string>
-				<string>88EDD6731042DB09003549B3</string>
+				<string>88FBA097104BE279005970FB</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>88EDD6741042DB09003549B3</string>
-				<string>88EDD6751042DB09003549B3</string>
-				<string>88EDD6761042DB09003549B3</string>
-				<string>88EDD6771042DB09003549B3</string>
-				<string>88EDD6781042DB09003549B3</string>
+				<string>88FBA098104BE279005970FB</string>
+				<string>88FBA099104BE279005970FB</string>
+				<string>88FBA09A104BE279005970FB</string>
+				<string>88FBA09B104BE279005970FB</string>
+				<string>88FBA09C104BE279005970FB</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -941,7 +941,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C78EAAD065D492600B07095</string>
-				<string>88EDD6791042DB09003549B3</string>
+				<string>88FBA09D104BE279005970FB</string>
 				<string>1C78EAAC065D492600B07095</string>
 			</array>
 			<key>ToolbarConfiguration</key>
@@ -951,7 +951,7 @@
 			<key>WindowToolGUID</key>
 			<string>1C78EAAD065D492600B07095</string>
 			<key>WindowToolIsVisible</key>
-			<true/>
+			<false/>
 		</dict>
 		<dict>
 			<key>Identifier</key>
