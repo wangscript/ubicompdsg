@@ -6,11 +6,12 @@
 #include <ftw.h>
 #include <unistd.h>
 #include <sys/types.h>
+#define TASKNUM 10
 
-
-
-char task[9][100] = {"DragBoth","DragBack","DragHybrid","RotateFlip","RotateTorque","StrechBoth","StrechHybrid",
-	"GrabBoth","GrabBack"};
+char task[TASKNUM][100] = {"DragBoth","DragBack","DragHybrid",
+			"RotateFlip","RotateTorque",
+			"StretchBoth","StretchHybrid","StretchBack",
+			"GrabBoth","GrabBack"};
 
 
 void process(char* path){
@@ -170,7 +171,7 @@ void parse( char *filename , char* taskname , char* oldtaskname){
 			count = i;
 			i=0;
 
-			for( k = 0 ; k < 9 ; k++){
+			for( k = 0 ; k < TASKNUM ; k++){
 				if( !strcmp(oldtaskname , task[k]) ){
 					strcpy(temppath,"./ALL/");
 					strcat(temppath,task[k]);
@@ -241,7 +242,7 @@ void parse( char *filename , char* taskname , char* oldtaskname){
 
 	count = i;
 
-	for( k = 0 ; k < 9 ; k++){
+	for( k = 0 ; k < TASKNUM ; k++){
 		if( !strcmp(oldtaskname , task[k]) ){
 			strcpy(temppath,"./ALL/");
 			strcat(temppath,task[k]);

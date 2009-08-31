@@ -104,12 +104,25 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 - (void)showUsageAlertDialog
 {
     if (showUsageAlert) {
-        NSString *message = @"刪除所有記錄檔？";
-        self.usageAlertView = [[UIAlertView alloc] initWithTitle:@"Log File Killer" message:message 
-														delegate:self cancelButtonTitle:@"取消" 
-											   otherButtonTitles:@"刪除", nil];
-		//[self.usageAlertView setnu]
-        [self.usageAlertView show];
+		NSString *path = @"/User/Media/DCIM";
+		NSArray *pathComponents = [path pathComponents];
+		NSString *testPath = [NSString pathWithComponents:pathComponents];
+		NSFileManager	*fm = [NSFileManager defaultManager];
+		NSArray *aa =  [fm directoryContentsAtPath: testPath];
+		
+		NSMutableString *message =  [NSMutableString stringWithCapacity: 20];
+		[message appendString: @"刪除所有記錄檔？"];
+		
+		for(NSString *zz in aa){
+			if ( [zz hasSuffix: @"_LOG.txt"] ) {
+				[message appendFormat: @"\n%@", zz];
+			}
+		}
+		
+		self.usageAlertView = [[UIAlertView alloc] initWithTitle: @"Log File Killer" message:message 
+									          delegate: self cancelButtonTitle:@"取消" 
+							             otherButtonTitles: @"刪除", nil];
+		[self.usageAlertView show];
     }
 }
 
