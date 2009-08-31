@@ -240,7 +240,7 @@ void templateRender( void ) {
 				arrowObject->_SIO2transform->loc->y = 0;
 				//printf("arrowObject->x = %lf , arrowObject->y = %lf\n",arrowObject->_SIO2transform->loc->x,arrowObject->_SIO2transform->loc->y);
 				sio2TransformBindMatrix(arrowObject->_SIO2transform);
-				strcpy( displayStr, "Select the die to START!" );
+				strcpy( displayStr, "Press START to START!" );
 				break;
 			case 1:
 				//nowTargetIndex = 1;
@@ -549,23 +549,21 @@ void templateRender( void ) {
 					vec2 pos;
 					glPushMatrix();
 					{
-						float scl;
-						
-						scl = 1.9f;
-						
-						glScalef( scl, scl, scl );
 						// -----------------------------------------
 						sio2->_SIO2material = NULL;
 						
-						pos.x = 0.0f;
-						pos.y = 480 / scl - 16.0f;
+						_SIO2font->_SIO2transform->loc->x = 8.0f;
+						_SIO2font->_SIO2transform->loc->y = sio2->_SIO2window->scl->y - 16.0f;
 						
-						/*_SIO2font->_SIO2material->diffuse->x = 0.0f;
+						_SIO2font->_SIO2material->diffuse->x = 0.0f;
 						_SIO2font->_SIO2material->diffuse->y = 1.0f;
 						_SIO2font->_SIO2material->diffuse->z = 1.0f;
-						sio2FontPrint( _SIO2font, &pos, displayStr, NULL);
-						*/
-						 // -----------------------------------------
+						
+						sio2FontPrint( _SIO2font,
+									  SIO2_TRANSFORM_MATRIX_APPLY,
+									  "%s",
+									  displayStr );
+						// -----------------------------------------
 					}
 					glPopMatrix();
 					sio2FontReset();
@@ -669,7 +667,7 @@ void templateShutdown( void ) {
 
 
 void templatePrintProgress( void ) {	
-/*	if( !_SIO2font )
+	if( !_SIO2font )
 	{
 		SIO2image	 *_SIO2image    = NULL;
 		SIO2material *_SIO2material = NULL;
@@ -683,13 +681,13 @@ void templatePrintProgress( void ) {
 			{
 				sio2ImageLoad( _SIO2image, _SIO2stream );
 				
-				sio2ImageGenId( _SIO2image, 0 );
+				sio2ImageGenId( _SIO2image, NULL, 0.0f );
 			}
 			_SIO2stream = sio2StreamClose( _SIO2stream );
 			
 			_SIO2material = sio2MaterialInit( "default16x16" );
 			{
-				_SIO2material->blend = SIO2_MATERIAL_ALPHA;
+				_SIO2material->blend = SIO2_MATERIAL_COLOR;
 				_SIO2material->_SIO2image[ SIO2_MATERIAL_CHANNEL0 ] = _SIO2image;
 			}
 			
@@ -704,13 +702,6 @@ void templatePrintProgress( void ) {
 			sio2FontBuild( _SIO2font );
 		}	
 	}
-	
-	
-	glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT );
-	
-	glMatrixMode( GL_MODELVIEW );
-	glLoadIdentity();
-*/	
 }
 
 void templateScreenTap( void *_ptr, unsigned char _state ) {

@@ -333,13 +333,13 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>7DBF05A210456A2000049E7B</string>
+										<string>7D017BE6104BEF24005AED6F</string>
 										<key>history</key>
 										<array>
 											<string>7D918AF1103C3DDB00A1DC44</string>
 											<string>7D8A7F3410453236001FCF26</string>
 											<string>7DBF059F10456A2000049E7B</string>
-											<string>7DBF05A010456A2000049E7B</string>
+											<string>7D977F79104AA7FA001D3E44</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -347,7 +347,6 @@
 											<string>7D18371D103EA0780067F566</string>
 											<string>7D8A7EC110452BA3001FCF26</string>
 											<string>7D1673451045369900B97F77</string>
-											<string>7DBF05A110456A2000049E7B</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -405,9 +404,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>7DBF05A310456A2000049E7B</string>
+				<string>7D017BE7104BEF24005AED6F</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>7DBF05A410456A2000049E7B</string>
+				<string>7D017BE8104BEF24005AED6F</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -541,7 +540,12 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
+		<string>7D017BF1104BEF24005AED6F</string>
+		<string>7D017BF2104BEF24005AED6F</string>
+		<string>1CD10A99069EF8BA00B06720</string>
+		<string>7D918A8F103C222D00A1DC44</string>
 		<string>/Users/miniMac/Desktop/DSG_SVN/Rotate_Torque/Rotate_Torque.xcodeproj</string>
+		<string>1C78EAAD065D492600B07095</string>
 	</array>
 	<key>WindowString</key>
 	<string>0 122 1920 1056 0 0 1920 1178 </string>
@@ -621,7 +625,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>7D918A8F103C222D00A1DC44</string>
-				<string>7DBF0500104549C100049E7B</string>
+				<string>7D017BE9104BEF24005AED6F</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -741,13 +745,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1CD10A99069EF8BA00B06720</string>
-				<string>7DBF0501104549C100049E7B</string>
+				<string>7D017BEA104BEF24005AED6F</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>7DBF0502104549C100049E7B</string>
-				<string>7DBF0503104549C100049E7B</string>
-				<string>7DBF0504104549C100049E7B</string>
-				<string>7DBF0505104549C100049E7B</string>
-				<string>7DBF0506104549C100049E7B</string>
+				<string>7D017BEB104BEF24005AED6F</string>
+				<string>7D017BEC104BEF24005AED6F</string>
+				<string>7D017BED104BEF24005AED6F</string>
+				<string>7D017BEE104BEF24005AED6F</string>
+				<string>7D017BEF104BEF24005AED6F</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -901,7 +905,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C78EAAD065D492600B07095</string>
-				<string>7DBF0507104549C100049E7B</string>
+				<string>7D017BF0104BEF24005AED6F</string>
 				<string>1C78EAAC065D492600B07095</string>
 			</array>
 			<key>ToolbarConfiguration</key>
