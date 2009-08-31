@@ -192,10 +192,26 @@
 
 - (IBAction) showLogButton
 {
+	NSString *path = @"/User/Media/DCIM";
+	NSArray *pathComponents = [path pathComponents];
+	NSString *testPath = [NSString pathWithComponents:pathComponents];
+	NSFileManager	*fm = [NSFileManager defaultManager];
+	NSArray *aa =  [fm directoryContentsAtPath: testPath];
+	int largest = 0;
+	for(NSString *zz in aa){
+		if ([zz hasSuffix: @"_CSV.csv"]){
+			NSArray *listItems = [zz componentsSeparatedByString:@"_CSV"];
+			int logIndex = [[listItems objectAtIndex:0] intValue];
+			if (logIndex > largest) largest = logIndex;
+		}
+	}
 	
 	[logButton setTitle: @"Log" forState: UIControlStateNormal];	
 	logButton.hidden = NO;
+	filename.text = [NSString stringWithFormat:@"%d",largest];
+	
 	filename.hidden = NO;
+	
 	
 	[filename becomeFirstResponder];
 }

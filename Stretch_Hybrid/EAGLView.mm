@@ -1063,8 +1063,8 @@ BOOL isDebug = YES;
 - (void) dragEnded {
 	if (isDebug) printf("Drag End\n");
 	dragState = NO;
-	newestDragBackIdx[0] = 5;
-	newestDragBackIdx[1] = 5;
+	//newestDragBackIdx[0] = 5;
+	//newestDragBackIdx[1] = 5;
 	newestDragFrontIdx[0] = 5;
 	newestDragFrontIdx[1] = 5;
 	tempDragPoint = CGPointMake(0,0);

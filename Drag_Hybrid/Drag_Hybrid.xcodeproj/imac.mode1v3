@@ -280,6 +280,7 @@
 							<array>
 								<array>
 									<integer>25</integer>
+									<integer>22</integer>
 									<integer>0</integer>
 								</array>
 							</array>
@@ -333,7 +334,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>88A5B8111042E24F001C32A3</string>
+										<string>88FBA13D104BE9DF005970FB</string>
 										<key>history</key>
 										<array>
 											<string>887E485E1032972500A3011E</string>
@@ -363,7 +364,7 @@
 											<string>88FACB611042D8C500CFE225</string>
 											<string>88A5B80D1042E24F001C32A3</string>
 											<string>88A5B80E1042E24F001C32A3</string>
-											<string>886741251042BE1F0062EFEE</string>
+											<string>88FCAA4E104BE0AB00F10F66</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -391,7 +392,6 @@
 											<string>886741001042BC0E0062EFEE</string>
 											<string>8862EFFF1042D8520020F020</string>
 											<string>88A5B80F1042E24F001C32A3</string>
-											<string>88A5B8101042E24F001C32A3</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -449,9 +449,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>88A5B8121042E24F001C32A3</string>
+				<string>88FBA13E104BE9DF005970FB</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>88A5B8131042E24F001C32A3</string>
+				<string>88FBA13F104BE9DF005970FB</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -585,11 +585,11 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>88A5B8141042E24F001C32A3</string>
-		<string>88A5B8151042E24F001C32A3</string>
-		<string>88043F7E10298B5A00AF24D5</string>
-		<string>1CD10A99069EF8BA00B06720</string>
+		<string>88FBA140104BE9DF005970FB</string>
+		<string>88FBA141104BE9DF005970FB</string>
 		<string>1C78EAAD065D492600B07095</string>
+		<string>1CD10A99069EF8BA00B06720</string>
+		<string>88043F7E10298B5A00AF24D5</string>
 		<string>/Users/imac/Desktop/DSG_SVN/Drag_Hybrid/Drag_Hybrid.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
@@ -670,7 +670,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>88043F7E10298B5A00AF24D5</string>
-				<string>88A5B8051042E0B3001C32A3</string>
+				<string>88FBA12F104BE9CB005970FB</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -790,13 +790,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1CD10A99069EF8BA00B06720</string>
-				<string>88A5B8061042E0B3001C32A3</string>
+				<string>88FBA130104BE9CB005970FB</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>88A5B8071042E0B3001C32A3</string>
-				<string>88A5B8081042E0B3001C32A3</string>
-				<string>88A5B8091042E0B3001C32A3</string>
-				<string>88A5B80A1042E0B3001C32A3</string>
-				<string>88A5B80B1042E0B3001C32A3</string>
+				<string>88FBA131104BE9CB005970FB</string>
+				<string>88FBA132104BE9CB005970FB</string>
+				<string>88FBA133104BE9CB005970FB</string>
+				<string>88FBA134104BE9CB005970FB</string>
+				<string>88FBA135104BE9CB005970FB</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -952,7 +952,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C78EAAD065D492600B07095</string>
-				<string>88A5B80C1042E0B3001C32A3</string>
+				<string>88FBA136104BE9CB005970FB</string>
 				<string>1C78EAAC065D492600B07095</string>
 			</array>
 			<key>ToolbarConfiguration</key>
@@ -962,7 +962,7 @@
 			<key>WindowToolGUID</key>
 			<string>1C78EAAD065D492600B07095</string>
 			<key>WindowToolIsVisible</key>
-			<true/>
+			<false/>
 		</dict>
 		<dict>
 			<key>Identifier</key>
