@@ -257,9 +257,11 @@ void templateRender( void ) {
 		
 		switch(taskState){
 			case 0:
+				render3DObjects = FALSE;
 				strcpy( displayStr, "Select the yellow circle to start!" );
 				break;
 			case 1:
+				render3DObjects = TRUE;
 				generatePosition();
 				sprintf(displayStr, "Round: %d", taskState);
 				taskStartTime = lastTime = nowTime;
@@ -451,7 +453,7 @@ void templateRender( void ) {
 				else
 				{
 					//Not showing the back-side finger:
-					obj->_SIO2transform->loc->x = cameraPosition - 30;
+					obj->_SIO2transform->loc->x = cameraPosition - 200;
 					sio2TransformBindMatrix( obj ->_SIO2transform  );
 				}
 				
@@ -466,11 +468,17 @@ void templateRender( void ) {
 			RenderSolidObject(objectSelect);
 			for(int k=0; k<5; k++)
 			{
-				if(backIsUsed[ k ])
 					RenderSolidObject( backVisual[k]);
 			}
 			
-			// Make Selection: ------------------------------------------------------------------	
+			// Make Selection: ------------------------------------------------------------------
+			for(int k=0; k<5; k++)
+			{
+				frontVisual[ k ]->_SIO2transform->loc->x = cameraPosition - 200;
+				sio2TransformBindMatrix( frontVisual[k] ->_SIO2transform );
+			}
+				
+			
 			
 			if ( tap_select ) {
 				tap_select = 0;
@@ -520,16 +528,16 @@ void templateRender( void ) {
 				}
 				else
 				{
-					obj->_SIO2transform->loc->y = cameraPosition - 5;
+					obj->_SIO2transform->loc->y = cameraPosition - 200;
 					sio2TransformBindMatrix( obj ->_SIO2transform );
 				}
 			}
 			
-			RenderSolidObject(objectSelect);
+			//RenderSolidObject(objectSelect);
 			for(int k=0; k<5; k++)
 			{
 				if(backIsUsed[ k ])
-					RenderSolidObject( backVisual[k]);
+					RenderSolidObject( backVisual[k] );
 			}
 			
 			//Visual Feedback for Selection ( including initializing the selection material):
@@ -560,9 +568,9 @@ void templateRender( void ) {
 			
 			RenderTransparentObject(objectArrow);
 			RenderTransparentObject(objectEnd);
-			for(int k=0; k< sio2->_SIO2window->n_touch; k++)
+			for(int k=0; k<5; k++)
 			{
-				RenderTransparentObject( frontVisual[ k ]);
+			  RenderTransparentObject( frontVisual[ k ]);
 			}
 			
 			sio2ObjectReset();
@@ -687,7 +695,7 @@ void templateLoading( void ) {
 	srand ( time(NULL) );
 	taskState = 0;
 	stateStartFlag = FALSE;
-	render3DObjects = TRUE;
+	render3DObjects =  FALSE;
 	nowTime = taskStartTime =  [NSDate timeIntervalSinceReferenceDate];
 	
 	//Initialization for visual feedback: -------------------------- 
@@ -1050,6 +1058,7 @@ void RenderTransparentObject ( void* obj )
 	void *ptr,
 	**_SIO2transp = NULL;		
 	SIO2object* theObject = (SIO2object* ) obj;
+	theObject->dst = 1.0f;
 	
 	
 	if( (theObject->type & SIO2_OBJECT_TRANSPARENT ) && theObject->dst )
