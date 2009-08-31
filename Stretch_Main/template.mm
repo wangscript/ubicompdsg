@@ -423,10 +423,12 @@ void templateRender( void ) {
 
 			sio2CameraUpdateFrustum( sio2->_SIO2camera );
 			sio2ResourceCull( sio2->_SIO2resource, sio2->_SIO2camera );		
-			sio2ResourceRender( sio2->_SIO2resource,
-							   sio2->_SIO2window,
-							   sio2->_SIO2camera,
-							   SIO2_RENDER_SOLID_OBJECT );			
+			for( int j=0; j<5; j++)
+			{
+				if( backIsUsed[ j ])
+					RenderSolidObject( backVisual[ j ] );
+			}
+			
 			// Make Selection: ------------------------------------------------------------------
 			for(int i=0; i<5; i++)
 			{
