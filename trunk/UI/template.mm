@@ -9,7 +9,7 @@
 using namespace std;
 
 #define TASK_NAME				"Template"
-#define SIO2_FILE_NAME			"Task_Seq.sio2"
+#define SIO2_FILE_NAME			"seqtest.sio2"
 #define TASK_TOTAL_ROUND		5
 
 #define OBJ_IN_SAME_POSISION	1
@@ -523,11 +523,11 @@ void templateLoading( void ) {
 	sio2ResourceGenId( sio2->_SIO2resource );
 	
 	selectObject = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Cube" );
-	targetObject = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Cube1" );
-	excludeObjects.push_back( targetObject );
-	excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneXY" ));
-	excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneYZ" ));
-	excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneXZ" ));
+	targetObject = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/planexy" );
+	//excludeObjects.push_back( targetObject );
+	//excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneXY" ));
+	//excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneYZ" ));
+	//excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneXZ" ));
 	
 	camera = ( SIO2camera * )sio2ResourceGet( sio2->_SIO2resource, SIO2_CAMERA,"camera/Camera" );
 
@@ -604,8 +604,8 @@ void templateChangeObjectScale( void *_ptr, float det_scale) {
 			_SIO2object->_SIO2transform->scl->z += det_scale;
 		}
 		
-		//sio2TransformBindMatrix( _SIO2object->_SIO2transform  );
-		sio2TransformBindMatrix2(_SIO2object->_SIO2transform,matrixrotate,-1.0f,0.0f,0.0f , 2);
+		sio2TransformBindMatrix( _SIO2object->_SIO2transform  );
+		//sio2TransformBindMatrix2(_SIO2object->_SIO2transform,matrixrotate, 0.0f,0.0f,0.0f , 2);
 	}
 	
 	
