@@ -103,7 +103,7 @@ void process(char* path){
 
 	printf("front  mean = %lf  front std = %lf\n", devicemean[0] , devicestd[0]);
 	printf("back  mean = %lf  back std = %lf\n", devicemean[1] , devicestd[1]);
-	printf("both  mean = %lf  both std = %lf\n", devicemean[2] , devicestd[2]);
+	printf("both  mean = %lf  both std = %lf\n\n\n", devicemean[2] , devicestd[2]);
 
 
 	fprintf(fp2,"%s,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf\n",
@@ -212,7 +212,16 @@ void parse( char *filename , char* taskname , char* oldtaskname){
 			comstd = sqrt(comstd/j - commean*commean);
 
 			printf("For %s %s\n",filename,oldtaskname);
-			printf("%lf , %lf  , %lf  , %lf\n",commean, comstd ,extramean , extrastd);	
+			printf("Total Completion Time : %lf    ",comsum);
+			printf("Average Completion Time : %lf   \n",commean);
+			printf("Completion time STD: %lf\n", comstd);
+
+			printf("Total Extra Movement : %lf    ",extrasum);
+			printf("Average Extra Movement : %lf   \n",extramean);
+			printf("Extra Movement STD: %lf\n", extrastd);
+
+			printf("Front: %lf , Back:%lf , Both:%lf\n\n\n",
+					oldonfront,oldonback,oldonboth);
 
 			fprintf(fp3,"%s,%lf,%lf,%lf,%lf,%lf,%lf,%lf\n"
 				,oldtaskname,commean,comstd,extramean,extrastd,oldonfront,oldonback,oldonboth);
@@ -269,8 +278,16 @@ void parse( char *filename , char* taskname , char* oldtaskname){
 	comstd = sqrt(comstd/j - commean*commean);
 
 	printf("For %s %s\n",filename,taskname);
-	printf("%lf , %lf  , %lf  , %lf\n",commean, comstd ,extramean , extrastd);	
-			fprintf(fp3,"%s,%lf,%lf,%lf,%lf,%lf,%lf,%lf\n"
+			printf("Total Completion Time : %lf    ",comsum);
+			printf("Average Completion Time : %lf   \n",commean);
+			printf("Completion time STD: %lf\n", comstd);
+
+			printf("Total Extra Movement : %lf    ",extrasum);
+			printf("Average Extra Movement : %lf   \n",extramean);
+			printf("Extra Movement STD: %lf\n", extrastd);
+			printf("Front: %lf , Back:%lf , Both:%lf\n\n\n",
+					oldonfront,oldonback,oldonboth);
+		fprintf(fp3,"%s,%lf,%lf,%lf,%lf,%lf,%lf,%lf\n"
 				,taskname,commean,comstd,extramean,extrastd,oldonfront,oldonback,oldonboth);
 	fclose(fp);
 	fclose(fp3);
