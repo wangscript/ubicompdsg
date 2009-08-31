@@ -333,19 +333,18 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>7D977DE91047D83D001D3E44</string>
+										<string>7D977F7F104AA7FB001D3E44</string>
 										<key>history</key>
 										<array>
 											<string>7D95AF5B10417CB1001FA344</string>
 											<string>7D977DE61047D83D001D3E44</string>
-											<string>7D977DE71047D83D001D3E44</string>
+											<string>7D977F7E104AA7FB001D3E44</string>
 										</array>
 										<key>prevStack</key>
 										<array>
 											<string>7D95AF5D10417CB1001FA344</string>
 											<string>7D95AF5E10417CB1001FA344</string>
 											<string>7DCA6BBB10417F9D00037211</string>
-											<string>7D977DE81047D83D001D3E44</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -403,9 +402,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>7D977DEA1047D83D001D3E44</string>
+				<string>7D977F80104AA7FB001D3E44</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>7D977DEB1047D83D001D3E44</string>
+				<string>7D977F81104AA7FB001D3E44</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -539,7 +538,12 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>/Users/miniMac/Desktop/DSG_SVN/Stretch_Hybrid/Stretch_Hybrid.xcodeproj</string>
+		<string>7D977F82104AA7FB001D3E44</string>
+		<string>7D977F83104AA7FB001D3E44</string>
+		<string>7D977F84104AA7FB001D3E44</string>
+		<string>1C78EAAD065D492600B07095</string>
+		<string>1CD10A99069EF8BA00B06720</string>
+		<string>7D95AF4D10417BE5001FA344</string>
 	</array>
 	<key>WindowString</key>
 	<string>0 122 1920 1056 0 0 1920 1178 </string>
@@ -619,7 +623,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>7D95AF4D10417BE5001FA344</string>
-				<string>7D16746410453CCC00B97F77</string>
+				<string>7D977F46104A9FEA001D3E44</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -661,8 +665,8 @@
 										<string>yes</string>
 										<key>sizes</key>
 										<array>
-											<string>{{0, 0}, {316, 201}}</string>
-											<string>{{316, 0}, {378, 201}}</string>
+											<string>{{0, 0}, {316, 202}}</string>
+											<string>{{316, 0}, {378, 202}}</string>
 										</array>
 									</dict>
 									<key>VerticalSplitView</key>
@@ -677,8 +681,8 @@
 										<string>yes</string>
 										<key>sizes</key>
 										<array>
-											<string>{{0, 0}, {694, 201}}</string>
-											<string>{{0, 201}, {694, 180}}</string>
+											<string>{{0, 0}, {694, 202}}</string>
+											<string>{{0, 202}, {694, 179}}</string>
 										</array>
 									</dict>
 								</dict>
@@ -711,7 +715,7 @@
 										<real>148</real>
 									</array>
 									<key>Frame</key>
-									<string>{{316, 0}, {378, 201}}</string>
+									<string>{{316, 0}, {378, 202}}</string>
 									<key>RubberWindowFrame</key>
 									<string>42 710 694 422 0 0 1920 1178 </string>
 								</dict>
@@ -739,13 +743,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1CD10A99069EF8BA00B06720</string>
-				<string>7D16746510453CCC00B97F77</string>
+				<string>7D977F47104A9FEA001D3E44</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>7D16746610453CCC00B97F77</string>
-				<string>7D16746710453CCC00B97F77</string>
-				<string>7D16746810453CCC00B97F77</string>
-				<string>7D16746910453CCC00B97F77</string>
-				<string>7D16746A10453CCC00B97F77</string>
+				<string>7D977F48104A9FEA001D3E44</string>
+				<string>7D977F49104A9FEA001D3E44</string>
+				<string>7D977F4A104A9FEA001D3E44</string>
+				<string>7D977F4B104A9FEA001D3E44</string>
+				<string>7D977F4C104A9FEA001D3E44</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -901,7 +905,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C78EAAD065D492600B07095</string>
-				<string>7D16746B10453CCC00B97F77</string>
+				<string>7D977F4D104A9FEA001D3E44</string>
 				<string>1C78EAAC065D492600B07095</string>
 			</array>
 			<key>ToolbarConfiguration</key>
