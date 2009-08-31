@@ -1020,6 +1020,10 @@ void logToFile(NSString *logText, NSString *fileName) {
 	
 }
 
+
+#pragma mark -
+#pragma mark HELP FUNCTION FOR VISUAL FEEDBACK
+
 void RenderTransparentObject ( void* obj )
 {
 	unsigned int j,
@@ -1028,6 +1032,7 @@ void RenderTransparentObject ( void* obj )
 	void *ptr,
 	**_SIO2transp = NULL;		
 	SIO2object* theObject = (SIO2object* ) obj;
+	theObject->dst = 1.0f;
 
 		
 	if( (theObject->type & SIO2_OBJECT_TRANSPARENT ) && theObject->dst )
@@ -1082,3 +1087,20 @@ void RenderTransparentObject ( void* obj )
 		_SIO2transp = NULL;
 	}
 }
+
+void RenderSolidObject( void* obj)
+{
+	SIO2object *_SIO2object = ( SIO2object * )obj;
+	_SIO2object->dst = 1.0f;
+	
+	{
+		sio2ObjectRender( _SIO2object,
+						 sio2->_SIO2window,			
+						 sio2->_SIO2camera,
+						 !( SIO2_RENDER_SOLID_OBJECT & SIO2_RENDER_NO_MATERIAL ),
+						 !( SIO2_RENDER_SOLID_OBJECT & SIO2_RENDER_NO_MATRIX ) );
+	}
+	
+}
+
+

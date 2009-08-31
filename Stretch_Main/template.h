@@ -69,7 +69,8 @@ void backTouchHandle(void *_ptr, int type, int index, float pt_x, float pt_y);
 
 void logToFile(NSString *logText, NSString *fileName);
 
-void RenderTransparentObject( void * o );
+void RenderTransparentObject ( void* obj );
 
+void RenderSolidObject( void* obj);
 
 #endif
