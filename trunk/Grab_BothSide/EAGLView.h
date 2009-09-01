@@ -129,7 +129,7 @@ Note that setting the view non-opaque will only work if the EAGL surface has an 
 - (int) myTouchMoved:(UITouch*)touch andPoint:(CGPoint)point andFront:(BOOL)isFront andNum:(int)num;
 - (int) myTouchEnded:(UITouch*)touch andPoint:(CGPoint)point andFront:(BOOL)isFront andNum:(int)num;
 
-- (void) dragBegan:(CGPoint)point;
+- (void) dragBegan:(CGPoint)point1 andFrontPoint:(CGPoint)point2;
 - (void) dragMoved:(CGPoint)point;
 - (void) dragEnded;
 
