@@ -55,6 +55,7 @@ SIO2material*	_SIO2material_selection = NULL; // Our selection material to highl
 bool	positionRegenerated;
 char	taskState;				// Main State 
 char	numberState;			// Each task square 1 ~ 4 State
+bool	render3DObjects;
 
 double	nowTime;
 double	lastTime;
@@ -236,6 +237,7 @@ void templateRender( void ) {
 		
 		switch(taskState){
 			case 0:
+				render3DObjects = FALSE;
 				vec3Copy(lastRotation, rotateObject->_SIO2transform->rot);
 				arrowObject->_SIO2transform->loc->y = 0;
 				//printf("arrowObject->x = %lf , arrowObject->y = %lf\n",arrowObject->_SIO2transform->loc->x,arrowObject->_SIO2transform->loc->y);
@@ -243,6 +245,7 @@ void templateRender( void ) {
 				strcpy( displayStr, "Press START to START!" );
 				break;
 			case 1:
+				render3DObjects = TRUE;
 				//nowTargetIndex = 1;
 				selection = rotateObject;
 				sprintf(displayStr, "Round: %d", taskState);
@@ -251,6 +254,7 @@ void templateRender( void ) {
 				randomRotateDirection();
 				break;
 			case TASK_TOTAL_ROUND + 1:
+				render3DObjects = FALSE;
 				taskCompleteTime[taskState-2] = nowTime - lastTime;
 				movement[taskState-2] = movementOne - 2;
 				taskTotalTime = 0;
@@ -324,7 +328,7 @@ void templateRender( void ) {
 		
 		if (taskState < TASK_TOTAL_ROUND + 1) {
 			sio2WindowEnterLandscape3D();
-			{
+			if (render3DObjects){
 				sio2CameraRender( _SIO2camera );
 				//TODO: ----------------------------- Visual Feedback -------------------------------
 				cameraPosition = _SIO2camera->_SIO2transform->loc->x;
@@ -591,6 +595,8 @@ void templateLoading( void ) {
 	printf("========init taskState========\n");
 	taskState = 0;
 	positionRegenerated = FALSE;
+	render3DObjects =  FALSE;
+	
 	lastRotation = sio2Vec3Init();
 	nowTime = taskStartTime =  [NSDate timeIntervalSinceReferenceDate];
 	for(int k=0 ; k<5 ; k++){

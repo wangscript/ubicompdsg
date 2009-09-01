@@ -544,7 +544,7 @@ BOOL isDebug = YES;
 			dragStartPts[0] = tp1._point;
 			dragStartPts[1] = tp2._point;
 			
-			[self dragBegan: dragStartPts[1] ];
+			[self dragBegan: dragStartPts[1] andFrontPoint: dragStartPts[0] ];
 			
 			//_StrtSystemTime = time(NULL);
 		}	
@@ -1002,16 +1002,16 @@ BOOL isDebug = YES;
 
 // ================ Functions for OBJECT DRAG =================
 
-- (void) dragBegan:(CGPoint)point {
+- (void) dragBegan:(CGPoint)point1 andFrontPoint:(CGPoint)point2 {
 	if (!ENABLE_OBJECT_GRAB) return;
 	
-	selectionPosition->x = point.x;    //Added by YO: for grab by Back-Side touch!----------------------------------------
-	selectionPosition->y = 480-point.y;
+	selectionPosition->x = point1.x;    //Added by YO: for grab by Back-Side touch!----------------------------------------
+	selectionPosition->y = 480-point1.y;
 	tap_select = 1; //設定物件被選取
 		
 	if (isDebug) printf("Drag Began\n");
 	dragState = YES;
-	tempDragPoint = point;
+	tempDragPoint = point2;
 	
 }
 
