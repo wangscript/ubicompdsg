@@ -11,7 +11,7 @@ using namespace std;
 #define SIO2_FILE_NAME			"Task_Stretch.sio2"
 #define TASK_TOTAL_ROUND		10
 #define TASK_PER_ROUND			5
-#define OBJ_IN_SAME_SIZE		0.1
+#define OBJ_IN_SAME_SIZE		0.2
 
 #define pi						3.1415926
 
@@ -798,7 +798,7 @@ void templateChangeObjectScale( void *_ptr, float det_scale) {
 		
 		//SIO2camera *_SIO2camera = ( SIO2camera * )sio2ResourceGet( sio2->_SIO2resource, SIO2_CAMERA,"camera/Camera");
 		if(debug) printf("_SIO2object->_SIO2transform->scl->x = %f \n", _SIO2object->_SIO2transform->scl->x);
-        det_scale *= 0.1;
+        det_scale *= 0.17;
 		if(_SIO2object->_SIO2transform->scl->x + det_scale < 3 && _SIO2object->_SIO2transform->scl->x + det_scale > 0.1)
 		{
 			_SIO2object->_SIO2transform->scl->x += det_scale;
