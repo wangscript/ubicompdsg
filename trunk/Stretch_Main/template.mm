@@ -9,8 +9,8 @@
 using namespace std;
 
 #define SIO2_FILE_NAME			"Task_Stretch.sio2"
-#define TASK_TOTAL_ROUND		10
-#define TASK_PER_ROUND			5
+#define TASK_TOTAL_ROUND		20
+#define TASK_PER_ROUND			10
 #define OBJ_IN_SAME_SIZE		0.2
 
 #define pi						3.1415926
@@ -104,6 +104,8 @@ double	fingersOnBackLastTime;
 double	fingersOnBackTotalTime;
 
 NSDate	*taskDate = [NSDate date];
+NSString *bundleName = [[NSString alloc] initWithString: [[[NSBundle mainBundle] infoDictionary] objectForKey: @"CFBundleDisplayName"]];
+
 
 // ============= Private variable for this task project ============= //
 
@@ -219,7 +221,6 @@ void generateLogFormat() {
 	NSMutableString *textCSV = [NSMutableString stringWithCapacity: 20];
 	NSMutableString *textAll = [NSMutableString stringWithCapacity: 20];
 	NSMutableString *textLog = [NSMutableString stringWithCapacity: 20];
-	NSString *bundleName = [[NSString alloc] initWithString: [[[NSBundle mainBundle] infoDictionary] objectForKey: @"CFBundleDisplayName"]];
 	
 	[textLog appendFormat: @"### %@ %@ ###\n", bundleName , taskDateString];
 	
@@ -256,7 +257,7 @@ void templateRender( void ) {
 		switch(taskState){
 			case 0:
 				render3DObjects = FALSE;
-				strcpy( displayStr, "Select the yellow circle to start!" );
+				strcpy( displayStr, "Tap START!" );
 				break;
 			case 1:
 				render3DObjects = TRUE;
@@ -271,7 +272,7 @@ void templateRender( void ) {
 				double tmp;
 				tmp = 0;
 				for (int k=0 ; k<TASK_TOTAL_ROUND ; k++) tmp += taskCompleteTime[k];
-				sprintf(displayStr, "Task Complete.");
+				sprintf(displayStr, "%s. Task Complete.", [bundleName UTF8String]);
 				taskTotalTime = tmp;
 				
 				render3DObjects = FALSE;
@@ -588,9 +589,11 @@ void templateRender( void ) {
 					{
 						// -----------------------------------------
 						sio2->_SIO2material = NULL;
-
+						float scl = 2.0f;
+						glScalef( scl, scl, scl );
+						
 						_SIO2font->_SIO2transform->loc->x = 8.0f;
-						_SIO2font->_SIO2transform->loc->y = sio2->_SIO2window->scl->y - 16.0f;
+						_SIO2font->_SIO2transform->loc->y = sio2->_SIO2window->scl->y/scl - 16.0f;
 						
 						_SIO2font->_SIO2material->diffuse->x = 0.0f;
 						_SIO2font->_SIO2material->diffuse->y = 1.0f;
@@ -670,7 +673,7 @@ void templateLoading( void ) {
 	
 	srand ( time(NULL) );
 	taskState = 0;
-	stateStartFlag = FALSE;
+	stateStartFlag = TRUE;
 	render3DObjects = FALSE;
 	nowTime = taskStartTime =  [NSDate timeIntervalSinceReferenceDate];
 	
