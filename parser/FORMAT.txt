@@ -1,0 +1,22 @@
+all.csv , all.txt:各個Task 所有User的總平均時間 與 Extra
+
+Task名稱,各回合平均時間,各回合時間標準差,各回合extra平均,各回合extra標準差,Front平均,Front標準差,Back平均,Back標準差,Both平均,Both標準差
+
+
+
+all_type.csv all_type.txt:各個Task 所有User 每種Type分開算 各回合平均時間 與 Extra
+
+Task名稱,type,各回合平均時間,各回合時間標準差,各回合extra平均,各回合extra標準差
+
+
+
+_編號.csv _編號.txt:每個人 所有task 各回合平均時間 Extra
+
+Task名稱,各回合平均時間,各回合時間標準差,各回合extra平均,各回合extra標準差,Front總時間,Back總時間,Both總時間
+
+
+
+_編號_type.csv  _編號_type.txt: 每個人 所有Task 每個Type分開  各回合平均時間 Extra
+
+Task名稱,type,各回合平均時間,各回合時間標準差,各回合extra平均,各回合extra標準差
+
