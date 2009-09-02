@@ -9,8 +9,8 @@
 using namespace std;
 
 #define SIO2_FILE_NAME			"Task_Grab.sio2"
-#define TASK_TOTAL_ROUND		32
-#define TASK_PER_ROUND			4
+#define TASK_TOTAL_ROUND		40
+#define TASK_PER_ROUND			10
 #define OBJ_IN_SAME_POSISION	0.75
 #define RANDOM_LOC_DISTANCE		3
 
@@ -103,7 +103,9 @@ bool	fingersOnBackOld;
 double	fingersOnBackLastTime;
 double	fingersOnBackTotalTime;
 
-NSDate	*taskDate = [NSDate date];
+NSDate		*taskDate = [NSDate date];
+NSString	*bundleName = [[NSString alloc] initWithString: [[[NSBundle mainBundle] infoDictionary] objectForKey: @"CFBundleDisplayName"]];
+
 
 // ============= Private variable for this task project ============= //
 
@@ -159,26 +161,26 @@ void generatePosition() {
 	
 	
 	switch( idx ){
-		case 1: y1 = -3; z1 = 1.5; size = 1.5; break;
-		case 2: y1 = -3; z1 = 1.5; size = 1; break;
-		case 3: y1 = -3; z1 = 1.5; size = 0.5; break;
-		case 4: y1 = -3; z1 = 1.5; size = 0.25; break;
-		case 5: y1 = -6; z1 = 3; size = 1; break;
-		case 6: y1 = 0; z1 = 3; size = 1; break;
-		case 7: y1 = -6; z1 = 0; size = 1; break;
-		case 8: y1 = 0; z1 = 0; size = 1; break;	
+		case 1: y1 = -6; z1 = 3; size = 1.5; break;
+		case 2: y1 = -6; z1 = 3; size = 1; break;
+		case 3: y1 = -6; z1 = 3; size = 0.5; break;
+		case 4: y1 = -6; z1 = 3; size = 0.25; break;
+		//case 5: y1 = -6; z1 = 3; size = 1; break;
+		//case 6: y1 = 0; z1 = 3; size = 1; break;
+		//case 7: y1 = -6; z1 = 0; size = 1; break;
+		//case 8: y1 = 0; z1 = 0; size = 1; break;	
 		default: break;
 	}
 	if (taskState == 1){
-		yy = y1 + (float)(rand() % 600) / 100;
-		zz = z1 - (float)(rand() % 300) / 100;
+		yy = y1 + (float)(rand() % 1200) / 100;
+		zz = z1 - (float)(rand() % 600) / 100;
 	}
 	else {
 		y_old = objectSelect->_SIO2transform->loc->y;
 		z_old = objectSelect->_SIO2transform->loc->z;
 		do {
-			yy = y1 + (float)(rand() % 600) / 100;
-			zz = z1 - (float)(rand() % 300) / 100;
+			yy = y1 + (float)(rand() % 1200) / 100;
+			zz = z1 - (float)(rand() % 600) / 100;
 		} while((pow(y_old - yy, 2) + pow(z_old - zz, 2)) < pow(RANDOM_LOC_DISTANCE, 2));
 	}
 	
@@ -227,7 +229,6 @@ void generateLogFormat() {
 	NSMutableString *textCSV = [NSMutableString stringWithCapacity: 20];
 	NSMutableString *textAll = [NSMutableString stringWithCapacity: 20];
 	NSMutableString *textLog = [NSMutableString stringWithCapacity: 20];
-	NSString *bundleName = [[NSString alloc] initWithString: [[[NSBundle mainBundle] infoDictionary] objectForKey: @"CFBundleDisplayName"]];
 	
 	[textLog appendFormat: @"### %@ %@ ###\n", bundleName , taskDateString];
 	
@@ -280,7 +281,7 @@ void templateRender( void ) {
 				double tmp;
 				tmp = 0;
 				for (int k=0 ; k<TASK_TOTAL_ROUND ; k++) tmp += taskCompleteTime[k];
-				sprintf(displayStr, "Task Complete.");
+				sprintf(displayStr, "%s. Task Complete.", [bundleName UTF8String]);
 				taskTotalTime = tmp;
 				
 				render3DObjects = FALSE;
@@ -489,22 +490,29 @@ void templateRender( void ) {
 				glClear( GL_COLOR_BUFFER_BIT ); // Clear the color buffer
 				sio2MaterialReset();            // Reset the material states
 				
-				//if(sio2->_SIO2window->n_touch != 0) {
-					if (GRAB_WITH_BACK_TOUCH) {
-						
-						selection = sio2ResourceSelect3D( sio2->_SIO2resource,
-														 sio2->_SIO2camera,
-														 sio2->_SIO2window,
-														 selectionPosition);
-						printf("test select selection = %d\n",selection);
+				selection = sio2ResourceSelect3D( sio2->_SIO2resource,
+												 sio2->_SIO2camera,
+												 sio2->_SIO2window,
+												 selectionPosition);
+				
+				// Selection 例外處理：不能select的物件
+				for (int a=0 ; a<excludeObjects.size() ; a++ ){
+					if ( selection == excludeObjects[a] ) {
+						selection = nil;
+						break;
 					}
-					else {
-						selection = sio2ResourceSelect3D( sio2->_SIO2resource,
-														 sio2->_SIO2camera,
-														 sio2->_SIO2window,
-														 sio2->_SIO2window->touch[0]);
-					}
-				//}
+				}
+				
+				if ( selection == nil && [bundleName hasSuffix: @"Both"]) {
+					vec2 *tmpPt = sio2Vec2Init();
+					tmpPt->x = sio2->_SIO2window->touch[0]->y;
+					tmpPt->y = 480 - sio2->_SIO2window->touch[0]->x;
+					selection = sio2ResourceSelect3D( sio2->_SIO2resource,
+													 sio2->_SIO2camera,
+													 sio2->_SIO2window,
+													 tmpPt);
+					sio2Vec2Free(tmpPt);
+				}
 				
 				// Selection 例外處理：不能select的物件
 				for (int a=0 ; a<excludeObjects.size() ; a++ ){
@@ -612,9 +620,11 @@ void templateRender( void ) {
 					{
 						// -----------------------------------------
 						sio2->_SIO2material = NULL;
+						float scl = 2.0f;
+						glScalef( scl, scl, scl );
 
 						_SIO2font->_SIO2transform->loc->x = 8.0f;
-						_SIO2font->_SIO2transform->loc->y = sio2->_SIO2window->scl->y - 16.0f;
+						_SIO2font->_SIO2transform->loc->y = sio2->_SIO2window->scl->y/scl - 16.0f;
 						
 						_SIO2font->_SIO2material->diffuse->x = 0.0f;
 						_SIO2font->_SIO2material->diffuse->y = 1.0f;
