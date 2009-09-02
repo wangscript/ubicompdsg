@@ -145,11 +145,15 @@ bool vec3BlurEqual(vec3* a, vec3* b, float threshold) {
 }
 
 bool objectsAreInSameSize(SIO2object* obj_1, SIO2object* obj_2) {
+	return (obj_1->_SIO2transform->scl->x > obj_2->_SIO2transform->scl->x);
+	
+	/*
 	return (
 			( fabs( obj_1->_SIO2transform->scl->x - obj_2->_SIO2transform->scl->x ) < OBJ_IN_SAME_SIZE )	
 			&&  ( fabs( obj_1->_SIO2transform->scl->y - obj_2->_SIO2transform->scl->y ) < OBJ_IN_SAME_SIZE )
 			&&	( fabs( obj_1->_SIO2transform->scl->z - obj_2->_SIO2transform->scl->z ) < OBJ_IN_SAME_SIZE )
 			);
+	*/
 }
 
 bool pointInBox(vec3* pt, vec3* box_center, float scl) {
@@ -334,7 +338,7 @@ void templateRender( void ) {
 					}
 				}
 				else{
-					if (objectsAreInSameSize( objectSelect2, objectEnd )){
+					if (objectsAreInSameSize( objectEnd , objectSelect2 )){
 						stateStartFlag = TRUE;
 						taskState ++;
 						AudioServicesPlaySystemSound(soundID);
