@@ -224,7 +224,7 @@ void sio2TransformBindMatrix( SIO2transform *_SIO2transform )
 
 
 void sio2TransformBindMatrix2(SIO2transform *_SIO2transform,GLfloat *matrixrotate ,float x,float y,float z , int test){
-	
+
 	if( test == 1){
 	
 		glPushMatrix();{
@@ -256,7 +256,7 @@ void sio2TransformBindMatrix2(SIO2transform *_SIO2transform,GLfloat *matrixrotat
 		glTranslatef( _SIO2transform->loc->x,
 				 _SIO2transform->loc->y,
 				 _SIO2transform->loc->z );
-		
+		/*
 		glRotatef( x,
 				  0.0f,
 				  0.0f,
@@ -269,12 +269,14 @@ void sio2TransformBindMatrix2(SIO2transform *_SIO2transform,GLfloat *matrixrotat
 				  1.0f,
 				  0.0f,
 				  0.0f);		
-		
+		*/
+			glMultMatrixf(matrixrotate);
+			
 		glScalef(_SIO2transform->scl->x,
 				 _SIO2transform->scl->y,
 				 _SIO2transform->scl->z );	
 		
-		glMultMatrixf(matrixrotate);
+		
 		glGetFloatv( GL_MODELVIEW_MATRIX, &_SIO2transform->mat[0] );
 		
 	}
@@ -291,11 +293,14 @@ void sio2TransformBindMatrix2(SIO2transform *_SIO2transform,GLfloat *matrixrotat
 						 _SIO2transform->loc->y,
 						 _SIO2transform->loc->z );
 			
+			glMultMatrixf(matrixrotate);
+			
 			glScalef(_SIO2transform->scl->x,
 					 _SIO2transform->scl->y,
 					 _SIO2transform->scl->z );	
 			
-			glMultMatrixf(matrixrotate);
+			//printf("%lf %lf %lf\n",_SIO2transform->scl->x,_SIO2transform->scl->y,_SIO2transform->scl->z);
+			
 			glGetFloatv( GL_MODELVIEW_MATRIX, &_SIO2transform->mat[0] );
 			
 		}
