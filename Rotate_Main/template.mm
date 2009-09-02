@@ -18,7 +18,7 @@ using namespace std;
 
 #define TASK_NAME				"Rotate_Flip"
 #define SIO2_FILE_NAME			"Task_Rotate.sio2"
-#define TASK_TOTAL_ROUND		20
+#define TASK_TOTAL_ROUND		40
 #define OBJ_IN_SAME_POSISION	1
 #define pi						3.1415926
 
@@ -104,6 +104,8 @@ double	fingersOnDeviceLastTime;
 double	fingersOnDeviceTotalTime = 0;
 
 NSDate	*taskDate = [NSDate date];
+NSString *bundleName = [[NSString alloc] initWithString: [[[NSBundle mainBundle] infoDictionary] objectForKey: @"CFBundleDisplayName"]];
+
 
 // ============= Private variable for this task project ============= //
 
@@ -149,19 +151,19 @@ void randomRotateDirection() {
 		}
 	}*/
 	
-	if( taskState >= 1 && taskState <= 5){
+	if( taskState >= 1 && taskState <= 10){
 		nowTargetIndex = 0;
 		taskType[taskState-1] = 1;
 	}
-	if( taskState >= 6 && taskState <= 10){
+	if( taskState >= 11 && taskState <= 20){
 		nowTargetIndex = 1;
 		taskType[taskState-1] = 2;
 	}
-	if( taskState >= 11 && taskState <= 15){
+	if( taskState >= 21 && taskState <= 30){
 		nowTargetIndex = 2;
 		taskType[taskState-1] = 3;
 	}
-	if( taskState >= 16 && taskState <= 20){
+	if( taskState >= 31 && taskState <= 40){
 		nowTargetIndex = 3;
 		taskType[taskState-1] = 4;
 	}
@@ -242,7 +244,7 @@ void templateRender( void ) {
 				arrowObject->_SIO2transform->loc->y = 0;
 				//printf("arrowObject->x = %lf , arrowObject->y = %lf\n",arrowObject->_SIO2transform->loc->x,arrowObject->_SIO2transform->loc->y);
 				sio2TransformBindMatrix(arrowObject->_SIO2transform);
-				strcpy( displayStr, "Press START to START!" );
+				strcpy( displayStr, "Tap START!" );
 				break;
 			case 1:
 				render3DObjects = TRUE;
@@ -259,7 +261,7 @@ void templateRender( void ) {
 				movement[taskState-2] = movementOne - 2;
 				taskTotalTime = 0;
 				for (int k=0 ; k<TASK_TOTAL_ROUND ; k++) taskTotalTime += taskCompleteTime[k];
-				sprintf(displayStr, "Task Complete.");
+				sprintf(displayStr, "%s. Task Complete.", [bundleName UTF8String]);
 				isAllTaskFinished = YES;   //-------------------------------Edit for LogButton-----------------
 				break;
 			default:
@@ -267,7 +269,6 @@ void templateRender( void ) {
 				sprintf(displayStr, "Round: %d", taskState);	   
 				taskCompleteTime[taskState-2] = nowTime - lastTime;
 				movement[taskState-2] = movementOne - 2;
-				printf("movement = %d\n",movementOne);
 				movementOne = 0;
 				lastTime = nowTime;
 				randomRotateDirection();
@@ -550,14 +551,15 @@ void templateRender( void ) {
 			if (ENABLE_SHOW_TEXT) {
 				sio2WindowEnterLandscape2D( sio2->_SIO2window );
 				{
-					vec2 pos;
 					glPushMatrix();
 					{
 						// -----------------------------------------
 						sio2->_SIO2material = NULL;
+						float scl = 2.0f;
+						glScalef( scl, scl, scl );
 						
 						_SIO2font->_SIO2transform->loc->x = 8.0f;
-						_SIO2font->_SIO2transform->loc->y = sio2->_SIO2window->scl->y - 16.0f;
+						_SIO2font->_SIO2transform->loc->y = sio2->_SIO2window->scl->y/scl - 16.0f;
 						
 						_SIO2font->_SIO2material->diffuse->x = 0.0f;
 						_SIO2font->_SIO2material->diffuse->y = 1.0f;
@@ -941,7 +943,6 @@ void generateLogFormat() {
 	NSMutableString *textCSV = [NSMutableString stringWithCapacity: 20];
 	NSMutableString *textAll = [NSMutableString stringWithCapacity: 20];
 	NSMutableString *textLog = [NSMutableString stringWithCapacity: 20];
-	NSString *bundleName = [[NSString alloc] initWithString: [[[NSBundle mainBundle] infoDictionary] objectForKey: @"CFBundleDisplayName"]];
 	
 	[textLog appendFormat: @"### %@ %@ ###\n", bundleName , taskDateString];
 	

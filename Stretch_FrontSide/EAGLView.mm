@@ -298,18 +298,15 @@ BOOL isDebug = YES;
 	self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:animationInterval target:self selector:@selector(drawView) userInfo:nil repeats:YES];
 }
 
-
 - (void)stopAnimation {
 	self.animationTimer = nil;
 }
-
 
 - (void)setAnimationTimer:(NSTimer *)newTimer {
 	[animationTimer invalidate];
 	animationTimer = newTimer;
 }
-
-
+ 
 - (void)setAnimationInterval:(NSTimeInterval)interval {
 	
 	animationInterval = interval;
@@ -318,7 +315,6 @@ BOOL isDebug = YES;
 		[self startAnimation];
 	}
 }
-
 
 - (void)dealloc {
 	
@@ -418,7 +414,9 @@ BOOL isDebug = YES;
 		fingersOnBack = TRUE;
 	}
 	
-	TouchPoint *tp1, *tp2, *tp3, *tp4;
+	TouchPoint *tp1, *tp2;
+	
+	/*
 	// Algmemted Part for STRETCH: -------------------------------------------------------------------
 	if(!strtState) 
 	{   
@@ -464,8 +462,9 @@ BOOL isDebug = YES;
 				[self strtBegan:tp1._point andPoint:tp3._point ];
 			}
 		}
+	 
 		//CASE3: 尚未有FlipPair或DragPair生成:
-		else if(newestDragFrontIdx[0]<5 && newestDragFrontIdx[1]<5 && newestDragBackIdx[0]<5 && newestDragBackIdx[1]<5) 
+		if(newestDragFrontIdx[0]<5 && newestDragFrontIdx[1]<5 && newestDragBackIdx[0]<5 && newestDragBackIdx[1]<5) 
 		{
 			tp1 = [self.frontLoc objectAtIndex: newestDragFrontIdx[0]];
 			tp2 = [self.frontLoc objectAtIndex: newestDragFrontIdx[1]];
@@ -485,7 +484,7 @@ BOOL isDebug = YES;
 				if(strtDebug) printf("From Strt!!!!\n");
 				if(strtDebug) printf("The strtPairIndex are <%d,%d><%d,%d>\n", strtPairIdx[0], strtPairIdx[1], strtPairIdx[2], strtPairIdx[3]);
 				
-				[self strtBegan:tp1._point andPoint:tp2._point];
+				[self strtBegan:tp3._point andPoint:tp4._point];
 			}
 			
 			else if( tp1._point.x < tp4._point.x + STRETCH_INITIAL_LIMIT && tp1._point.x > tp4._point.x - STRETCH_INITIAL_LIMIT &&
@@ -499,11 +498,8 @@ BOOL isDebug = YES;
 				strtPairIdx[1] = newestDragBackIdx[1];
 				strtPairIdx[2] = newestDragFrontIdx[1];
 				strtPairIdx[3] = newestDragBackIdx[0];	
-				[self strtBegan:tp1._point andPoint:tp2._point];
+				[self strtBegan:tp3._point andPoint:tp4._point];
 			}
-			
-			
-				
 				
 		}
 	}
@@ -514,22 +510,23 @@ BOOL isDebug = YES;
 			if(isDebug) printf("The newestDragFrontIdx: %d",newestDragBackIdx[0]);
 		
 			tp1 = [self.frontLoc objectAtIndex: newestDragFrontIdx[0]];
-			tp2 = [self.frontLoc objectAtIndex: newestDragBackIdx[0]];
+			tp2 = [self.backLoc objectAtIndex: newestDragBackIdx[0]];
 			if( tp1._point.x < tp2._point.x + STRETCH_INITIAL_LIMIT && tp1._point.x > tp2._point.x - STRETCH_INITIAL_LIMIT &&
 			   tp1._point.y < tp2._point.y + STRETCH_INITIAL_LIMIT && tp1._point.y > tp2._point.y - STRETCH_INITIAL_LIMIT) {
 				
 				strtPairIdx[2] = newestDragFrontIdx[0];
 				strtPairIdx[3] = newestDragBackIdx[0];
 				
-				tp3 = [self.frontLoc objectAtIndex:strtPairIdx[0]];
+				tp3 = [self.backLoc objectAtIndex:strtPairIdx[1]];
 				
-				tempStrtDistance = sqrt(pow(tp1._point.x - tp3._point.x, 2)+pow(tp1._point.y - tp3._point.y, 2));
+				tempStrtDistance = sqrt(pow(tp2._point.x - tp3._point.x, 2)+pow(tp2._point.y - tp3._point.y, 2));
 				
 				isStrtHalt = NO;
 			}
 		
 	
 	}
+	
 	// Algmented Part for DRAG: ----------------------------------------------------------------------
 	if(!strtState && !dragState && newestDragFrontIdx[0]<5 && newestDragBackIdx[0]<5) 
 	{
@@ -544,11 +541,12 @@ BOOL isDebug = YES;
 			dragStartPts[0] = tp1._point;
 			dragStartPts[1] = tp2._point;
 			
-			[self dragBegan: dragStartPts[1] andFrontPoint: dragStartPts[0] ];
+			[self dragBegan: dragStartPts[1] ];
 			
 			//_StrtSystemTime = time(NULL);
 		}	
 	}
+	/*
 	// Algmented Part for FLIP: ----------------------------------------------------------------------
 	if(!strtState && !flipState && newestFlipFrontIdx<5 && newestFlipBackIdx<5) 
 	{
@@ -576,8 +574,6 @@ BOOL isDebug = YES;
 		isFlipY = NO;
 	}
 	// -----------------------------------------------------------------------------------------------
-
-	
 	
 	// 當只有偵測到一個指頭：
 	if( sio2->_SIO2window->n_touch == 1 && !cameraDiveState && newestSingleIdx<5 )
@@ -609,6 +605,35 @@ BOOL isDebug = YES;
 		cameraDiveIdx[1] = newestDoubleIdx[1];
 		[self cameraDiveBegan:tp1._point andPoint:tp2._point];
 	}
+	*/
+	
+	if (!strtState && newestDragFrontIdx[0] < 5 && newestDragFrontIdx[1] < 5){
+		tp1 = [self.frontLoc objectAtIndex: newestDragFrontIdx[0]];
+		tp2 = [self.frontLoc objectAtIndex: newestDragFrontIdx[1]];
+		strtPairIdx[0] = newestDragFrontIdx[0];
+		strtPairIdx[1] = newestDragFrontIdx[1];
+		
+		[self strtBegan: tp1._point andPoint: tp2._point];
+	}
+	else if (!strtState && newestDragFrontIdx[0] < 5){
+		tp1 = [self.frontLoc objectAtIndex: newestDragFrontIdx[0]];
+		[self dragBegan: tp1._point];
+	}
+	
+	if (isStrtHalt && newestDragFrontIdx[0] < 5 && newestDragFrontIdx[1] < 5){
+		printf("Started from Stretch Halted\n");
+		tp1 = [self.frontLoc objectAtIndex: newestDragFrontIdx[0]];
+		
+		strtPairIdx[0] = newestDragFrontIdx[0];
+		strtPairIdx[1] = newestDragFrontIdx[1];
+		
+		tp2 = [self.frontLoc objectAtIndex: newestDragFrontIdx[1]];
+		
+		tempStrtDistance = sqrt(pow(tp1._point.x - tp2._point.x, 2)+pow(tp1._point.y - tp2._point.y, 2));
+		
+		isStrtHalt = NO;
+	}
+	
 	
 	return index;
 }
@@ -643,7 +668,7 @@ BOOL isDebug = YES;
 									 );
 		i = num;
 	}
-	
+	/*
 	// Algmented Part For DRAG: ----------------------------------------------------------------------------------------------
 	if(dragState) 
 	{
@@ -684,6 +709,7 @@ BOOL isDebug = YES;
 	}	
 	// Algmented Part for FLIP: ----------------------------------------------------------------------------------------------
 	if(flipState)
+	 */
 	{
 		tp1 = [self.frontLoc objectAtIndex: flipPairIdx[0]];
 		tp2 = [self.backLoc  objectAtIndex: flipPairIdx[1]];
@@ -726,6 +752,26 @@ BOOL isDebug = YES;
 	if(strtState && !isStrtHalt)
 	{//NOTE: 判斷stretch的move只需要判斷正面的那兩點
 		tp1 = [self.frontLoc objectAtIndex: strtPairIdx[0]];
+		tp2 = [self.frontLoc  objectAtIndex: strtPairIdx[1]];
+		
+		double strtNewDistance;
+		strtNewDistance = pow( tp1._point.x - tp2._point.x, 2 ) + pow( tp1._point.y - tp2._point.y, 2);
+		
+		if( strtNewDistance > strtPrevDistance + STRETCH_MOVE_THRESOULD) {
+			strtExpand = YES;
+			[self strtMoved:tp1._point andPoint:tp2._point];
+		}
+		else if(strtNewDistance < strtPrevDistance - STRETCH_MOVE_THRESOULD) {														
+			strtExpand = NO;
+			[self strtMoved:tp1._point andPoint:tp2._point];
+		}
+		
+	    strtPrevDistance = strtNewDistance;
+	}
+	/*
+	if(strtState && !isStrtHalt)
+	{//NOTE: 判斷stretch的move只需要判斷正面的那兩點
+		tp1 = [self.frontLoc objectAtIndex: strtPairIdx[0]];
 		tp2 = [self.frontLoc  objectAtIndex: strtPairIdx[2]];
 		//if(strtDebug) if(isDebug) printf(" ==--> The strtPairIndex are <%d,%d><%d,%d>\n", strtPairIdx[0], strtPairIdx[1], strtPairIdx[2], strtPairIdx[3]);
 		
@@ -743,8 +789,9 @@ BOOL isDebug = YES;
 		
 	    strtPrevDistance = strtNewDistance;
 	}
+	 */
 	// -----------------------------------------------------------------------------------------------------------------------
-	
+	/*
 	if(cameraMoveState)
 	{
 		tp1 = [self.frontLoc objectAtIndex: cameraMoveIdx];
@@ -756,7 +803,7 @@ BOOL isDebug = YES;
 		tp2 = [self.frontLoc objectAtIndex: cameraDiveIdx[1]];
 		[self cameraDiveMoved: tp1._point andPoint: tp2._point];
 	}
-	
+	*/
 
 	return i;
 }
@@ -768,7 +815,7 @@ BOOL isDebug = YES;
 		for(i = 0 ; i < 5 ; i++){
 			tempPtr = [self.frontLoc objectAtIndex:i];
 			if(tempPtr._touch == touch){
-				
+				/*
 				if (strtState && strtPairIdx[0] == num && !isStrtHalt ) [self strtHaltWithIndex:0];
 				if (strtState && strtPairIdx[2] == num && !isStrtHalt ) [self strtHaltWithIndex:2];				
 				if (strtState && strtPairIdx[0] == i && isStrtHalt ) [self strtEnded];
@@ -782,8 +829,31 @@ BOOL isDebug = YES;
 				if( newestSingleIdx    == i) newestSingleIdx    = 5;
 				if( newestDoubleIdx[0] == i) newestDoubleIdx[0] = 5;
 				if( newestDoubleIdx[1] == i) newestDoubleIdx[1] = 5;
-					
-				 isUsed[i]=FALSE;
+				*/
+				if (newestDragFrontIdx[0] == i && newestDragFrontIdx[1] != 5) 
+				{ 
+					newestDragFrontIdx[0] = newestDragFrontIdx[1];
+					newestDragFrontIdx[1] = 5;
+				}
+				else if( newestDragFrontIdx[0] == i && newestDragFrontIdx[1] == 5)
+				{
+					newestDragFrontIdx[0] = 5;
+				}
+				
+				if (newestDragFrontIdx[1] == i) newestDragFrontIdx[1] = 5;
+				
+				if(strtState && strtPairIdx[0] == i && !isStrtHalt){
+					if (strtPairIdx[1] == 5) [self strtEnded];
+					else [self strtHaltWithIndex:0];
+				}
+				else if(strtState && strtPairIdx[1] == i && !isStrtHalt){
+					if (strtPairIdx[0] == 5) [self strtEnded];
+					else [self strtHaltWithIndex:1];
+				}
+				if (strtState && strtPairIdx[0] == i && isStrtHalt) [self strtEnded];
+				
+				
+				isUsed[i]=FALSE;
 				//return i;
 				break;
 			}
@@ -794,16 +864,14 @@ BOOL isDebug = YES;
 		fingersOnFront = hasFingers;
 	}
 	else{
-		
+		/*
 		if (dragState && dragPairIdx[1] == num) [self dragEnded];
 		if (flipState && flipPairIdx[1] == num) [self flipEnded];
 		if (strtState && strtPairIdx[1] == num && !isStrtHalt ) [self strtHaltWithIndex:1];
 		if (strtState && strtPairIdx[3] == num && !isStrtHalt ) [self strtHaltWithIndex:3];
 		if (strtState && strtPairIdx[1] == num && isStrtHalt ) [self strtEnded];
-		
-		if (newestDragBackIdx[0] == num) newestDragBackIdx[0] = 5;
-		if (newestDragBackIdx[1] == num) newestDragBackIdx[1] = 5;
-		if (newestFlipBackIdx    == num) newestFlipBackIdx    = 5;
+		*/
+
 		
 		mysio2ResourceDispatchEvents( sio2->_SIO2resource,
 									 sio2->_SIO2window,
@@ -824,8 +892,6 @@ BOOL isDebug = YES;
 		fingersOnBack = hasFingers;
 		
 		i = num;
-		
-		//printf("----------num = %d\n",num);
 	}
 	
 	
@@ -1002,16 +1068,16 @@ BOOL isDebug = YES;
 
 // ================ Functions for OBJECT DRAG =================
 
-- (void) dragBegan:(CGPoint)point1 andFrontPoint:(CGPoint)point2 {
+- (void) dragBegan:(CGPoint)point {
 	if (!ENABLE_OBJECT_GRAB) return;
 	
-	selectionPosition->x = point1.x;    //Added by YO: for grab by Back-Side touch!----------------------------------------
-	selectionPosition->y = 480 - point1.y;
+	selectionPosition->x = point.x;    //Added by YO: for grab by Back-Side touch!----------------------------------------
+	selectionPosition->y = 480-point.y;
 	tap_select = 1; //設定物件被選取
 		
 	if (isDebug) printf("Drag Began\n");
 	dragState = YES;
-	tempDragPoint = point2;
+	tempDragPoint = point;
 	
 }
 
@@ -1044,8 +1110,8 @@ BOOL isDebug = YES;
 - (void) dragEnded {
 	if (isDebug) printf("Drag End\n");
 	dragState = NO;
-	newestDragBackIdx[0] = 5;
-	newestDragBackIdx[1] = 5;
+	//newestDragBackIdx[0] = 5;
+	//newestDragBackIdx[1] = 5;
 	newestDragFrontIdx[0] = 5;
 	newestDragFrontIdx[1] = 5;
 	tempDragPoint = CGPointMake(0,0);
@@ -1162,7 +1228,7 @@ BOOL isDebug = YES;
 - (void) strtBegan:(CGPoint)point1 andPoint:(CGPoint)point2 {  	
 	if(!ENABLE_OBJECT_STRETCH) return;
 	
-	if(isDebug) printf("Stretch Began\n");
+	printf("Stretch Began\n");
 	strtState = YES;
 	// Also Reset _DragState and _FlipState: 
 	if(dragState) [self dragEnded];
@@ -1173,9 +1239,9 @@ BOOL isDebug = YES;
 
 - (void) strtMoved:(CGPoint)point1 andPoint:(CGPoint)point2 {
 	if(strtExpand) 
-		if(isDebug) printf("Stretch Expand\n");
+		printf("Stretch Expand\n");
 	else
-		if(isDebug) printf("Stretch Shrink\n");
+		printf("Stretch Shrink\n");
 	
 	double theDistance = sqrt( pow(point1.x - point2.x, 2) + pow(point1.y - point2.y, 2) );
 	double scaleIndex = theDistance - tempStrtDistance;
@@ -1199,20 +1265,19 @@ BOOL isDebug = YES;
 }
 
 - (void) strtHaltWithIndex:(int)idx {
-	if(isDebug) printf("Stretch Halted\n");
-	if( idx == 0 || idx == 1)
-	{
-		strtPairIdx[0] = strtPairIdx[2];
-		strtPairIdx[1] = strtPairIdx[3];
+	printf("Stretch Halted\n");
+	
+	if (idx == 0) {
+		strtPairIdx[0] = strtPairIdx[1];
 	}
-	strtPairIdx[2] = 5;
-	strtPairIdx[3] = 5;
+	strtPairIdx[1] = 5;
+	
 	isStrtHalt = YES;
 }
 
 
 - (void) strtEnded {
-	if(isDebug) printf("Stretch End\n");
+	printf("Stretch End\n");
 	strtState  = NO;
 	strtExpand = NO;
 	isStrtHalt = NO;

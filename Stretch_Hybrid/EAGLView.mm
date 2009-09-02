@@ -507,8 +507,6 @@ BOOL isDebug = YES;
 	if(strtState && isStrtHalt && newestDragBackIdx[0] < 5 && newestDragFrontIdx[0] < 5 ) //Case: Stretch Halted
 	{
 			if(isDebug) printf("Started from Stretch Halted ---------------\n");
-			if(isDebug) printf("The newestDragFrontIdx: %d",newestDragFrontIdx[0]);
-			if(isDebug) printf("The newestDragFrontIdx: %d",newestDragBackIdx[0]);
 		
 			tp1 = [self.frontLoc objectAtIndex: newestDragFrontIdx[0]];
 			tp2 = [self.backLoc objectAtIndex: newestDragBackIdx[0]];
