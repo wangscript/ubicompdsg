@@ -24,6 +24,8 @@
 #define ENABLE_SHOW_BACK_TOUCH	YES
 #define	ENABLE_SHOW_TEXT		YES
 
+#include "../src/sio2/sio2.h"
+
 typedef enum {
 	GESTURE_BOTH_GRAB = 0,
 	GESTURE_BOTH_DRAG,
@@ -68,4 +70,12 @@ void templateMoveCamera( void *_ptr ,float _detX, float _detY, float _detZ );
 void backTouchHandle(void *_ptr, int type, int index, float pt_x, float pt_y);
 
 void logToFile(NSString *logText, NSString *fileName);
+
+// Help Functions For Visual Feedback:
+void sortingTheObjects();
+
+void RenderTransparentObject ( SIO2object* obj );
+
+void RenderSolidObject( SIO2object* obj);
+
 #endif

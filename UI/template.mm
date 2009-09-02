@@ -9,7 +9,7 @@
 using namespace std;
 
 #define TASK_NAME				"Template"
-#define SIO2_FILE_NAME			"seqtest.sio2"
+#define SIO2_FILE_NAME			"Visual02.sio2"
 #define TASK_TOTAL_ROUND		5
 
 #define OBJ_IN_SAME_POSISION	1
@@ -60,7 +60,9 @@ vec2	backTouchPoint[5];
 
 char	displayStr[ SIO2_MAX_CHAR ] = {""};
 
-vector<SIO2object*> excludeObjects;   // Objects cannot be selected
+vector<SIO2object*> excludeObjects;         // Objects cannot be selected
+vector<SIO2object*> theSortedObjects;
+vector<SIO2object*> theSelectedGroup;
 
 vec2	startLoc1;
 vec2	startLoc2;
@@ -289,82 +291,105 @@ void templateRender( void ) {
 						_SIO2camera->cstart,
 						_SIO2camera->cend );
 		
+#pragma mark Rendering:
 		sio2WindowEnterLandscape3D();
 		{
 			sio2CameraRender( _SIO2camera );
+			sortingTheObjects();
+			
+			sio2CameraUpdateFrustum( sio2->_SIO2camera );
+			sio2ResourceCull( sio2->_SIO2resource, sio2->_SIO2camera );	
+			sio2ResourceRender( sio2->_SIO2resource,
+							   sio2->_SIO2window,
+							   sio2->_SIO2camera,
+							   SIO2_RENDER_SOLID_OBJECT );
+			
 			
 			if ( tap_select ) {
+				
+				theSelectedGroup.clear();
 				tap_select = 0;
 				
 				glClear( GL_COLOR_BUFFER_BIT ); // Clear the color buffer
 				sio2MaterialReset();            // Reset the material states
 				
-				if(sio2->_SIO2window->n_touch != 0) {
-					if (GRAB_WITH_BACK_TOUCH) {
-						selection = sio2ResourceSelect3D( sio2->_SIO2resource,
-														 sio2->_SIO2camera,
-														 sio2->_SIO2window,
-														 selectionPosition);
+				for( int index = 0; index < theSortedObjects.size(); index++)
+				{
+					//RenderSolidObject( theSortedObjects[ index] );
+					if(sio2->_SIO2window->n_touch != 0) {
+						if (GRAB_WITH_BACK_TOUCH) {
+							selection = sio2ResourceSelect3D( sio2->_SIO2resource,
+															 sio2->_SIO2camera,
+															 sio2->_SIO2window,
+															 selectionPosition);
+						}
+						else {
+							selection = sio2ResourceSelect3D( sio2->_SIO2resource,
+															 sio2->_SIO2camera,
+															 sio2->_SIO2window,
+															 sio2->_SIO2window->touch[0]);
+						}
 					}
-					else {
-						selection = sio2ResourceSelect3D( sio2->_SIO2resource,
-														 sio2->_SIO2camera,
-														 sio2->_SIO2window,
-														 sio2->_SIO2window->touch[0]);
+					
+					// 重疊處理
+					if (selection == targetObject) {
+						if (pointInBox(selectObject->_SIO2transform->loc, targetObject->_SIO2transform->loc, targetObject->_SIO2transform->scl->x))
+							selection = selectObject;
+						else if (selectObject->_SIO2transform->loc->x + selectObject->_SIO2transform->scl->x < targetObject->_SIO2transform->loc->x - targetObject->_SIO2transform->scl->x)
+							selection = selectObject;
 					}
-				}
-				
-				// 重疊處理
-				if (selection == targetObject) {
-					if (pointInBox(selectObject->_SIO2transform->loc, targetObject->_SIO2transform->loc, targetObject->_SIO2transform->scl->x))
-						selection = selectObject;
-					else if (selectObject->_SIO2transform->loc->x + selectObject->_SIO2transform->scl->x < targetObject->_SIO2transform->loc->x - targetObject->_SIO2transform->scl->x)
-						selection = selectObject;
-				}
-				
-				// Selection 例外處理：不能select的物件
-				for (int a=0 ; a<excludeObjects.size() ; a++ ){
-					if ( selection == excludeObjects[a] ) {
-						selection = nil;
-						break;
+					
+					// Selection 例外處理：不能select的物件
+					for (int a=0 ; a<excludeObjects.size() ; a++ ){
+						if ( selection == excludeObjects[a] ) {
+							selection = nil;
+							break;
+						}
 					}
+					
+					if(selection != NULL)
+						theSelectedGroup.push_back(selection);
+					
 				}
 			}
 			
-			glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT );
-			sio2CameraUpdateFrustum( sio2->_SIO2camera );
-			sio2ResourceCull( sio2->_SIO2resource, sio2->_SIO2camera );		
-			sio2ResourceRender( sio2->_SIO2resource,
+			
+			
+			else
+			 sio2ResourceRender( sio2->_SIO2resource,
 							   sio2->_SIO2window,
 							   sio2->_SIO2camera,
-							   SIO2_RENDER_SOLID_OBJECT | SIO2_RENDER_ALPHA_TESTED_OBJECT );
+							   SIO2_RENDER_SOLID_OBJECT );
 			
 			// 有選到東西的的話做highlight
-			if( selection )	{				
-				if( !_SIO2material_selection )
-				{
-					// Initialize the material
-					_SIO2material_selection = sio2MaterialInit( "selection" );
+			for( int index=0; index < theSelectedGroup.size(); index++)
+			{
+				selection = theSelectedGroup[ index ];
+				if( selection )	{				
+					if( !_SIO2material_selection )
+					{
+						// Initialize the material
+						_SIO2material_selection = sio2MaterialInit( "selection" );
+						
+						// Initialize some component of the color
+						_SIO2material_selection->diffuse->z = 0.0f;
+						_SIO2material_selection->diffuse->w = 0.35f;
+						
+						// Change the blending mode
+						_SIO2material_selection->blend = SIO2_MATERIAL_COLOR;
+					}		
 					
-					// Initialize some component of the color
-					_SIO2material_selection->diffuse->z = 0.0f;
-					_SIO2material_selection->diffuse->w = 0.35f;
+					// Set to red
+					_SIO2material_selection->diffuse->x = 1.0f;
+					_SIO2material_selection->diffuse->y = 0.0f;
 					
-					// Change the blending mode
-					_SIO2material_selection->blend = SIO2_MATERIAL_COLOR;
-				}		
-				
-				// Set to red
-				_SIO2material_selection->diffuse->x = 1.0f;
-				_SIO2material_selection->diffuse->y = 0.0f;
-				
-				// Render the material
-				sio2MaterialRender( _SIO2material_selection );
-
-				sio2ObjectRender( selection, sio2->_SIO2window, sio2->_SIO2camera, 0, SIO2_TRANSFORM_MATRIX_BIND );
-
+					// Render the material
+					sio2MaterialRender( _SIO2material_selection );
+					
+					sio2ObjectRender( selection, sio2->_SIO2window, sio2->_SIO2camera, 0, SIO2_TRANSFORM_MATRIX_BIND );
+					
+				}
 			}
-
 			// Render all the alpha objects currently inside the frustum.
 			sio2ResourceRender( sio2->_SIO2resource,
 							   sio2->_SIO2window,
@@ -523,14 +548,22 @@ void templateLoading( void ) {
 	sio2ResourceGenId( sio2->_SIO2resource );
 	
 	selectObject = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Cube" );
-	targetObject = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/planexy" );
-	//excludeObjects.push_back( targetObject );
-	//excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneXY" ));
-	//excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneYZ" ));
-	//excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneXZ" ));
+	targetObject = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Cube1" );
+
+#pragma mark Definition of Vectors:
+	excludeObjects.push_back( targetObject );
+	excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneXY" ));
+	excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneYZ" ));
+	excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneXZ" ));
 	
+	theSortedObjects.push_back((SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Cube"));
+	theSortedObjects.push_back((SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Cube2"));
+		
 	camera = ( SIO2camera * )sio2ResourceGet( sio2->_SIO2resource, SIO2_CAMERA,"camera/Camera" );
 
+	//Sort the Objects:
+	sortingTheObjects();
+	
 	selection = selectObject;
 	
 	sio2->_SIO2window->_SIO2windowrender = templateRender;
@@ -764,5 +797,111 @@ void logToFile(NSString *logText, NSString *fileName) {
 		[outFile writeData: data];
 		[outFile closeFile];
 	}
+}
+
+
+#pragma mark Help Functions for Visual Feedback:
+void RenderTransparentObject ( SIO2object* obj )
+{
+	unsigned int j,
+	n_transp = 0;
+	
+	void *ptr,
+	**_SIO2transp = NULL;		
+	SIO2object* theObject = (SIO2object* ) obj;
+	
+	
+	if( (theObject->type & SIO2_OBJECT_TRANSPARENT ) && theObject->dst )
+	{
+		++n_transp;
+		_SIO2transp = ( void ** ) realloc( _SIO2transp,
+										  n_transp * sizeof( void * ) );
+		
+		_SIO2transp[ n_transp - 1 ] = theObject;
+	}
+	
+	
+	
+	
+	int i = 0;
+	while( i != n_transp )
+	{
+		j = 0;
+		while( j != ( n_transp - 1 ) )
+		{
+			SIO2object *a = ( SIO2object * )_SIO2transp[ j     ],
+			*b = ( SIO2object * )_SIO2transp[ j + 1 ];
+			
+			if( a->dst < b->dst )
+			{
+				ptr = _SIO2transp[ j + 1 ];
+				_SIO2transp[ j + 1 ] = _SIO2transp[ j ];
+				_SIO2transp[ j     ] = ptr;
+			}
+			++j;
+		}
+		
+		++i;
+	}
+	
+	
+	i = 0;
+	while( i != n_transp )
+	{
+		sio2ObjectRender( ( SIO2object * )_SIO2transp[ i ],
+						 sio2->_SIO2window,			
+						 sio2->_SIO2camera,
+						 !( SIO2_RENDER_TRANSPARENT_OBJECT & SIO2_RENDER_NO_MATERIAL ),
+						 !( SIO2_RENDER_TRANSPARENT_OBJECT & SIO2_RENDER_NO_MATRIX ) );
+		++i;
+	}
+	
+	
+	if( _SIO2transp )
+	{
+		free( _SIO2transp );
+		_SIO2transp = NULL;
+	}
+}
+
+void RenderSolidObject( SIO2object* obj)
+{
+	//SIO2object *_SIO2object = ( SIO2object * )obj;
+	obj->dst = 1.0f;
+	if( ( obj->type & SIO2_OBJECT_SOLID ) && obj->dst )
+	{
+		sio2ObjectRender( obj,
+						 sio2->_SIO2window,			
+						 sio2->_SIO2camera,
+						 !( SIO2_RENDER_SOLID_OBJECT & SIO2_RENDER_NO_MATERIAL ),
+						 !( SIO2_RENDER_SOLID_OBJECT & SIO2_RENDER_NO_MATRIX ) );
+	}
+	
+}
+
+void sortingTheObjects() 
+{
+	SIO2object* tempObject;
+	double tempDistance;
+	double d;
+	
+	for( int i=0; i< theSortedObjects.size(); i++)
+	{
+		tempObject   = theSortedObjects[ i ];
+		tempDistance = fabs( theSortedObjects[ i ]->_SIO2transform->loc->x - camera->_SIO2transform->loc->x ); 
+		
+		for( int j = i+1; j< theSortedObjects.size(); j++)
+		{
+			d = fabs( theSortedObjects[ j ]->_SIO2transform->loc->x - camera->_SIO2transform->loc->x );
+			if( d < tempDistance)
+			{
+				tempDistance = d;
+				theSortedObjects[ i ] = theSortedObjects[ j ];
+				theSortedObjects[ j ] = tempObject;
+				tempObject = theSortedObjects[i]; 
+			}
+		}
+	}
+	
 }
 
