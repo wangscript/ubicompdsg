@@ -186,7 +186,7 @@ BOOL isDebug = YES;
 		oldIsRotateEnded = YES;
 		//-------------------------------------------------------------------
 		
-		movementNeeded = 4;
+		movementNeeded = 2;
 	
 	}
 	
