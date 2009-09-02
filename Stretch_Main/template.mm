@@ -263,7 +263,7 @@ void templateRender( void ) {
 				generatePosition();
 				sprintf(displayStr, "Round: %d", taskState);
 				taskStartTime = lastTime = nowTime;
-				movementOne = 2;  // Special case for Drag
+				movementOne = 0;  // Special case for Drag
 				break;
 			case TASK_TOTAL_ROUND + 1:
 				taskCompleteTime[taskState-2] = nowTime - lastTime;
