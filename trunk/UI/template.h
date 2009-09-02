@@ -78,4 +78,6 @@ void RenderTransparentObject ( SIO2object* obj );
 
 void RenderSolidObject( SIO2object* obj);
 
+bool checkForGroup( SIO2object* oFront, SIO2object* oBack );
+
 #endif

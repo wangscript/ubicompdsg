@@ -299,10 +299,7 @@ void templateRender( void ) {
 			
 			sio2CameraUpdateFrustum( sio2->_SIO2camera );
 			sio2ResourceCull( sio2->_SIO2resource, sio2->_SIO2camera );	
-			sio2ResourceRender( sio2->_SIO2resource,
-							   sio2->_SIO2window,
-							   sio2->_SIO2camera,
-							   SIO2_RENDER_SOLID_OBJECT );
+
 			
 			
 			if ( tap_select ) {
@@ -313,15 +310,26 @@ void templateRender( void ) {
 				glClear( GL_COLOR_BUFFER_BIT ); // Clear the color buffer
 				sio2MaterialReset();            // Reset the material states
 				
-				for( int index = 0; index < theSortedObjects.size(); index++)
+				double cameraPosition = camera->_SIO2transform->loc->x;
+				
+				for( int i=0; i < theSortedObjects.size(); i++)
 				{
-					//RenderSolidObject( theSortedObjects[ index] );
-					if(sio2->_SIO2window->n_touch != 0) {
+					theSortedObjects[ i ]->_SIO2transform->loc->x = cameraPosition + ( cameraPosition - theSortedObjects[ i ]->_SIO2transform->loc->x );
+					sio2TransformBindMatrix2( theSortedObjects[ i ]->_SIO2transform, matrixrotate, 0.0f,0.0f,0.0f , 2 );
+				}
+				
+				for(int i = theSortedObjects.size()-1 ; i >= 0; i-- )
+				{
+					theSortedObjects[ i ]->_SIO2transform->loc->x = cameraPosition - ( theSortedObjects[ i ]->_SIO2transform->loc->x - cameraPosition );
+					sio2TransformBindMatrix2( theSortedObjects[ i ]->_SIO2transform, matrixrotate, 0.0f,0.0f,0.0f , 2 );
+					RenderSolidObject( theSortedObjects[ i ] );
+					
+					if( sio2->_SIO2window->n_touch != 0 ) {
 						if (GRAB_WITH_BACK_TOUCH) {
 							selection = sio2ResourceSelect3D( sio2->_SIO2resource,
-															 sio2->_SIO2camera,
-															 sio2->_SIO2window,
-															 selectionPosition);
+													   sio2->_SIO2camera,
+													   sio2->_SIO2window,
+													   selectionPosition);
 						}
 						else {
 							selection = sio2ResourceSelect3D( sio2->_SIO2resource,
@@ -347,19 +355,40 @@ void templateRender( void ) {
 						}
 					}
 					
-					if(selection != NULL)
+					if(selection)
 						theSelectedGroup.push_back(selection);
-					
 				}
+
+								
+				/* Implimentation for Group Select:
+				if( selection )
+				{
+					int theSelectedIndex = theSortedObjects.size();
+					for( int index= 0; index < theSortedObjects.size(); index++ )
+					{
+						if( selection == theSortedObjects[ index ] )
+							theSelectedIndex = index;
+						
+						if( selection != theSortedObjects[ index ] && index > theSelectedIndex )
+						{
+							if ( checkForGroup( selection, theSortedObjects[ index ] ) )
+								theSelectedGroup.push_back( theSortedObjects[ index ] );
+						}	
+					}
+					
+					theSelectedGroup.push_back( selection );
+				}*/
 			}
-			
-			
-			
+
 			else
-			 sio2ResourceRender( sio2->_SIO2resource,
+			{
+				RenderSolidObject( theSortedObjects[0] );
+				RenderSolidObject( theSortedObjects[1] );
+			}
+			 /*sio2ResourceRender( sio2->_SIO2resource,
 							   sio2->_SIO2window,
 							   sio2->_SIO2camera,
-							   SIO2_RENDER_SOLID_OBJECT );
+							   SIO2_RENDER_SOLID_OBJECT );*/
 			
 			// 有選到東西的的話做highlight
 			for( int index=0; index < theSelectedGroup.size(); index++)
@@ -682,49 +711,53 @@ void templateRotateObject( void *_ptr , int rotateDirection, int theDirState ) {
 }
 
 void templateMoveObject( void *_ptr ,float _detX, float _detY, float _detZ ) {	
-	
-	SIO2object *_SIO2object = selection;
-	
-	// Check if we get a pointer.
-	if( _SIO2object )
-	{
-		// Apply a rotation based on the touch movement.
-		SIO2camera *_SIO2camera = ( SIO2camera * )sio2ResourceGet( sio2->_SIO2resource, SIO2_CAMERA,"camera/Camera");
-		float k = sio2Distance(_SIO2camera->_SIO2transform->loc, _SIO2object->_SIO2transform->loc) * 0.0001;
-		
-		
-		if(fabsf(_detX) > 0.01)
-		{
-			if(debug) printf("\nDETX!!!");
-			if(_SIO2object->_SIO2transform->loc->z + _detX * k < 100 && _SIO2object->_SIO2transform->loc->z + _detX * k > _SIO2object->_SIO2transform->scl->x)
-	    	{
-				_SIO2object->_SIO2transform->loc->z += _detX * k;
-		    }
-     	}
-		if(fabsf(_detY) > 0.01)
-		{
-			if(debug) printf("\nDETY!!!");
-			if(_SIO2object->_SIO2transform->loc->y + _detY * k < 100 && _SIO2object->_SIO2transform->loc->y + _detY * k > _SIO2object->_SIO2transform->scl->x)
-			{
-				_SIO2object->_SIO2transform->loc->y += _detY * k;
-			}
-		}
-		
-		if(fabs(_detZ) > 0.01)
-		{
-			if(debug) printf("\nDETZ!!!");
-			if(_SIO2object->_SIO2transform->loc->x + _detZ * k < 100 && _SIO2object->_SIO2transform->loc->x + _detZ * k > _SIO2object->_SIO2transform->scl->x)
-			{
-				_SIO2object->_SIO2transform->loc->x += _detZ * k; 
-			}
-			if(debug) printf("X: %f\n",_SIO2object->_SIO2transform->loc->x);
-		}
-		
 
-		sio2TransformBindMatrix2(_SIO2object->_SIO2transform,matrixrotate, 0.0f, 0.0f, 0.0f , 2);
+	for( int i=0;  i < theSelectedGroup.size(); i++)
+	{
+		SIO2object *_SIO2object = theSelectedGroup[ i ];
 		
-		//sio2TransformBindMatrix( _SIO2object->_SIO2transform  );
+		// Check if we get a pointer.
+		if( _SIO2object )
+		{
+			// Apply a rotation based on the touch movement.
+			SIO2camera *_SIO2camera = ( SIO2camera * )sio2ResourceGet( sio2->_SIO2resource, SIO2_CAMERA,"camera/Camera");
+			float k = sio2Distance(_SIO2camera->_SIO2transform->loc, _SIO2object->_SIO2transform->loc) * 0.0001;
+			
+			
+			if(fabsf(_detX) > 0.01)
+			{
+				if(debug) printf("\nDETX!!!");
+				if(_SIO2object->_SIO2transform->loc->z + _detX * k < 100 && _SIO2object->_SIO2transform->loc->z + _detX * k > _SIO2object->_SIO2transform->scl->x)
+				{
+					_SIO2object->_SIO2transform->loc->z += _detX * k;
+				}
+			}
+			if(fabsf(_detY) > 0.01)
+			{
+				if(debug) printf("\nDETY!!!");
+				if(_SIO2object->_SIO2transform->loc->y + _detY * k < 100 && _SIO2object->_SIO2transform->loc->y + _detY * k > _SIO2object->_SIO2transform->scl->x)
+				{
+					_SIO2object->_SIO2transform->loc->y += _detY * k;
+				}
+			}
+			
+			if(fabs(_detZ) > 0.01)
+			{
+				if(debug) printf("\nDETZ!!!");
+				if(_SIO2object->_SIO2transform->loc->x + _detZ * k < 100 && _SIO2object->_SIO2transform->loc->x + _detZ * k > _SIO2object->_SIO2transform->scl->x)
+				{
+					_SIO2object->_SIO2transform->loc->x += _detZ * k; 
+				}
+				if(debug) printf("X: %f\n",_SIO2object->_SIO2transform->loc->x);
+			}
+			
+			
+			sio2TransformBindMatrix2(_SIO2object->_SIO2transform,matrixrotate, 0.0f, 0.0f, 0.0f , 2);
+			
+			//sio2TransformBindMatrix( _SIO2object->_SIO2transform  );
+		}
 	}
+
 }
 
 void templateMoveCamera( void *_ptr ,float _detX, float _detY, float _detZ ) {	
@@ -867,7 +900,7 @@ void RenderTransparentObject ( SIO2object* obj )
 void RenderSolidObject( SIO2object* obj)
 {
 	//SIO2object *_SIO2object = ( SIO2object * )obj;
-	obj->dst = 1.0f;
+	//obj->dst = 1.0f;
 	if( ( obj->type & SIO2_OBJECT_SOLID ) && obj->dst )
 	{
 		sio2ObjectRender( obj,
@@ -877,6 +910,7 @@ void RenderSolidObject( SIO2object* obj)
 						 !( SIO2_RENDER_SOLID_OBJECT & SIO2_RENDER_NO_MATRIX ) );
 	}
 	
+	sio2ObjectReset();
 }
 
 void sortingTheObjects() 
@@ -904,4 +938,23 @@ void sortingTheObjects()
 	}
 	
 }
+
+bool checkForGroup( SIO2object* oFront, SIO2object* oBack )
+{
+	vec2 frontCenter, backCenter;
+	
+	frontCenter.x = oFront->_SIO2transform->loc->y;
+	frontCenter.y = oFront->_SIO2transform->loc->z;
+	backCenter.x = oBack->_SIO2transform->loc->y;
+	backCenter.y = oBack->_SIO2transform->loc->z;
+	
+	double theDistance = fabs( pow( frontCenter.x - backCenter.x, 2 ) + pow( frontCenter.y - backCenter.y, 2 ) );
+	double theDimantion = sqrt( pow( oBack->_SIO2transform->scl->x*2, 2 ) +
+						   pow( oBack->_SIO2transform->scl->y*2, 2 ) + 
+						   pow( oBack->_SIO2transform->scl->z*2, 2 ) );
+	
+	if( theDistance < theDimantion )	return true;
+	else							return false;
+}
+
 
