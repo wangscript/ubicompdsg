@@ -28,6 +28,8 @@ using namespace std;
 #define PUSH_INITIAL_WAIT_TIME	0.2
 #define PUSH_PERIOD_TIME		0.1
 
+#define SINGLE_SELEC_TIME       0.5
+
 #define Camera_Moved_Mode       0
 #define Object_Moved_Mode       1
 #define Object_Scale_Mode       2
@@ -380,6 +382,7 @@ BOOL isDebug = YES;
 		fingersOnFront = TRUE;
 	}
 	else{
+		
 		[self.backLoc replaceObjectAtIndex: num
 		                        withObject: [[TouchPoint alloc] initWithTouch:touch andPoint:point]
 		];
@@ -678,7 +681,7 @@ BOOL isDebug = YES;
 		//if(isDebug) printf("Front: X=>%f Y=>%f\n",tp1._point.x,tp1._point.y);
 		//if(isDebug) printf("BACK : X=>%f Y=>%f\n",tp2._point.x,tp2._point.y);
 		
-		// Check for the direction of FLIPing
+		// Chng
 		if( !isFlipX && !isFlipY){
 			if( fabs(tp1._point.y-flipStartPts[0].y - tp2._point.y + flipStartPts[1].y) > FLIP_INITIAL_LIMIT ){
 				isFlipY = TRUE;
@@ -1233,7 +1236,7 @@ BOOL isDebug = YES;
 #pragma mark Object Push
 // ================ Functions for OBJECT PUSH =================
 
-- (void) : (int)count andFront: (BOOL)front {
+- (void) setTouchAtSameTime: (int)count andFront: (BOOL)front {
 	double nowTime = [NSDate timeIntervalSinceReferenceDate];
 	if ((nowTime - _SameTouchFirstTime) < PUSH_INITIAL_PERIOD) {
 		_PushState = 5;
@@ -1487,9 +1490,59 @@ static int _degree_counter = 0; // Counter for rotate 90 degree
 	else                  theDirState  = 3;
 }
 
+
+#pragma mark Helpful Functions for Single Selection
+// ============== helpful functions for Single Selection ==========
+
+- (void) setSingleSelectionTimer:(int) preIndex andFront:(BOOL) front
+{
+	NSTimer *timer;
+	if(front) {
+		
+		theFrontPreIndexForSingleSelection = preIndex;
+		timer = [NSTimer scheduledTimerWithTimeInterval: SINGLE_SELEC_TIME 
+												 target: self
+											   selector: @selector(frontSingleSelectionTimer:)
+											   userInfo: nil
+												repeats: NO ];
+	}
+	
+	else {
+		
+		theBackPreIndexForSingleSelection = preIndex;
+		timer = [NSTimer scheduledTimerWithTimeInterval: SINGLE_SELEC_TIME 
+												 target: self
+											   selector: @selector(backSingleSelectionTimer:)
+											   userInfo: nil
+												repeats: NO ];		
+	}
+}
+
+- (void) frontSingleSelectionTimer:(id) sender
+{
+	if( newestDragFrontIdx[0] == theFrontPreIndexForSingleSelection)
+	{
+	
+	}
+}
+
+- (void) backSingleSelectionTimer:(id) sender
+{
+	if( newestDragBackIdx[0] == theBackPreIndexForSingleSelection )
+	{
+	
+	}
+}
+
+// =================================================================
+
 - (void) logButtonPredded:(id) sender
 {
 	isReadyToLog = YES;
 }
+
+
+
+
 
 @end
