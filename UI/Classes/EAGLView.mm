@@ -11,6 +11,8 @@ BOOL strtDebug = YES;
 #import "main.h"
 #import "template.h"
 #import "templateAppDelegate.h"
+#include <vector>
+using namespace std;
 
 #define DRAG_INITIAL_LIMIT		50
 #define DRAG_MOVING_LIMIT		200 
@@ -54,9 +56,9 @@ extern bool             isReadyToLog;
 
 extern vec2				*selectionPosition;
 
-
 extern GLfloat matrixrotate[16];
 
+extern vector< SIO2object* > theSelectedGroup; 
 
 @implementation TouchPoint
 
@@ -1036,7 +1038,12 @@ BOOL isDebug = YES;
 	tempDragPoint = CGPointMake(0,0);
 	
 	if( !flipState && !strtState && selection != nil)
+	{
 		[gestureSequence addObject: INTOBJ(GESTURE_BOTH_DRAG)];
+		
+		// De-select as the Draging is ended
+		theSelectedGroup.clear();
+	}
 
 }
 
@@ -1138,7 +1145,12 @@ BOOL isDebug = YES;
 	tempFlipPoint = CGPointMake(0,0);
 	
 	if( selection!=nil && !dragState && !strtState )
+	{
 		[gestureSequence addObject: INTOBJ(GESTURE_BOTH_FLIP)];
+		
+		// De-select as Fliping is ended:
+		theSelectedGroup.clear();
+	}
 }
 
 #pragma mark Object Stretch
@@ -1210,13 +1222,18 @@ BOOL isDebug = YES;
 	tempStrtDistance      = 0;
 	
 	if(selection != nil)
+	{
 		[gestureSequence addObject: INTOBJ(GESTURE_BOTH_STRETCH)];
+		
+		// De-select as the Stretching is ended:
+		theSelectedGroup.clear();
+	}
 }
 
 #pragma mark Object Push
 // ================ Functions for OBJECT PUSH =================
 
-- (void) setTouchAtSameTime: (int)count andFront: (BOOL)front {
+- (void) : (int)count andFront: (BOOL)front {
 	double nowTime = [NSDate timeIntervalSinceReferenceDate];
 	if ((nowTime - _SameTouchFirstTime) < PUSH_INITIAL_PERIOD) {
 		_PushState = 5;
