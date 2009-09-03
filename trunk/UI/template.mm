@@ -355,6 +355,16 @@ void templateRender( void ) {
 						}
 					}
 					
+					
+					for( int j=0; j < theSelectedGroup.size(); j++ )
+					{
+						if( selection == theSelectedGroup[ j ] )
+						{
+							selection = nil;
+							break;
+						}
+					}
+					
 					if(selection)
 						theSelectedGroup.push_back(selection);
 				}
@@ -649,28 +659,31 @@ void templateScreenAccelerometer( void *_ptr ) {
 #pragma mark -
 #pragma mark Object & Camera Transform Handle
 
-void templateChangeObjectScale( void *_ptr, float det_scale) {
+void templateChangeObjectScale( void *_ptr, float det_scale) 
+{
+	det_scale *= 0.1;
 	
-	SIO2object *_SIO2object = selection;
-	
-	if( _SIO2object )
+	for( int i= theSelectedGroup.size()-1; i >= 0; i--)
 	{
-		
-		//SIO2camera *_SIO2camera = ( SIO2camera * )sio2ResourceGet( sio2->_SIO2resource, SIO2_CAMERA,"camera/Camera");
-		if(debug) printf("_SIO2object->_SIO2transform->scl->x = %f \n", _SIO2object->_SIO2transform->scl->x);
-        det_scale *= 0.1;
-		if(_SIO2object->_SIO2transform->scl->x + det_scale < 3 && _SIO2object->_SIO2transform->scl->x + det_scale > 0.1)
+		SIO2object *_SIO2object = theSelectedGroup[ i ];		
+		if( _SIO2object )
 		{
-			_SIO2object->_SIO2transform->scl->x += det_scale;
-			_SIO2object->_SIO2transform->scl->y += det_scale;
-			_SIO2object->_SIO2transform->scl->z += det_scale;
+			
+			//SIO2camera *_SIO2camera = ( SIO2camera * )sio2ResourceGet( sio2->_SIO2resource, SIO2_CAMERA,"camera/Camera");
+			if(debug) printf("_SIO2object->_SIO2transform->scl->x = %f \n", _SIO2object->_SIO2transform->scl->x);
+			
+			if(_SIO2object->_SIO2transform->scl->x + det_scale < 3 && _SIO2object->_SIO2transform->scl->x + det_scale > 0.1)
+			{
+				_SIO2object->_SIO2transform->scl->x += det_scale;
+				_SIO2object->_SIO2transform->scl->y += det_scale;
+				_SIO2object->_SIO2transform->scl->z += det_scale;
+			}
+			
+			//sio2TransformBindMatrix( _SIO2object->_SIO2transform  );
+			sio2TransformBindMatrix2(_SIO2object->_SIO2transform,matrixrotate, 0.0f,0.0f,0.0f , 2);
 		}
-		
-		sio2TransformBindMatrix( _SIO2object->_SIO2transform  );
-		//sio2TransformBindMatrix2(_SIO2object->_SIO2transform,matrixrotate, 0.0f,0.0f,0.0f , 2);
 	}
-	
-	
+
 }
 
 void templateRotateObject( void *_ptr , int rotateDirection, int theDirState ) {
