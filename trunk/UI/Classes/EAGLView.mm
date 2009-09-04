@@ -28,7 +28,7 @@ using namespace std;
 #define PUSH_INITIAL_WAIT_TIME	0.2
 #define PUSH_PERIOD_TIME		0.1
 
-#define SINGLE_SELEC_TIME       0.5
+#define SINGLE_SELEC_TIME       0.3
 
 #define Camera_Moved_Mode       0
 #define Object_Moved_Mode       1
@@ -53,10 +53,15 @@ extern bool				fingersOnBack;
 extern SIO2object       *selection;
 
 extern unsigned char	tap_select;  // For GRAB Gesture
+extern unsigned char     front_select;
+extern unsigned char     back_select;
+
 extern bool             isAllTaskFinished;
 extern bool             isReadyToLog;
 
 extern vec2				*selectionPosition;
+extern vec2				*frontSelectPosition;
+extern vec2				*backSelectPosition;
 
 extern GLfloat matrixrotate[16];
 
@@ -152,7 +157,9 @@ BOOL isDebug = YES;
 		newestFlipFrontIdx    = 5;
 		newestFlipBackIdx     = 5;
 		
-
+		theFrontPreIndexForSingleSelection = 5;
+		theBackPreIndexForSingleSelection = 5;
+		
 		dragState  = NO;
 		flipState  = NO;
 		isFlipX    = NO;
@@ -520,7 +527,7 @@ BOOL isDebug = YES;
 		
 	
 	}
-	// Algmented Part for DRAG: ----------------------------------------------------------------------
+	// Algmented Part for DRAG: -----------------------------------------------------------------------
 	if(!strtState && !dragState && newestDragFrontIdx[0]<5 && newestDragBackIdx[0]<5) 
 	{
 		tp1 = [self.frontLoc objectAtIndex: newestDragFrontIdx[0]];
@@ -539,7 +546,7 @@ BOOL isDebug = YES;
 			//_StrtSystemTime = time(NULL);
 		}	
 	}
-	// Algmented Part for FLIP: ----------------------------------------------------------------------
+	// Algmented Part for FLIP: --------------------------------------------------------------------------
 	if(!strtState && !flipState && newestFlipFrontIdx<5 && newestFlipBackIdx<5) 
 	{
 		if(!dragState) 
@@ -565,7 +572,21 @@ BOOL isDebug = YES;
 		isFlipX = NO;
 		isFlipY = NO;
 	}
-	// -----------------------------------------------------------------------------------------------
+	// Algmented Part for Single-Selection
+	if(!strtState && !flipState && !dragState )
+	{
+		if( isFront )
+		{
+			if( theFrontPreIndexForSingleSelection == 5 && newestDragFrontIdx[0]<5)
+				[ self setSingleSelectionTimer: newestDragFrontIdx[0] andFront: TRUE ];
+		}
+		else
+		{
+			if( theBackPreIndexForSingleSelection == 5 && newestDragBackIdx[0]<5)
+				[ self setSingleSelectionTimer: newestDragBackIdx[0] andFront: FALSE ];
+		}
+	}
+	// ------------------------------------------------------------------------------------------------------------
 
 	
 	
@@ -767,6 +788,8 @@ BOOL isDebug = YES;
 				if (newestDragFrontIdx[1] == i) newestDragFrontIdx[1] = 5;
 				if (newestFlipFrontIdx    == i) newestFlipFrontIdx    = 5;
 				
+				if( theFrontPreIndexForSingleSelection == i ) theFrontPreIndexForSingleSelection = 5;
+				
 				if( cameraMoveState && cameraMoveIdx == i) [self cameraMoveEnded];
 				if( cameraDiveState && (cameraDiveIdx[0] == i || cameraDiveIdx[1] == i) ) [self cameraDiveEnded];
 				if( newestSingleIdx    == i) newestSingleIdx    = 5;
@@ -794,6 +817,8 @@ BOOL isDebug = YES;
 		if (newestDragBackIdx[0] == num) newestDragBackIdx[0] = 5;
 		if (newestDragBackIdx[1] == num) newestDragBackIdx[1] = 5;
 		if (newestFlipBackIdx    == num) newestFlipBackIdx    = 5;
+		
+		if( theBackPreIndexForSingleSelection == num ) theBackPreIndexForSingleSelection = 5;
 		
 		mysio2ResourceDispatchEvents( sio2->_SIO2resource,
 									 sio2->_SIO2window,
@@ -854,9 +879,9 @@ BOOL isDebug = YES;
 	for (i=0 ; i<count ; i++) {
 		// add a new touch point into multitouch.loc
 		num = [self myTouchBegan:[allTouches objectAtIndex:i]
-					    andPoint:[[allTouches objectAtIndex:i] locationInView:self]
-					    andFront:YES
-						  andNum:11 // useless 
+					   andPoint:[[allTouches objectAtIndex:i] locationInView:self]
+					   andFront:YES
+					   andNum:11 // useless 
 			   ]; 
 		_SameTouchIdx[i] = num;
 	}
@@ -950,6 +975,9 @@ BOOL isDebug = YES;
 	newestDragBackIdx[1]  = 5;
 	newestFlipFrontIdx    = 5;
 	newestFlipBackIdx     = 5;
+	
+	theFrontPreIndexForSingleSelection = 5;
+	theBackPreIndexForSingleSelection = 5;
 	
 	dragState  = NO;
 	flipState  = NO;
@@ -1131,6 +1159,8 @@ BOOL isDebug = YES;
 													   userInfo:nil
 														repeats:YES];
 				[self decreaseTheDirectionState];
+				
+
 			}
 		}			
 		// ---------------------------------------
@@ -1151,9 +1181,12 @@ BOOL isDebug = YES;
 	{
 		[gestureSequence addObject: INTOBJ(GESTURE_BOTH_FLIP)];
 		
-		// De-select as Fliping is ended:
-		theSelectedGroup.clear();
+		if( isRotateEnded )
+		{ // De-select as Rotating is ended:
+			theSelectedGroup.clear();
+		}
 	}
+	
 }
 
 #pragma mark Object Stretch
@@ -1473,6 +1506,9 @@ static int _degree_counter = 0; // Counter for rotate 90 degree
 		_degree_counter=0;
 		[sender invalidate];
 		isRotateEnded = YES;
+		if(isDebug) printf("De-Select as Rotating end\n");
+		// De-select as Rotating is ended:
+		theSelectedGroup.clear();
 		printf("-----The Rotating is Ended");
 	}
 	
@@ -1520,17 +1556,23 @@ static int _degree_counter = 0; // Counter for rotate 90 degree
 
 - (void) frontSingleSelectionTimer:(id) sender
 {
-	if( newestDragFrontIdx[0] == theFrontPreIndexForSingleSelection)
+	if( newestDragFrontIdx[0] == theFrontPreIndexForSingleSelection && theFrontPreIndexForSingleSelection != 5  && !dragState )
 	{
-	
+		TouchPoint* tp = [self.frontLoc objectAtIndex: theFrontPreIndexForSingleSelection];
+		frontSelectPosition->x = tp._point.x;
+		frontSelectPosition->y = 480 - tp._point.y;
+		front_select = 1;
 	}
 }
 
 - (void) backSingleSelectionTimer:(id) sender
 {
-	if( newestDragBackIdx[0] == theBackPreIndexForSingleSelection )
+	if( newestDragBackIdx[0] == theBackPreIndexForSingleSelection  && theBackPreIndexForSingleSelection != 5  && !dragState )
 	{
-	
+		TouchPoint* tp = [self.backLoc objectAtIndex: theBackPreIndexForSingleSelection];
+		backSelectPosition->x = tp._point.x;
+		backSelectPosition->y = 480 - tp._point.y;
+		back_select = 1;
 	}
 }
 
