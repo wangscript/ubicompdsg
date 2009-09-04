@@ -25,6 +25,8 @@ using namespace std;
 
 NSString *FILENAME;
 SystemSoundID soundID;
+SystemSoundID soundID2;
+SystemSoundID soundID3;
 
 // ============= Shared variable between each task project ============= //
 bool debug = FALSE;
@@ -256,6 +258,7 @@ void templateRender( void ) {
 				randomRotateDirection();
 				break;
 			case TASK_TOTAL_ROUND + 1:
+				AudioServicesPlaySystemSound(soundID2);
 				render3DObjects = FALSE;
 				taskCompleteTime[taskState-2] = nowTime - lastTime;
 				if(movementOne < 2)
@@ -317,7 +320,10 @@ void templateRender( void ) {
 				positionRegenerated = FALSE;
 				printf("You turn right! \n");
 				
-				AudioServicesPlaySystemSound(soundID);
+				if( taskState == 11 || taskState == 21 || taskState== 31)
+					AudioServicesPlaySystemSound(soundID3);
+				else	
+					AudioServicesPlaySystemSound(soundID);
 				
 			}else{
 				printf("You turn wrong! \n");
@@ -595,6 +601,11 @@ void templateLoading( void ) {
 	CFURLRef ding = (CFURLRef)[ [NSURL alloc] initFileURLWithPath: [[NSBundle mainBundle] pathForResource: @"ding" ofType:@"wav" ]];
 	AudioServicesCreateSystemSoundID( ding, &soundID);
 
+	CFURLRef die = (CFURLRef)[ [NSURL alloc] initFileURLWithPath: [[NSBundle mainBundle] pathForResource: @"die" ofType:@"wav" ]];
+	AudioServicesCreateSystemSoundID( die, &soundID2);	
+	
+	CFURLRef money = (CFURLRef)[ [NSURL alloc] initFileURLWithPath: [[NSBundle mainBundle] pathForResource: @"money" ofType:@"wav" ]];
+	AudioServicesCreateSystemSoundID( money, &soundID3);	
 	
 	
 	srand ( time(NULL) );
