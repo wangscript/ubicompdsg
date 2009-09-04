@@ -28,6 +28,8 @@ using namespace std;
 
 NSString *FILENAME;
 SystemSoundID soundID;
+SystemSoundID soundID2;
+SystemSoundID soundID3;
 //rotate
 GLfloat matrixrotate[16];
 int movement[100];
@@ -158,6 +160,7 @@ void generatePosition() {
 	int idx = (taskState - 1) / TASK_PER_ROUND + 1;
 	taskType[taskState - 1] = idx;
 	
+	
 	switch( idx ){
 		case 1: 	y1 = -6; z1 =  3; y2 =  6; z2 =  3; y3 = 0; z3 = 3; rot_x = 180; break;	// ->
 		case 2: 	y1 = -6; z1 = -3; y2 =  6; z2 = -3; y3 = 0; z3 = -3; rot_x = 180; break;	// ->
@@ -269,6 +272,7 @@ void templateRender( void ) {
 				movementOne = 0;  // Special case for Drag
 				break;
 			case TASK_TOTAL_ROUND + 1:
+				AudioServicesPlaySystemSound(soundID2);
 				taskCompleteTime[taskState-2] = nowTime - lastTime;
 				movement[taskState-2] = movementOne - movementNeeded;
 				double tmp;
@@ -695,6 +699,16 @@ void templateLoading( void ) {
 	
 	CFURLRef ding = (CFURLRef)[ [NSURL alloc] initFileURLWithPath: [[NSBundle mainBundle] pathForResource: @"ding" ofType:@"wav" ]];
 	AudioServicesCreateSystemSoundID( ding, &soundID);
+	
+	
+	CFURLRef win1 = (CFURLRef)[ [NSURL alloc] initFileURLWithPath: [[NSBundle mainBundle] pathForResource: @"win1" ofType:@"wav" ]];
+	AudioServicesCreateSystemSoundID( win1, &soundID2);	
+	
+	CFURLRef money = (CFURLRef)[ [NSURL alloc] initFileURLWithPath: [[NSBundle mainBundle] pathForResource: @"money" ofType:@"wav" ]];
+	AudioServicesCreateSystemSoundID( money, &soundID3);	
+	
+	
+	
 	
 	
 	//ADD by YO: for selection from Back-Side touch:
