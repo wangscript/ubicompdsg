@@ -258,6 +258,8 @@ void templateRender( void ) {
 			case TASK_TOTAL_ROUND + 1:
 				render3DObjects = FALSE;
 				taskCompleteTime[taskState-2] = nowTime - lastTime;
+				if(movementOne < 2)
+					movementOne = 2;
 				movement[taskState-2] = movementOne - 2;
 				taskTotalTime = 0;
 				for (int k=0 ; k<TASK_TOTAL_ROUND ; k++) taskTotalTime += taskCompleteTime[k];
@@ -268,6 +270,9 @@ void templateRender( void ) {
 				//nowTargetIndex = 1;
 				sprintf(displayStr, "Round: %d", taskState);	   
 				taskCompleteTime[taskState-2] = nowTime - lastTime;
+				printf("====Movement = %d====\n",movementOne);
+				if(movementOne < 2)
+					movementOne = 2;
 				movement[taskState-2] = movementOne - 2;
 				movementOne = 0;
 				lastTime = nowTime;
