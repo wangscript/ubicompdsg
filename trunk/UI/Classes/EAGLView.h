@@ -72,7 +72,7 @@ Note that setting the view non-opaque will only work if the EAGL surface has an 
 	
 	int theFrontPreIndexForSingleSelection;
 	int theBackPreIndexForSingleSelection;
-	BOOL singleSelectionState;
+	int singleSelectionState;
 	
 	CGPoint dragStartPts[2];
 	CGPoint flipStartPts[2];
@@ -170,5 +170,9 @@ Note that setting the view non-opaque will only work if the EAGL surface has an 
 - (void) setSingleSelectionTimer: (int)preIndex andFront: (BOOL)front;
 - (void) frontSingleSelectionTimer: (id)sender;
 - (void) backSingleSelectionTimer: (id)sender;
+
+- (void) singleSelectionBegan: (CGPoint)point andFront: (BOOL)front;
+- (void) singleSelectionMoved: (CGPoint)point;
+- (void) singleSelectionEnded;
 
 @end

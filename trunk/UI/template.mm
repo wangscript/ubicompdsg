@@ -32,6 +32,8 @@ GLfloat matrixrotate[16];
 // ============= Shared variable between each task project ============= //
 
 vec2* selectionPosition;
+vec2* frontSelectPosition;
+vec2* backSelectPosition;
 
 bool debug = FALSE;
 
@@ -41,6 +43,10 @@ bool  isAllTaskFinished = NO;
 bool  hadLogged         = NO;
 //------------------------------------------
 unsigned char	tap_select = 0;					// Used to check if we want to select an object
+unsigned char  front_select = 0;
+unsigned char  back_select = 0;
+
+
 SIO2font*		_SIO2font  = NULL;				// Default font pointer used to draw info on the current selection.
 SIO2object*		selection  = NULL;				// Handle of the selected object.
 SIO2material*	_SIO2material_selection = NULL; // Our selection material to highlight the current selection.
@@ -299,8 +305,6 @@ void templateRender( void ) {
 			
 			sio2CameraUpdateFrustum( sio2->_SIO2camera );
 			sio2ResourceCull( sio2->_SIO2resource, sio2->_SIO2camera );	
-
-			
 			
 			if ( tap_select ) {
 				
@@ -389,11 +393,135 @@ void templateRender( void ) {
 					theSelectedGroup.push_back( selection );
 				}*/
 			}
+			else if( front_select || back_select)
+			{
+				theSelectedGroup.clear();
+				glClear( GL_COLOR_BUFFER_BIT ); // Clear the color buffer
+				sio2MaterialReset();            // Reset the material states
+				double cameraPosition = camera->_SIO2transform->loc->x;
+				
+				if(back_select)
+				{
+					for( int index=0; index < theSortedObjects.size(); index++)
+					{
+						theSortedObjects[ index ]->_SIO2transform->loc->x = cameraPosition + ( cameraPosition - theSortedObjects[ index ]->_SIO2transform->loc->x );
+						sio2TransformBindMatrix2( theSortedObjects[ index ]->_SIO2transform, matrixrotate, 0.0f,0.0f,0.0f , 2 );
+					}
+					
+					back_select = 0;
+					selection = nil;
+					for( int index = theSortedObjects.size()-1; index>=0; index--)
+					{
+						theSortedObjects[ index ]->_SIO2transform->loc->x = cameraPosition - ( theSortedObjects[ index ]->_SIO2transform->loc->x - cameraPosition );
+						sio2TransformBindMatrix2( theSortedObjects[ index ]->_SIO2transform, matrixrotate, 0.0f,0.0f,0.0f , 2 );
+						RenderSolidObject( theSortedObjects[ index ] );
+						
+						if (GRAB_WITH_BACK_TOUCH) {
+							selection = sio2ResourceSelect3D( sio2->_SIO2resource,
+															 sio2->_SIO2camera,
+															 sio2->_SIO2window,
+															 backSelectPosition );
+						}
+						
+						// 重疊處理
+						if (selection == targetObject) {
+							if (pointInBox(selectObject->_SIO2transform->loc, targetObject->_SIO2transform->loc, targetObject->_SIO2transform->scl->x))
+								selection = selectObject;
+							else if (selectObject->_SIO2transform->loc->x + selectObject->_SIO2transform->scl->x < targetObject->_SIO2transform->loc->x - targetObject->_SIO2transform->scl->x)
+								selection = selectObject;
+						}
+						
+						// Selection 例外處理：不能select的物件
+						for (int a=0 ; a<excludeObjects.size() ; a++ ){
+							if ( selection == excludeObjects[a] ) {
+								selection = nil;
+								break;
+							}
+						}
+						
+						
+						for( int j=0; j < theSelectedGroup.size(); j++ )
+						{
+							if( selection == theSelectedGroup[ j ] )
+							{
+								selection = nil;
+								break;
+							}
+						}
+						
+						if(selection)
+						{
+							theSelectedGroup.push_back(selection);
+							for( int k = index-1; k >= 0; k--)
+							{ // Render the rest objects in theSortedObjects:
+								theSortedObjects[ k ]->_SIO2transform->loc->x = cameraPosition - ( theSortedObjects[ k ]->_SIO2transform->loc->x - cameraPosition );
+								sio2TransformBindMatrix2( theSortedObjects[ k ]->_SIO2transform, matrixrotate, 0.0f,0.0f,0.0f , 2 );
+								RenderSolidObject( theSortedObjects[ k ] );								
+							}
+							break;                                          //JUMP OUT OF THE FORLOOP.
+						}
+						
+					}
+				}
+				if(front_select)
+				{
+					
+					for( int k=0; k<theSortedObjects.size(); k++)
+					{
+						RenderSolidObject( theSortedObjects[k] );
+					}
+					
+					front_select = 0;
+					selection = nil;
+					if( sio2->_SIO2window->n_touch != 0 ) {
+						if (GRAB_WITH_BACK_TOUCH) {
+							selection = sio2ResourceSelect3D( sio2->_SIO2resource,
+													   sio2->_SIO2camera,
+													   sio2->_SIO2window,
+													   frontSelectPosition );
+						}
+					}
+					
+					// 重疊處理
+					if (selection == targetObject) {
+						if (pointInBox(selectObject->_SIO2transform->loc, targetObject->_SIO2transform->loc, targetObject->_SIO2transform->scl->x))
+							selection = selectObject;
+						else if (selectObject->_SIO2transform->loc->x + selectObject->_SIO2transform->scl->x < targetObject->_SIO2transform->loc->x - targetObject->_SIO2transform->scl->x)
+							selection = selectObject;
+					}
+					
+					// Selection 例外處理：不能select的物件
+					for (int a=0 ; a<excludeObjects.size() ; a++ ){
+						if ( selection == excludeObjects[a] ) {
+							selection = nil;
+							break;
+						}
+					}
+					
+					
+					for( int j=0; j < theSelectedGroup.size(); j++ )
+					{
+						if( selection == theSelectedGroup[ j ] )
+						{
+							selection = nil;
+							break;
+						}
+					}
+					
+					if(selection)
+					{
+						theSelectedGroup.push_back(selection);
+					}
+					
+				}
+			}
 
 			else
 			{
-				RenderSolidObject( theSortedObjects[0] );
-				RenderSolidObject( theSortedObjects[1] );
+				sio2ResourceRender( sio2->_SIO2resource,
+								   sio2->_SIO2window,
+								   sio2->_SIO2camera,
+								   SIO2_RENDER_SOLID_OBJECT );
 			}
 			 /*sio2ResourceRender( sio2->_SIO2resource,
 							   sio2->_SIO2window,
@@ -435,8 +563,7 @@ void templateRender( void ) {
 							   sio2->_SIO2camera,
 							   SIO2_RENDER_TRANSPARENT_OBJECT );
 			
-			sio2ObjectReset();
-			
+			sio2ObjectReset();			
 			sio2MaterialReset();
 			
 		}
@@ -548,6 +675,8 @@ void templateLoading( void ) {
 	
 	//ADD by YO: for selection from Back-Side touch:
 	selectionPosition = sio2Vec2Init();
+	frontSelectPosition = sio2Vec2Init();
+	backSelectPosition = sio2Vec2Init();
 	
 	unsigned int i = 0;
 	
@@ -688,7 +817,13 @@ void templateChangeObjectScale( void *_ptr, float det_scale)
 
 void templateRotateObject( void *_ptr , int rotateDirection, int theDirState ) {
 	
-	SIO2object *_SIO2object = selection;
+	if( theSelectedGroup.size() != 1 ) 
+	{ // Not dealing with Multi-Objects-Rotation for now.	
+		return;
+	}
+	
+	SIO2object* _SIO2object = theSelectedGroup[0];
+	
 	if( _SIO2object )
 	{
 		//_rotateAngle = 0.0f;
