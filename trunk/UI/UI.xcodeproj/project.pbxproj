@@ -15,12 +15,7 @@
 		28FD14FE0DC6FC130079059D /* EAGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 28FD14FD0DC6FC130079059D /* EAGLView.mm */; };
 		28FD15000DC6FC520079059D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD14FF0DC6FC520079059D /* OpenGLES.framework */; };
 		28FD15080DC6FC5B0079059D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD15070DC6FC5B0079059D /* QuartzCore.framework */; };
-<<<<<<< .mine
-		7D32BA8C1050EB66001683AF /* libsio2_sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D32BA8B1050EB66001683AF /* libsio2_sim.a */; };
-		7DD5A3A9104E653B003C8CCC /* Visual02.sio2 in Resources */ = {isa = PBXBuildFile; fileRef = 7DD5A3A8104E653B003C8CCC /* Visual02.sio2 */; };
-=======
 		88561653104FE3BF0009CC1C /* Visual02.sio2 in Resources */ = {isa = PBXBuildFile; fileRef = 88561652104FE3BF0009CC1C /* Visual02.sio2 */; };
->>>>>>> .r198
 		889B398A103055BA00204ACA /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 889B3985103055BA00204ACA /* BrowserViewController.m */; };
 		889B398B103055BA00204ACA /* Picker.m in Sources */ = {isa = PBXBuildFile; fileRef = 889B3987103055BA00204ACA /* Picker.m */; };
 		889B398C103055BA00204ACA /* TCPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 889B3989103055BA00204ACA /* TCPServer.m */; };
@@ -337,12 +332,7 @@
 		28FD15070DC6FC5B0079059D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = main.mm; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* template_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = template_Prefix.pch; sourceTree = "<group>"; };
-<<<<<<< .mine
-		7D32BA8B1050EB66001683AF /* libsio2_sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsio2_sim.a; path = ../../SIO2_SDK_v1.4/src/sio2/libsio2_sim.a; sourceTree = SOURCE_ROOT; };
-		7DD5A3A8104E653B003C8CCC /* Visual02.sio2 */ = {isa = PBXFileReference; lastKnownFileType = file; name = Visual02.sio2; path = ../data/Visual02.sio2; sourceTree = SOURCE_ROOT; };
-=======
 		88561652104FE3BF0009CC1C /* Visual02.sio2 */ = {isa = PBXFileReference; lastKnownFileType = file; name = Visual02.sio2; path = ../data/Visual02.sio2; sourceTree = SOURCE_ROOT; };
->>>>>>> .r198
 		889B3984103055BA00204ACA /* BrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserViewController.h; sourceTree = "<group>"; };
 		889B3985103055BA00204ACA /* BrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserViewController.m; sourceTree = "<group>"; };
 		889B3986103055BA00204ACA /* Picker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Picker.h; sourceTree = "<group>"; };
@@ -950,7 +940,6 @@
 				E073A43D100D36D7004A0982 /* libsio2_dev.a in Frameworks */,
 				889B3A141030590300204ACA /* SystemConfiguration.framework in Frameworks */,
 				889B3A461030591300204ACA /* CoreGraphics.framework in Frameworks */,
-				7D32BA8C1050EB66001683AF /* libsio2_sim.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1012,11 +1001,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< .mine
-				7DD5A3A8104E653B003C8CCC /* Visual02.sio2 */,
-=======
 				88561652104FE3BF0009CC1C /* Visual02.sio2 */,
->>>>>>> .r198
 				88FD063D1036BF7B00AF93D2 /* default16x16.tga */,
 				E0E313F40E5EA78B00F6D25F /* Icon.png */,
 				889B3A6E103059BA00204ACA /* Task_Seq.sio2 */,
@@ -1033,7 +1018,6 @@
 				889B3A451030591300204ACA /* CoreGraphics.framework */,
 				889B3A131030590300204ACA /* SystemConfiguration.framework */,
 				E073A43B100D36D7004A0982 /* libsio2_dev.a */,
-				7D32BA8B1050EB66001683AF /* libsio2_sim.a */,
 				28FD15070DC6FC5B0079059D /* QuartzCore.framework */,
 				E0E30D6A0E5EA2FA00F6D25F /* OpenAL.framework */,
 				28FD14FF0DC6FC520079059D /* OpenGLES.framework */,
@@ -1733,11 +1717,7 @@
 				E0E313F70E5EA78B00F6D25F /* Default.png in Resources */,
 				889B3A6F103059BA00204ACA /* Task_Seq.sio2 in Resources */,
 				88FD063E1036BF7B00AF93D2 /* default16x16.tga in Resources */,
-<<<<<<< .mine
-				7DD5A3A9104E653B003C8CCC /* Visual02.sio2 in Resources */,
-=======
 				88561653104FE3BF0009CC1C /* Visual02.sio2 in Resources */,
->>>>>>> .r198
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2066,7 +2046,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/..\"",
 					"\"$(SRCROOT)/../src/sio2\"",
-					"\"$(SRCROOT)/../../SIO2_SDK_v1.4/src/sio2\"",
 				);
 				OTHER_CFLAGS = (
 					"-fno-regmove",
@@ -2097,7 +2076,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/..\"",
 					"\"$(SRCROOT)/../src/sio2\"",
-					"\"$(SRCROOT)/../../SIO2_SDK_v1.4/src/sio2\"",
 				);
 				OTHER_CFLAGS = (
 					"-fno-regmove",
