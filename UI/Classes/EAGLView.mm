@@ -28,7 +28,10 @@ using namespace std;
 #define PUSH_INITIAL_WAIT_TIME	0.2
 #define PUSH_PERIOD_TIME		0.1
 
-#define SINGLE_SELEC_TIME       0.3
+#define SINGLE_SELEC_TIME		0.3
+#define SINGLE_SELEC_FRONT		1
+#define SINGLE_SELEC_BACK		2
+#define SINGLE_SELEC_INVALID	0
 
 #define Camera_Moved_Mode       0
 #define Object_Moved_Mode       1
@@ -1453,7 +1456,7 @@ BOOL isDebug = YES;
 									  SIO2_WINDOW_TAP_DOWN,
 									  0,  //scale
 									  0,     //direction, 1: horizontal ; 2: vertical
-								      0,     //dirState
+									  0,     //dirState
 									  0,     //delta x
 									  0,     //delta y
 									  10* scaleIndex      //delta z
