@@ -24,6 +24,8 @@
 		889B398C103055BA00204ACA /* TCPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 889B3989103055BA00204ACA /* TCPServer.m */; };
 		889B3A141030590300204ACA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 889B3A131030590300204ACA /* SystemConfiguration.framework */; };
 		889B3A461030591300204ACA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 889B3A451030591300204ACA /* CoreGraphics.framework */; };
+		88B89B2E1051186C00D33048 /* money.wav in Resources */ = {isa = PBXBuildFile; fileRef = 88B89B2C1051186C00D33048 /* money.wav */; };
+		88B89B2F1051186C00D33048 /* die.wav in Resources */ = {isa = PBXBuildFile; fileRef = 88B89B2D1051186C00D33048 /* die.wav */; };
 		88FACB841042D91800CFE225 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 88FACB831042D91800CFE225 /* Icon.png */; };
 		E073A29A100D3660004A0982 /* sio2_camera.cc in Sources */ = {isa = PBXBuildFile; fileRef = E073A255100D3660004A0982 /* sio2_camera.cc */; };
 		E073A29B100D3660004A0982 /* sio2_emitter.cc in Sources */ = {isa = PBXBuildFile; fileRef = E073A258100D3660004A0982 /* sio2_emitter.cc */; };
@@ -345,6 +347,8 @@
 		889B3989103055BA00204ACA /* TCPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPServer.m; sourceTree = "<group>"; };
 		889B3A131030590300204ACA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		889B3A451030591300204ACA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		88B89B2C1051186C00D33048 /* money.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = money.wav; sourceTree = "<group>"; };
+		88B89B2D1051186C00D33048 /* die.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = die.wav; sourceTree = "<group>"; };
 		88FACB831042D91800CFE225 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E073A254100D3660004A0982 /* sio2_action.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = sio2_action.h; path = ../src/sio2/sio2_action.h; sourceTree = SOURCE_ROOT; };
@@ -983,6 +987,8 @@
 			children = (
 				39A871E31044143D000C3739 /* Task_Rotate.sio2 */,
 				7D8A7C9B1043D139001FCF26 /* ding.wav */,
+				88B89B2C1051186C00D33048 /* money.wav */,
+				88B89B2D1051186C00D33048 /* die.wav */,
 				8869928710382ACF000723F1 /* default16x16.tga */,
 			);
 			name = data;
@@ -1725,6 +1731,8 @@
 				88FACB841042D91800CFE225 /* Icon.png in Resources */,
 				7D8A7C9C1043D139001FCF26 /* ding.wav in Resources */,
 				39A871E41044143D000C3739 /* Task_Rotate.sio2 in Resources */,
+				88B89B2E1051186C00D33048 /* money.wav in Resources */,
+				88B89B2F1051186C00D33048 /* die.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
