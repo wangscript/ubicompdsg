@@ -109,7 +109,7 @@ void process(char* path){
 			fprintf(fp5,"%s,%d,%lf,%lf,%lf,%lf\n",path+6,ii+1,typecommean,typecomstd,typeextramean, typeextrastd);
 
 
-			fprintf(fp4,"For type : %d\n", ii+1);	
+			fprintf(fp4,"#For type : %d\n", ii+1);	
 			fprintf(fp4,"Total Completion Time : %lf  Average Completion Time : %lf   Completion time STD: %lf\n",typecomsum, typecommean, typecomstd);
 
 			fprintf(fp4,"Total Extra Movement : %lf   Average Extra Movement : %lf    Extra Movement STD: %lf\n\n\n", typeextrasum, typeextramean, typeextrastd);
@@ -250,8 +250,8 @@ void parse( char *filename , char* taskname , char* oldtaskname){
 
 			count = i;
 
-			fprintf(fp5,"For %s %s\n",filename,oldtaskname);
-			fprintf(fp4,"For %s %s\n",filename,oldtaskname);
+			fprintf(fp5,"#For %s %s\n",filename,oldtaskname);
+			fprintf(fp4,"#For %s %s\n",filename,oldtaskname);
 //For TYPE
 			typeextrasum = 0.0;
 			typecomsum = 0.0;
@@ -292,7 +292,7 @@ void parse( char *filename , char* taskname , char* oldtaskname){
 
 			fprintf(fp6,"%s,%d,%lf,%lf,%lf,%lf\n",oldtaskname,type[j-1],typecommean, typecomstd,typeextramean, typeextrastd);
 
-			fprintf(fp4,"For type : %d\n",type[j-1]);	
+			fprintf(fp4,"#For type : %d\n",type[j-1]);	
 			fprintf(fp4,"Total Completion Time : %lf  Average Completion Time : %lf   Completion time STD: %lf\n",typecomsum, typecommean, typecomstd);
 
 			fprintf(fp4,"Total Extra Movement : %lf   Average Extra Movement : %lf    Extra Movement STD: %lf\n\n\n", typeextrasum, typeextramean, typeextrastd);
@@ -394,7 +394,7 @@ void parse( char *filename , char* taskname , char* oldtaskname){
 			typecomstd = 0.0;
 			numoftype = 0;
 
-	fprintf(fp5,"For %s %s\n",filename,taskname);
+	fprintf(fp5,"#For %s %s\n",filename,taskname);
 	//printf("count = %d\n",count);	
 			for( j = 0; j < count ; j++){
 
@@ -426,7 +426,7 @@ void parse( char *filename , char* taskname , char* oldtaskname){
 					typeextrastd = sqrt(typeextrastd/typecount - typeextramean*typeextramean);
 					typecomstd = sqrt(typecomstd/typecount - typecommean*typecommean);
 
-			fprintf(fp4,"For type : %d\n",type[j-1]);	
+			fprintf(fp4,"#For type : %d\n",type[j-1]);	
 			fprintf(fp4,"Total Completion Time : %lf  Average Completion Time : %lf   Completion time STD: %lf\n",typecomsum, typecommean, typecomstd);
 
 			fprintf(fp4,"Total Extra Movement : %lf   Average Extra Movement : %lf    Extra Movement STD: %lf\n\n\n", typeextrasum, typeextramean, typeextrastd);
