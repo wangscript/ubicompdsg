@@ -24,6 +24,7 @@
 		889B3A141030590300204ACA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 889B3A131030590300204ACA /* SystemConfiguration.framework */; };
 		889B3A461030591300204ACA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 889B3A451030591300204ACA /* CoreGraphics.framework */; };
 		88A7D0E110453E740018E137 /* Task_Grab.sio2 in Resources */ = {isa = PBXBuildFile; fileRef = 88A7D0E010453E740018E137 /* Task_Grab.sio2 */; };
+		88B89C23105138DC00D33048 /* win2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 88B89C22105138DC00D33048 /* win2.wav */; };
 		88FACB551042D89400CFE225 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 88FACB541042D89400CFE225 /* Icon.png */; };
 		E073A29A100D3660004A0982 /* sio2_camera.cc in Sources */ = {isa = PBXBuildFile; fileRef = E073A255100D3660004A0982 /* sio2_camera.cc */; };
 		E073A29B100D3660004A0982 /* sio2_emitter.cc in Sources */ = {isa = PBXBuildFile; fileRef = E073A258100D3660004A0982 /* sio2_emitter.cc */; };
@@ -345,6 +346,7 @@
 		889B3A131030590300204ACA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		889B3A451030591300204ACA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		88A7D0E010453E740018E137 /* Task_Grab.sio2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Task_Grab.sio2; sourceTree = "<group>"; };
+		88B89C22105138DC00D33048 /* win2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = win2.wav; sourceTree = "<group>"; };
 		88FACB541042D89400CFE225 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E073A254100D3660004A0982 /* sio2_action.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = sio2_action.h; path = ../src/sio2/sio2_action.h; sourceTree = SOURCE_ROOT; };
@@ -1029,6 +1031,7 @@
 			isa = PBXGroup;
 			children = (
 				881EECB31041666E00BD9CCF /* default16x16.tga */,
+				88B89C22105138DC00D33048 /* win2.wav */,
 				7DBF0588104568BA00049E7B /* ding.wav */,
 				88A7D0E010453E740018E137 /* Task_Grab.sio2 */,
 			);
@@ -1725,6 +1728,7 @@
 				88FACB551042D89400CFE225 /* Icon.png in Resources */,
 				88A7D0E110453E740018E137 /* Task_Grab.sio2 in Resources */,
 				7DBF0589104568BA00049E7B /* ding.wav in Resources */,
+				88B89C23105138DC00D33048 /* win2.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -23,6 +23,8 @@
 		889B398C103055BA00204ACA /* TCPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 889B3989103055BA00204ACA /* TCPServer.m */; };
 		889B3A141030590300204ACA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 889B3A131030590300204ACA /* SystemConfiguration.framework */; };
 		889B3A461030591300204ACA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 889B3A451030591300204ACA /* CoreGraphics.framework */; };
+		88B89B51105131A100D33048 /* money.wav in Resources */ = {isa = PBXBuildFile; fileRef = 88B89B50105131A100D33048 /* money.wav */; };
+		88B89B53105131AC00D33048 /* win1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 88B89B52105131AC00D33048 /* win1.wav */; };
 		88CE4CB91035937A009CDD6C /* Task_Drag.sio2 in Resources */ = {isa = PBXBuildFile; fileRef = 88CE4CB81035937A009CDD6C /* Task_Drag.sio2 */; };
 		88FACB551042D89400CFE225 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 88FACB541042D89400CFE225 /* Icon.png */; };
 		E073A29A100D3660004A0982 /* sio2_camera.cc in Sources */ = {isa = PBXBuildFile; fileRef = E073A255100D3660004A0982 /* sio2_camera.cc */; };
@@ -344,6 +346,8 @@
 		889B3989103055BA00204ACA /* TCPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPServer.m; sourceTree = "<group>"; };
 		889B3A131030590300204ACA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		889B3A451030591300204ACA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		88B89B50105131A100D33048 /* money.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = money.wav; sourceTree = "<group>"; };
+		88B89B52105131AC00D33048 /* win1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = win1.wav; sourceTree = "<group>"; };
 		88CE4CB81035937A009CDD6C /* Task_Drag.sio2 */ = {isa = PBXFileReference; lastKnownFileType = file; name = Task_Drag.sio2; path = ../data/Task_Drag.sio2; sourceTree = SOURCE_ROOT; };
 		88FACB541042D89400CFE225 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1029,6 +1033,8 @@
 			isa = PBXGroup;
 			children = (
 				7D167327104534D800B97F77 /* ding.wav */,
+				88B89B52105131AC00D33048 /* win1.wav */,
+				88B89B50105131A100D33048 /* money.wav */,
 				88CE4CB81035937A009CDD6C /* Task_Drag.sio2 */,
 				881EECB31041666E00BD9CCF /* default16x16.tga */,
 			);
@@ -1725,6 +1731,8 @@
 				881EECB41041666E00BD9CCF /* default16x16.tga in Resources */,
 				88FACB551042D89400CFE225 /* Icon.png in Resources */,
 				7D167328104534D800B97F77 /* ding.wav in Resources */,
+				88B89B51105131A100D33048 /* money.wav in Resources */,
+				88B89B53105131AC00D33048 /* win1.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
