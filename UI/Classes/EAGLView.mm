@@ -162,6 +162,8 @@ BOOL isDebug = YES;
 		
 		theFrontPreIndexForSingleSelection = 5;
 		theBackPreIndexForSingleSelection = 5;
+		singleSelectionFrontState = NO;
+		singleSelectionBackState = NO;
 		
 		dragState  = NO;
 		flipState  = NO;
@@ -176,7 +178,7 @@ BOOL isDebug = YES;
 		newestDoubleIdx[1] = 5;
 		
 		cameraMoveIdx      = 5;
-	    cameraDiveIdx[0]   = 5;
+		cameraDiveIdx[0]   = 5;
 		cameraDiveIdx[1]   = 5;
 		
 		cameraMoveState		  = NO;
@@ -260,10 +262,10 @@ BOOL isDebug = YES;
 		sio2->_SIO2window->_SIO2windowaccelerometer = templateScreenAccelerometer;
 		
 		//added by danielbas
-		sio2->_SIO2window->_SIO2windowChangeObjScl		= templateChangeObjectScale;
+		sio2->_SIO2window->_SIO2windowChangeObjScl	  = templateChangeObjectScale;
 		sio2->_SIO2window->_SIO2windowRotateObj         = templateRotateObject;
-		sio2->_SIO2window->_SIO2windowMoveObj           = templateMoveObject;
-		sio2->_SIO2window->_SIO2windowMoveCamera        = templateMoveCamera;
+		sio2->_SIO2window->_SIO2windowMoveObj          = templateMoveObject;
+		sio2->_SIO2window->_SIO2windowMoveCamera      = templateMoveCamera;
 		sio2->_SIO2window->_SIO2windowBackHandle        = backTouchHandle;
 	
 		
@@ -556,8 +558,8 @@ BOOL isDebug = YES;
 		{ 
 			newestDragBackIdx[0]  = 5;
 			newestDragBackIdx[1]  = 5;
-			newestDragFrontIdx[0] = 5;
-			newestDragFrontIdx[1] = 5;
+			newestDragFrontIdx[0]  = 5;
+			newestDragFrontIdx[1]  = 5;
 		}
 		
 		tp1 = [self.frontLoc objectAtIndex: newestFlipFrontIdx];
@@ -596,7 +598,7 @@ BOOL isDebug = YES;
 	// 當只有偵測到一個指頭：
 	if( sio2->_SIO2window->n_touch == 1 && !cameraDiveState && newestSingleIdx<5 )
 	{
-		if(!cameraMoveState)
+		if(!cameraMoveState )
 		{
 			tp1 = [self.frontLoc objectAtIndex: newestSingleIdx];
 			cameraMoveIdx = newestSingleIdx;
@@ -696,6 +698,17 @@ BOOL isDebug = YES;
 		
 		else [self dragEnded];
 	}	
+	else if( singleSelectionFrontState  )
+	{
+		tp1 = [self.frontLoc objectAtIndex: theFrontPreIndexForSingleSelection];
+		[self singleSelectionMoved: tp1._point andFront:YES ];
+		
+	}
+	else if( singleSelectionBackState )
+	{
+		tp1 = [self.backLoc objectAtIndex: theBackPreIndexForSingleSelection];	
+		[ self singleSelectionMoved: tp1._point andFront:NO ];
+	}
 	// Algmented Part for FLIP: ----------------------------------------------------------------------------------------------
 	if(flipState)
 	{
@@ -791,14 +804,14 @@ BOOL isDebug = YES;
 				if (newestDragFrontIdx[1] == i) newestDragFrontIdx[1] = 5;
 				if (newestFlipFrontIdx    == i) newestFlipFrontIdx    = 5;
 				
-				if( theFrontPreIndexForSingleSelection == i ) theFrontPreIndexForSingleSelection = 5;
+				if( theFrontPreIndexForSingleSelection == i ) [self singleSelectionEndedForFront: TRUE ];
 				
 				if( cameraMoveState && cameraMoveIdx == i) [self cameraMoveEnded];
 				if( cameraDiveState && (cameraDiveIdx[0] == i || cameraDiveIdx[1] == i) ) [self cameraDiveEnded];
 				if( newestSingleIdx    == i) newestSingleIdx    = 5;
 				if( newestDoubleIdx[0] == i) newestDoubleIdx[0] = 5;
 				if( newestDoubleIdx[1] == i) newestDoubleIdx[1] = 5;
-					
+				
 				 isUsed[i]=FALSE;
 				//return i;
 				break;
@@ -821,7 +834,7 @@ BOOL isDebug = YES;
 		if (newestDragBackIdx[1] == num) newestDragBackIdx[1] = 5;
 		if (newestFlipBackIdx    == num) newestFlipBackIdx    = 5;
 		
-		if( theBackPreIndexForSingleSelection == num ) theBackPreIndexForSingleSelection = 5;
+		if( theBackPreIndexForSingleSelection == num ) [self singleSelectionEndedForFront: FALSE ];
 		
 		mysio2ResourceDispatchEvents( sio2->_SIO2resource,
 									 sio2->_SIO2window,
@@ -981,6 +994,8 @@ BOOL isDebug = YES;
 	
 	theFrontPreIndexForSingleSelection = 5;
 	theBackPreIndexForSingleSelection = 5;
+	singleSelectionFrontState = NO;
+	singleSelectionBackState = NO;
 	
 	dragState  = NO;
 	flipState  = NO;
@@ -1539,6 +1554,9 @@ static int _degree_counter = 0; // Counter for rotate 90 degree
 	if(front) {
 		
 		theFrontPreIndexForSingleSelection = preIndex;
+		TouchPoint* tp = [ [ self frontLoc ] objectAtIndex:preIndex ];
+		tempSingleSelectFrontPoint = tp._point;
+		
 		timer = [NSTimer scheduledTimerWithTimeInterval: SINGLE_SELEC_TIME 
 												 target: self
 											   selector: @selector(frontSingleSelectionTimer:)
@@ -1549,6 +1567,9 @@ static int _degree_counter = 0; // Counter for rotate 90 degree
 	else {
 		
 		theBackPreIndexForSingleSelection = preIndex;
+		TouchPoint* tp = [ [ self backLoc ] objectAtIndex:preIndex ];
+		tempSingleSelectBackPoint = tp._point;
+		
 		timer = [NSTimer scheduledTimerWithTimeInterval: SINGLE_SELEC_TIME 
 												 target: self
 											   selector: @selector(backSingleSelectionTimer:)
@@ -1562,9 +1583,16 @@ static int _degree_counter = 0; // Counter for rotate 90 degree
 	if( newestDragFrontIdx[0] == theFrontPreIndexForSingleSelection && theFrontPreIndexForSingleSelection != 5  && !dragState )
 	{
 		TouchPoint* tp = [self.frontLoc objectAtIndex: theFrontPreIndexForSingleSelection];
-		frontSelectPosition->x = tp._point.x;
-		frontSelectPosition->y = 480 - tp._point.y;
-		front_select = 1;
+		
+		double d = sqrt( pow( tp._point.x - tempSingleSelectFrontPoint.x, 2 ) + pow( tp._point.y - tempSingleSelectFrontPoint.y, 2 ) );
+		
+		if( d < 5 )
+		{
+			frontSelectPosition->x = tp._point.x;
+			frontSelectPosition->y = 480 - tp._point.y;
+			front_select = 1;
+			[ self singleSelectionBegan: tp._point andFront: YES ];
+		}
 	}
 }
 
@@ -1573,9 +1601,97 @@ static int _degree_counter = 0; // Counter for rotate 90 degree
 	if( newestDragBackIdx[0] == theBackPreIndexForSingleSelection  && theBackPreIndexForSingleSelection != 5  && !dragState )
 	{
 		TouchPoint* tp = [self.backLoc objectAtIndex: theBackPreIndexForSingleSelection];
-		backSelectPosition->x = tp._point.x;
-		backSelectPosition->y = 480 - tp._point.y;
-		back_select = 1;
+		
+		double d = sqrt( pow( tp._point.x - tempSingleSelectBackPoint.x, 2 ) + pow( tp._point.y - tempSingleSelectBackPoint.y, 2 ) );
+		
+		if( d < 5 )
+		{
+			backSelectPosition->x = tp._point.x;
+			backSelectPosition->y = 480 - tp._point.y;
+			back_select = 1;
+			[ self singleSelectionBegan: tp._point andFront: NO ];
+		}
+	}
+}
+
+- (void) singleSelectionBegan: (CGPoint) point andFront: (BOOL) isFront
+{
+	if( isFront )
+	{
+		if( cameraMoveState )
+			[ self cameraMoveEnded];
+		
+		singleSelectionFrontState = YES;
+		tempSingleSelectFrontPoint = point;
+	}
+	else
+	{
+		singleSelectionBackState = YES;
+		tempSingleSelectBackPoint = point;
+	}
+}
+
+- (void) singleSelectionMoved: (CGPoint) point andFront: (BOOL) isFront
+{
+	if( isFront )
+	{
+		int theDeltaX = point.x - tempSingleSelectFrontPoint.x;
+		int theDeltaY = point.y - tempSingleSelectFrontPoint.y;
+		
+		
+		mysio2ResourceDispatchEvents( sio2->_SIO2resource,
+								sio2->_SIO2window,
+								my_WINDOW_MOVE_OBJ,
+								SIO2_WINDOW_TAP_DOWN,
+								0,		//scale
+								0,     //direction
+								0,     //dirState
+								(float)10*theDeltaX,     //delta x
+								(float)10*theDeltaY,     //delta y
+								0      //delta z
+								);
+		
+		tempSingleSelectFrontPoint = point;
+	}
+	else
+	{
+		int theDeltaX = point.x - tempSingleSelectBackPoint.x;
+		int theDeltaY = point.y - tempSingleSelectBackPoint.y;
+		
+		
+		mysio2ResourceDispatchEvents( sio2->_SIO2resource,
+								sio2->_SIO2window,
+								my_WINDOW_MOVE_OBJ,
+								SIO2_WINDOW_TAP_DOWN,
+								0,		//scale
+								0,     //direction
+								0,     //dirState
+								(float)10*theDeltaX,     //delta x
+								(float)10*theDeltaY,     //delta y
+								0      //delta z
+								);
+		
+		tempSingleSelectBackPoint = point;	
+	}
+}
+
+- (void) singleSelectionEndedForFront: (BOOL) isFront
+{
+	if( isFront)
+	{
+		singleSelectionFrontState = NO;
+		theFrontPreIndexForSingleSelection = 5;
+		
+		if( !dragState && !flipState && isRotateEnded )
+			theSelectedGroup.clear();
+	}
+	else
+	{
+		singleSelectionBackState = NO;
+		theBackPreIndexForSingleSelection = 5;
+		
+		if( !dragState && !flipState && isRotateEnded )
+			theSelectedGroup.clear();
 	}
 }
 
