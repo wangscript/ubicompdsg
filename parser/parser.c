@@ -112,7 +112,7 @@ void process(char* path){
 			fprintf(fp4,"#For type : %d\n", ii+1);	
 			fprintf(fp4,"Total Completion Time : %lf  Average Completion Time : %lf   Completion time STD: %lf\n",typecomsum, typecommean, typecomstd);
 
-			fprintf(fp4,"Total Extra Movement : %lf   Average Extra Movement : %lf    Extra Movement STD: %lf\n\n\n", typeextrasum, typeextramean, typeextrastd);
+			fprintf(fp4,"Total Extra Movement : %lf   Average Extra Movement : %lf    Extra Movement STD: %lf\n\n", typeextrasum, typeextramean, typeextrastd);
 			
 
 		}
@@ -295,7 +295,7 @@ void parse( char *filename , char* taskname , char* oldtaskname){
 			fprintf(fp4,"#For type : %d\n",type[j-1]);	
 			fprintf(fp4,"Total Completion Time : %lf  Average Completion Time : %lf   Completion time STD: %lf\n",typecomsum, typecommean, typecomstd);
 
-			fprintf(fp4,"Total Extra Movement : %lf   Average Extra Movement : %lf    Extra Movement STD: %lf\n\n\n", typeextrasum, typeextramean, typeextrastd);
+			fprintf(fp4,"Total Extra Movement : %lf   Average Extra Movement : %lf    Extra Movement STD: %lf\n\n", typeextrasum, typeextramean, typeextrastd);
 			
 
 					typeextrasum = 0.0;
@@ -429,7 +429,7 @@ void parse( char *filename , char* taskname , char* oldtaskname){
 			fprintf(fp4,"#For type : %d\n",type[j-1]);	
 			fprintf(fp4,"Total Completion Time : %lf  Average Completion Time : %lf   Completion time STD: %lf\n",typecomsum, typecommean, typecomstd);
 
-			fprintf(fp4,"Total Extra Movement : %lf   Average Extra Movement : %lf    Extra Movement STD: %lf\n\n\n", typeextrasum, typeextramean, typeextrastd);
+			fprintf(fp4,"Total Extra Movement : %lf   Average Extra Movement : %lf    Extra Movement STD: %lf\n\n", typeextrasum, typeextramean, typeextrastd);
 			
 					typeextrasum = 0.0;
 					typecomsum = 0.0;
