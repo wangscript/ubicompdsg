@@ -1218,6 +1218,8 @@ BOOL isDebug = YES;
 	// Also Reset _DragState and _FlipState: 
 	if(dragState) [self dragEnded];
 	if(flipState) [self flipEnded];
+	if(singleSelectionFrontState)		[self singleSelectionEndedForFront:YES];
+	else if(singleSelectionBackState)	[self singleSelectionEndedForFront:NO];
 
 	tempStrtDistance = sqrt( pow(point1.x - point2.x, 2) + pow(point1.y - point2.y,2) );
 }
@@ -1682,7 +1684,7 @@ static int _degree_counter = 0; // Counter for rotate 90 degree
 		singleSelectionFrontState = NO;
 		theFrontPreIndexForSingleSelection = 5;
 		
-		if( !dragState && !flipState && isRotateEnded )
+		if( !dragState && !flipState && isRotateEnded && !strtState)
 			theSelectedGroup.clear();
 	}
 	else
@@ -1690,7 +1692,7 @@ static int _degree_counter = 0; // Counter for rotate 90 degree
 		singleSelectionBackState = NO;
 		theBackPreIndexForSingleSelection = 5;
 		
-		if( !dragState && !flipState && isRotateEnded )
+		if( !dragState && !flipState && isRotateEnded && !strtState)
 			theSelectedGroup.clear();
 	}
 }
