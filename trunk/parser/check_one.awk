@@ -36,8 +36,8 @@ BEGIN {
 }
 
 {
-	if (CompleteTime < 0 || Extra < 0 || FrontTime < 0 || BackTime < 0 || BothTime < 0) {
-		str = sprintf("%s\n%s %d < 0", str, TaskName, Round)
+	if (CompleteTime <= 0 || Extra < 0 || FrontTime < 0 || BackTime < 0 || BothTime <= 0) {
+		str = sprintf("%s\n%s %d 太小", str, TaskName, Round)
 	}
 	if (CompleteTime > bow || Extra > bow || FrontTime > bow || BackTime > bow || BothTime > bow) {
 		str = sprintf("%s\n%s %d 爆了", str, TaskName, Round)
@@ -56,5 +56,6 @@ END {
 		printf ("%s\n", str)
 		print "============"
 	}
+	else print "OK"
 }
 

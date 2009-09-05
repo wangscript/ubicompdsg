@@ -12,7 +12,8 @@ BEGIN{
 }
 
 {
-	line[$1] = sprintf("%s\n%s", line[$1], $0)
+	if (NR == 1) line[$1] = sprintf("%s%s", line[$1], $0)
+	else line[$1] = sprintf("%s\n%s", line[$1], $0)
 }
 
 END{

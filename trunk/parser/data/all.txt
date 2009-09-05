@@ -1,0 +1,117 @@
+Task: DragBack
+Total Completion Time : 895.987000  Average Completion Time : 1.555533   Completion time STD: 0.729521
+Total Extra Movement : 264.000000   Average Extra Movement : 0.458333    Extra Movement STD: 0.822851
+Front Sum = 7.710766  Front  Mean = 0.642564  Front Std = 1.668700
+Back Sum = 624.880819   Back  Mean = 52.073402  Back Std = 11.800687
+Both Sum = 625.731719   Both  Mean = 52.144310  Both Std = 11.814430
+Efficency : 69.84 %
+
+
+Task: DragBoth
+Total Completion Time : 1129.363000  Average Completion Time : 1.960700   Completion time STD: 1.197975
+Total Extra Movement : 453.000000   Average Extra Movement : 0.786458    Extra Movement STD: 1.667570
+Front Sum = 678.494089  Front  Mean = 56.541174  Front Std = 9.626842
+Back Sum = 831.978359   Back  Mean = 69.331530  Back Std = 18.050759
+Both Sum = 855.400441   Both  Mean = 71.283370  Both Std = 17.617977
+Efficency : 75.74 %
+
+
+Task: DragFront
+Total Completion Time : 721.700000  Average Completion Time : 1.252951   Completion time STD: 1.035808
+Total Extra Movement : 310.000000   Average Extra Movement : 0.538194    Extra Movement STD: 1.881083
+Front Sum = 434.603007  Front  Mean = 36.216917  Front Std = 11.011147
+Back Sum = 29.931349   Back  Mean = 2.494279  Back Std = 3.773901
+Both Sum = 422.906462   Both  Mean = 35.242205  Both Std = 10.967549
+Efficency : 58.60 %
+
+
+Task: DragHybrid
+Total Completion Time : 1226.251000  Average Completion Time : 2.322445   Completion time STD: 1.647115
+Total Extra Movement : 575.000000   Average Extra Movement : 1.089015    Extra Movement STD: 2.110497
+Front Sum = 352.443255  Front  Mean = 32.040296  Front Std = 14.853155
+Back Sum = 947.082322   Back  Mean = 86.098393  Back Std = 34.723528
+Both Sum = 958.070112   Both  Mean = 87.097283  Both Std = 34.702397
+Efficency : 78.13 %
+
+
+Task: GrabBack
+Total Completion Time : 701.494000  Average Completion Time : 1.461446   Completion time STD: 1.273898
+Total Extra Movement : 632.000000   Average Extra Movement : 1.316667    Extra Movement STD: 1.714440
+Front Sum = 0.985070  Front  Mean = 0.082089  Front Std = 0.169648
+Back Sum = 372.112483   Back  Mean = 31.009374  Back Std = 19.274311
+Both Sum = 372.498234   Both  Mean = 31.041520  Both Std = 19.259446
+Efficency : 53.10 %
+
+
+Task: GrabBoth
+Total Completion Time : 1200.671000  Average Completion Time : 2.501398   Completion time STD: 2.709513
+Total Extra Movement : 1130.000000   Average Extra Movement : 2.354167    Extra Movement STD: 5.562297
+Front Sum = 275.994521  Front  Mean = 22.999543  Front Std = 8.690184
+Back Sum = 889.491052   Back  Mean = 74.124254  Back Std = 41.272824
+Both Sum = 902.044620   Both  Mean = 75.170385  Both Std = 41.045761
+Efficency : 75.13 %
+
+
+Task: GrabFront
+Total Completion Time : 1035.933000  Average Completion Time : 2.158194   Completion time STD: 5.315050
+Total Extra Movement : 2086.000000   Average Extra Movement : 4.345833    Extra Movement STD: 16.935145
+Front Sum = 404.740415  Front  Mean = 33.728368  Front Std = 20.763358
+Back Sum = 106.778929   Back  Mean = 8.898244  Back Std = 17.649098
+Both Sum = 458.980537   Both  Mean = 38.248378  Both Std = 26.391197
+Efficency : 44.31 %
+
+
+Task: RotateFlip
+Total Completion Time : 487.437000  Average Completion Time : 1.015494   Completion time STD: 1.025401
+Total Extra Movement : 387.000000   Average Extra Movement : 0.806250    Extra Movement STD: 2.252767
+Front Sum = 267.768478  Front  Mean = 22.314040  Front Std = 12.136904
+Back Sum = 280.463345   Back  Mean = 23.371945  Back Std = 12.978863
+Both Sum = 298.413436   Both  Mean = 24.867786  Both Std = 13.310687
+Efficency : 61.22 %
+
+
+Task: RotateTorque
+Total Completion Time : 360.748000  Average Completion Time : 0.751558   Completion time STD: 0.919612
+Total Extra Movement : 356.000000   Average Extra Movement : 0.741667    Extra Movement STD: 2.324223
+Front Sum = 150.779768  Front  Mean = 12.564981  Front Std = 5.725296
+Back Sum = 178.525706   Back  Mean = 14.877142  Back Std = 8.725158
+Both Sum = 193.231286   Both  Mean = 16.102607  Both Std = 8.570727
+Efficency : 53.56 %
+
+
+Task: StretchBack
+Total Completion Time : 390.216000  Average Completion Time : 1.625900   Completion time STD: 1.296079
+Total Extra Movement : 317.000000   Average Extra Movement : 1.320833    Extra Movement STD: 2.827908
+Front Sum = 20.653022  Front  Mean = 1.721085  Front Std = 4.061638
+Back Sum = 301.265507   Back  Mean = 25.105459  Back Std = 8.030600
+Both Sum = 289.346566   Both  Mean = 24.112214  Both Std = 7.850827
+Efficency : 74.15 %
+
+
+Task: StretchBoth
+Total Completion Time : 885.121000  Average Completion Time : 3.688004   Completion time STD: 6.119328
+Total Extra Movement : 1678.000000   Average Extra Movement : 6.991667    Extra Movement STD: 18.686335
+Front Sum = 649.060160  Front  Mean = 54.088347  Front Std = 24.341721
+Back Sum = 667.785005   Back  Mean = 55.648750  Back Std = 28.644772
+Both Sum = 683.527810   Both  Mean = 56.960651  Both Std = 29.993082
+Efficency : 77.22 %
+
+
+Task: StretchFront
+Total Completion Time : 303.016000  Average Completion Time : 1.262567   Completion time STD: 2.105775
+Total Extra Movement : 281.000000   Average Extra Movement : 1.170833    Extra Movement STD: 3.220375
+Front Sum = 222.996269  Front  Mean = 18.583022  Front Std = 15.806519
+Back Sum = 57.904960   Back  Mean = 4.825413  Back Std = 8.912751
+Both Sum = 192.543399   Both  Mean = 16.045283  Both Std = 6.546779
+Efficency : 63.54 %
+
+
+Task: StretchHybrid
+Total Completion Time : 823.580000  Average Completion Time : 3.431583   Completion time STD: 3.867955
+Total Extra Movement : 1691.000000   Average Extra Movement : 7.045833    Extra Movement STD: 11.341571
+Front Sum = 483.910764  Front  Mean = 40.325897  Front Std = 28.785690
+Back Sum = 657.365855   Back  Mean = 54.780488  Back Std = 31.691481
+Both Sum = 679.283936   Both  Mean = 56.606995  Both Std = 33.720971
+Efficency : 82.48 %
+
+
