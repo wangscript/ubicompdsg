@@ -66,7 +66,6 @@ extern vec2				*selectionPosition;
 extern vec2				*frontSelectPosition;
 extern vec2				*backSelectPosition;
 
-extern GLfloat matrixrotate[16];
 
 extern vector< SIO2object* > theSelectedGroup; 
 
@@ -269,14 +268,7 @@ BOOL isDebug = YES;
 		sio2->_SIO2window->_SIO2windowBackHandle        = backTouchHandle;
 	
 		
-		//for rotate
-		for(int i = 0 ; i < 16 ; i++){
-			matrixrotate[i] = 0.0f;
-		}
-		matrixrotate[0] = 1.0f;
-		matrixrotate[5] = 1.0f;
-		matrixrotate[10] = 1.0f;
-		matrixrotate[15] = 1.0f;
+
 		
 	}
 	
