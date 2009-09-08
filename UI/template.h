@@ -26,6 +26,20 @@
 
 #include "../src/sio2/sio2.h"
 
+@interface theObject : NSObject
+{
+	SIO2object* _obj;
+	GLfloat _rotateMatrix[16];
+}
+
+- ( theObject*) initWithSIO2Object:( SIO2object*) newObject;
+- ( GLfloat* ) getRotatingMatrix;
+- ( void ) setRotatingMatrix:( GLfloat*) newMatrix;
+
+@property (nonatomic ) SIO2object* _obj;
+
+@end
+
 typedef enum {
 	GESTURE_BOTH_GRAB = 0,
 	GESTURE_BOTH_DRAG,

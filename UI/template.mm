@@ -27,7 +27,8 @@ using namespace std;
 #pragma mark -
 
 //rotate
-GLfloat matrixrotate[16];
+//GLfloat matrixrotate[16];
+vector < GLfloat[16] > rotatingMatrixs;
 
 // ============= Shared variable between each task project ============= //
 
@@ -67,7 +68,7 @@ vec2	backTouchPoint[5];
 char	displayStr[ SIO2_MAX_CHAR ] = {""};
 
 vector<SIO2object*> excludeObjects;         // Objects cannot be selected
-vector<SIO2object*> theSortedObjects;
+vector<theObject*> theSortedObjects;
 vector<SIO2object*> theSelectedGroup;
 
 vec2	startLoc1;
@@ -270,6 +271,46 @@ void generateLogFormat() {
 	logToFile(textLog, [NSString stringWithFormat: @"%s_LOG.txt", TASK_NAME]);
 }
 */
+
+
+@implementation theObject
+
+@synthesize _obj;
+
+- (theObject*) initWithSIO2Object:( SIO2object*) newObject;
+{
+	if (self) {
+		_obj = newObject;
+		
+		for( int i=0; i<16; i++)
+		{
+			_rotateMatrix[ i ] = 0.0f;
+		}
+		_rotateMatrix[0]	= 1.0f;
+		_rotateMatrix[5]	= 1.0f;
+		_rotateMatrix[10]	= 1.0f;
+		_rotateMatrix[15]	= 1.0f;
+	}
+	return self;
+}
+
+- ( GLfloat* ) getRotatingMatrix
+{
+	return _rotateMatrix;
+}
+
+- ( void ) setRotatingMatrix: ( GLfloat* ) newMatrix
+{
+	for( int i=0; i<16; i++)
+	{
+		_rotateMatrix[i] = newMatrix[i];
+	}
+}
+
+@end
+
+
+
 #pragma mark -
 #pragma mark SIO2 template
 
@@ -318,15 +359,28 @@ void templateRender( void ) {
 				
 				for( int i=0; i < theSortedObjects.size(); i++)
 				{
-					theSortedObjects[ i ]->_SIO2transform->loc->x = cameraPosition + ( cameraPosition - theSortedObjects[ i ]->_SIO2transform->loc->x );
-					sio2TransformBindMatrix2( theSortedObjects[ i ]->_SIO2transform, matrixrotate, 0.0f,0.0f,0.0f , 2 );
+					GLfloat _M [16];
+					for( int k=0; k<16; k++)
+					{
+						_M[ k ] = [ theSortedObjects[ i ] getRotatingMatrix ][k];
+					}
+					
+					theSortedObjects[ i ]._obj ->_SIO2transform->loc->x = cameraPosition + ( cameraPosition - theSortedObjects[ i ]._obj ->_SIO2transform->loc->x );
+					sio2TransformBindMatrix2( theSortedObjects[ i ]._obj ->_SIO2transform, _M, 0.0f,0.0f,0.0f , 2 );
+					[ theSortedObjects[i] setRotatingMatrix: _M ];
 				}
 				
 				for(int i = theSortedObjects.size()-1 ; i >= 0; i-- )
 				{
-					theSortedObjects[ i ]->_SIO2transform->loc->x = cameraPosition - ( theSortedObjects[ i ]->_SIO2transform->loc->x - cameraPosition );
-					sio2TransformBindMatrix2( theSortedObjects[ i ]->_SIO2transform, matrixrotate, 0.0f,0.0f,0.0f , 2 );
-					RenderSolidObject( theSortedObjects[ i ] );
+					GLfloat _M [16];
+					for( int k=0; k<16; k++)
+					{
+						_M[ k ] = [ theSortedObjects[ i ] getRotatingMatrix ][k];
+					}
+					theSortedObjects[ i ]._obj->_SIO2transform->loc->x = cameraPosition - ( theSortedObjects[ i ]._obj ->_SIO2transform->loc->x - cameraPosition );
+					sio2TransformBindMatrix2( theSortedObjects[ i ]._obj ->_SIO2transform, _M, 0.0f,0.0f,0.0f , 2 );
+					[ theSortedObjects[i] setRotatingMatrix: _M ];
+					RenderSolidObject( theSortedObjects[ i ]._obj );
 					
 					if( sio2->_SIO2window->n_touch != 0 ) {
 						if (GRAB_WITH_BACK_TOUCH) {
@@ -404,17 +458,30 @@ void templateRender( void ) {
 				{
 					for( int index=0; index < theSortedObjects.size(); index++)
 					{
-						theSortedObjects[ index ]->_SIO2transform->loc->x = cameraPosition + ( cameraPosition - theSortedObjects[ index ]->_SIO2transform->loc->x );
-						sio2TransformBindMatrix2( theSortedObjects[ index ]->_SIO2transform, matrixrotate, 0.0f,0.0f,0.0f , 2 );
+						GLfloat _M [16];
+						for( int k=0; k<16; k++)
+						{
+							_M[ k ] = [ theSortedObjects[ index ] getRotatingMatrix ][k];
+						}
+						theSortedObjects[ index ]._obj ->_SIO2transform->loc->x = cameraPosition + ( cameraPosition - theSortedObjects[ index ]._obj ->_SIO2transform->loc->x );
+						sio2TransformBindMatrix2( theSortedObjects[ index ]._obj ->_SIO2transform, _M, 0.0f,0.0f,0.0f , 2 );
+						[ theSortedObjects[ index ] setRotatingMatrix: _M ];
+						
 					}
 					
 					back_select = 0;
 					selection = nil;
 					for( int index = theSortedObjects.size()-1; index>=0; index--)
 					{
-						theSortedObjects[ index ]->_SIO2transform->loc->x = cameraPosition - ( theSortedObjects[ index ]->_SIO2transform->loc->x - cameraPosition );
-						sio2TransformBindMatrix2( theSortedObjects[ index ]->_SIO2transform, matrixrotate, 0.0f,0.0f,0.0f , 2 );
-						RenderSolidObject( theSortedObjects[ index ] );
+						GLfloat _M [16];
+						for( int k=0; k<16; k++)
+						{
+							_M[ k ] = [ theSortedObjects[ index ] getRotatingMatrix ][k];
+						}
+						theSortedObjects[ index ]._obj ->_SIO2transform->loc->x = cameraPosition - ( theSortedObjects[ index ]._obj ->_SIO2transform->loc->x - cameraPosition );
+						sio2TransformBindMatrix2( theSortedObjects[ index ]._obj ->_SIO2transform, _M, 0.0f,0.0f,0.0f , 2 );
+						[ theSortedObjects[ index ] setRotatingMatrix: _M ];
+						RenderSolidObject( theSortedObjects[ index ]._obj  );
 						
 						if (GRAB_WITH_BACK_TOUCH) {
 							selection = sio2ResourceSelect3D( sio2->_SIO2resource,
@@ -454,9 +521,15 @@ void templateRender( void ) {
 							theSelectedGroup.push_back(selection);
 							for( int k = index-1; k >= 0; k--)
 							{ // Render the rest objects in theSortedObjects:
-								theSortedObjects[ k ]->_SIO2transform->loc->x = cameraPosition - ( theSortedObjects[ k ]->_SIO2transform->loc->x - cameraPosition );
-								sio2TransformBindMatrix2( theSortedObjects[ k ]->_SIO2transform, matrixrotate, 0.0f,0.0f,0.0f , 2 );
-								RenderSolidObject( theSortedObjects[ k ] );								
+								GLfloat _M [16];
+								for( int l =0; l <16; l ++)
+								{
+									_M[ l ] = [ theSortedObjects[ k ] getRotatingMatrix ][l];
+								}
+								theSortedObjects[ k ]._obj ->_SIO2transform->loc->x = cameraPosition - ( theSortedObjects[ k ]._obj ->_SIO2transform->loc->x - cameraPosition );
+								sio2TransformBindMatrix2( theSortedObjects[ k ]._obj ->_SIO2transform, _M, 0.0f,0.0f,0.0f , 2 );
+								[ theSortedObjects[ k ] setRotatingMatrix: _M ];
+								RenderSolidObject( theSortedObjects[ k ]._obj  );								
 							}
 							break;                                          //JUMP OUT OF THE FORLOOP.
 						}
@@ -468,7 +541,7 @@ void templateRender( void ) {
 					
 					for( int k=0; k<theSortedObjects.size(); k++)
 					{
-						RenderSolidObject( theSortedObjects[k] );
+						RenderSolidObject( theSortedObjects[k]._obj  );
 					}
 					
 					front_select = 0;
@@ -724,8 +797,17 @@ void templateLoading( void ) {
 	excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneYZ" ));
 	excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneXZ" ));
 	
-	theSortedObjects.push_back((SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Cube"));
-	theSortedObjects.push_back((SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Cube2"));
+	theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Cube2") ] );
+	theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Cube") ]);
+
+	
+	/* Initialize the Matrixs for Rotating:
+	for( int i=0; i<theSortedObjects.size(); i++)
+	{
+		GLfloat* tempM = [ theSortedObjects[ i ] getRotatingMatrix];
+		for( int i=0; i<16; i++)
+			printf("=======> tempM[%d]: %f", i, tempM[i] );
+	}*/
 		
 	camera = ( SIO2camera * )sio2ResourceGet( sio2->_SIO2resource, SIO2_CAMERA,"camera/Camera" );
 
@@ -791,10 +873,25 @@ void templateScreenAccelerometer( void *_ptr ) {
 void templateChangeObjectScale( void *_ptr, float det_scale) 
 {
 	det_scale *= 0.1;
+	SIO2object* _SIO2object = nil;
+	int index;
 	
 	for( int i= theSelectedGroup.size()-1; i >= 0; i--)
 	{
-		SIO2object *_SIO2object = theSelectedGroup[ i ];		
+		GLfloat _M[16];
+		for( int k=0; k < theSortedObjects.size(); k++)
+		{
+			if( theSortedObjects[k]._obj == theSelectedGroup[ i ] )
+			{
+				for( int s=0; s<16; s++)
+					_M[s] = [ theSortedObjects[k] getRotatingMatrix ][s];
+				
+				index = k;
+				_SIO2object = theSortedObjects[k]._obj;
+				break;
+			}
+		}
+		
 		if( _SIO2object )
 		{
 			
@@ -809,7 +906,8 @@ void templateChangeObjectScale( void *_ptr, float det_scale)
 			}
 			
 			//sio2TransformBindMatrix( _SIO2object->_SIO2transform  );
-			sio2TransformBindMatrix2(_SIO2object->_SIO2transform,matrixrotate, 0.0f,0.0f,0.0f , 2);
+			sio2TransformBindMatrix2(_SIO2object->_SIO2transform,_M, 0.0f,0.0f,0.0f , 2);
+			[ theSortedObjects[ index ] setRotatingMatrix: _M ];
 		}
 	}
 
@@ -822,31 +920,55 @@ void templateRotateObject( void *_ptr , int rotateDirection, int theDirState ) {
 		return;
 	}
 	
-	SIO2object* _SIO2object = theSelectedGroup[0];
+	SIO2object* _SIO2object;
+	GLfloat _M[16];
+	int index;
+	
+	for( int i=0; i<theSortedObjects.size(); i++)
+	{
+		if( theSortedObjects[ i ]._obj == theSelectedGroup[ 0 ] )
+		{
+			_SIO2object = theSortedObjects[ i ]._obj ;
+			for( int k=0; k<16; k++)
+			{
+				_M[ k ] = [ theSortedObjects[ i ] getRotatingMatrix ][k];
+			}
+			index = i;
+			break;
+		}
+	}
+	
+
+	
 	
 	if( _SIO2object )
 	{
 		//_rotateAngle = 0.0f;
 		switch(rotateDirection){
 			case 1:{ //Rotate-Up
-				sio2TransformBindMatrix2(_SIO2object->_SIO2transform,matrixrotate,0.0f,1.0f,0.0f , 1);
+				sio2TransformBindMatrix2(_SIO2object->_SIO2transform,_M,0.0f,1.0f,0.0f , 1);
+				[ theSortedObjects[ index ] setRotatingMatrix: _M];
 				break;
 			}
 		    case 2:{ //Rotate-Right
-				sio2TransformBindMatrix2(_SIO2object->_SIO2transform,matrixrotate,1.0f,0.0f,0.0f , 1);
+				sio2TransformBindMatrix2(_SIO2object->_SIO2transform,_M,1.0f,0.0f,0.0f , 1);
+				[ theSortedObjects[ index ] setRotatingMatrix: _M];
 				break;
 			}
 			case 3:{ //Rotate-Down
-				sio2TransformBindMatrix2(_SIO2object->_SIO2transform,matrixrotate,0.0f,-1.0f,0.0f , 1);
+				sio2TransformBindMatrix2(_SIO2object->_SIO2transform,_M,0.0f,-1.0f,0.0f , 1);
+				[ theSortedObjects[ index ] setRotatingMatrix: _M];
 				break;
 			}
 		    case 4:{//Rotate-Left		
 	
-				sio2TransformBindMatrix2(_SIO2object->_SIO2transform,matrixrotate,-1.0f,0.0f,0.0f , 1);
+				sio2TransformBindMatrix2(_SIO2object->_SIO2transform,_M,-1.0f,0.0f,0.0f , 1);
+				[ theSortedObjects[ index ] setRotatingMatrix: _M];
 				break;
 			}
 			case 5:{//Rotate-X
-				sio2TransformBindMatrix2(_SIO2object->_SIO2transform,matrixrotate, 0.0f,0.0f,1.0f , 1);
+				sio2TransformBindMatrix2(_SIO2object->_SIO2transform,_M, 0.0f,0.0f,1.0f , 1);
+				[ theSortedObjects[ index ] setRotatingMatrix: _M];
 				break;			
 			
 			}
@@ -862,7 +984,22 @@ void templateMoveObject( void *_ptr ,float _detX, float _detY, float _detZ ) {
 
 	for( int i=0;  i < theSelectedGroup.size(); i++)
 	{
-		SIO2object *_SIO2object = theSelectedGroup[ i ];
+		GLfloat _M[16];
+		SIO2object *_SIO2object = nil;
+		int index;
+		
+		for( int k=0; k<theSortedObjects.size(); k++)
+		{
+			if( theSortedObjects[k]._obj == theSelectedGroup[i])
+			{
+				for( int l=0; l<16; l++)
+					_M[l] = [ theSortedObjects[k] getRotatingMatrix][l] ;
+				
+				_SIO2object = theSortedObjects[k]._obj; 
+				index = k;
+				break;
+			}
+		}
 		
 		// Check if we get a pointer.
 		if( _SIO2object )
@@ -900,7 +1037,8 @@ void templateMoveObject( void *_ptr ,float _detX, float _detY, float _detZ ) {
 			}
 			
 			
-			sio2TransformBindMatrix2(_SIO2object->_SIO2transform,matrixrotate, 0.0f, 0.0f, 0.0f , 2);
+			sio2TransformBindMatrix2(_SIO2object->_SIO2transform,_M, 0.0f, 0.0f, 0.0f , 2);
+			[ theSortedObjects[ index] setRotatingMatrix: _M];
 			
 			//sio2TransformBindMatrix( _SIO2object->_SIO2transform  );
 		}
@@ -1063,24 +1201,24 @@ void RenderSolidObject( SIO2object* obj)
 
 void sortingTheObjects() 
 {
-	SIO2object* tempObject;
+	theObject* tempObject;
 	double tempDistance;
 	double d;
 	
 	for( int i=0; i< theSortedObjects.size(); i++)
 	{
-		tempObject   = theSortedObjects[ i ];
-		tempDistance = fabs( theSortedObjects[ i ]->_SIO2transform->loc->x - camera->_SIO2transform->loc->x ); 
+		tempObject   = theSortedObjects[ i ] ;
+		tempDistance = fabs( theSortedObjects[ i ]._obj ->_SIO2transform->loc->x - camera->_SIO2transform->loc->x ); 
 		
 		for( int j = i+1; j< theSortedObjects.size(); j++)
 		{
-			d = fabs( theSortedObjects[ j ]->_SIO2transform->loc->x - camera->_SIO2transform->loc->x );
+			d = fabs( theSortedObjects[ j ]._obj ->_SIO2transform->loc->x - camera->_SIO2transform->loc->x );
 			if( d < tempDistance)
 			{
 				tempDistance = d;
-				theSortedObjects[ i ] = theSortedObjects[ j ];
-				theSortedObjects[ j ] = tempObject;
-				tempObject = theSortedObjects[i]; 
+				theSortedObjects[ i ]  = theSortedObjects[ j ] ;
+				theSortedObjects[ j ]  = tempObject;
+				tempObject = theSortedObjects[ i ] ; 
 			}
 		}
 	}
