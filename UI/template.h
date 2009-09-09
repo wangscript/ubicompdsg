@@ -24,6 +24,9 @@
 #define ENABLE_SHOW_BACK_TOUCH	YES
 #define	ENABLE_SHOW_TEXT		YES
 
+#define JG_GAME_PASSWORD NULL // add by moje
+#define JG_GAME_GARDEN "Visual02.sio2"
+
 #include "../src/sio2/sio2.h"
 
 @interface theObject : NSObject
