@@ -23,6 +23,9 @@ using namespace std;
 #define TARTET_ROT_Z_2			180
 #define TAR_OBJ_DIS_THRESHOLD	1
 #define TAR_OBJ_SCL_THRESHOLD	0.2
+#define JG_GAME_AFILTER SIO2_IMAGE_ANISOTROPIC_1X
+#define JG_GAME_TFILTER	SIO2_IMAGE_QUADLINEAR
+
 
 #pragma mark -
 
@@ -339,13 +342,19 @@ void templateRender( void ) {
 						_SIO2camera->cend );
 		
 #pragma mark Rendering:
+		
 		sio2WindowEnterLandscape3D();
 		{
+			
 			sio2CameraRender( _SIO2camera );
 			sortingTheObjects();
 			
 			sio2CameraUpdateFrustum( sio2->_SIO2camera );
 			sio2ResourceCull( sio2->_SIO2resource, sio2->_SIO2camera );	
+			
+			// Update the fire video if one of the lantern is          //add by moje
+			// visible.                                                //add by moje
+			sio2ExecLUA( "video.render_fire();" );                     //add by moje
 			
 			if ( tap_select ) {
 				
@@ -636,6 +645,19 @@ void templateRender( void ) {
 							   sio2->_SIO2camera,
 							   SIO2_RENDER_TRANSPARENT_OBJECT );
 			
+            //fire
+			{	static SIO2object *fire    = sio2ResourceGetObject( sio2->_SIO2resource,
+																   "object/fire" );
+				sio2DisableState( &fire->flags   , SIO2_OBJECT_INVISIBLE );
+				
+				sio2ObjectRender( fire,
+								 sio2->_SIO2window,
+								 sio2->_SIO2camera,
+								 1, SIO2_TRANSFORM_MATRIX_BIND );
+				
+				sio2EnableState( &fire->flags   , SIO2_OBJECT_INVISIBLE );              // video end by moje
+            }
+			
 			sio2ObjectReset();			
 			sio2MaterialReset();
 			
@@ -750,7 +772,7 @@ void templateLoading( void ) {
 	selectionPosition = sio2Vec2Init();
 	frontSelectPosition = sio2Vec2Init();
 	backSelectPosition = sio2Vec2Init();
-	
+
 	unsigned int i = 0;
 	
 	srand ( time(NULL) );
@@ -763,15 +785,24 @@ void templateLoading( void ) {
 	
 	gestureSequence = [[NSMutableArray alloc] init];
 	
+	
+	sio2->_SIO2resource = sio2ResourceInit( "jgGarden" );	
+		// Initialize a physic world.
+	sio2->_SIO2physic = sio2PhysicInit( "jgGarden" );
+	
 	sio2ResourceCreateDictionary( sio2->_SIO2resource );
+	sio2->tfilter = JG_GAME_TFILTER;
+	sio2->afilter = JG_GAME_AFILTER;
+	
 	
 	sio2ResourceOpen( sio2->_SIO2resource, SIO2_FILE_NAME, 1 );
+	
 	
 	// Loop into the archive extracting all the 
 	// resources compressed within the fileformat.
 	while( i != sio2->_SIO2resource->gi.number_entry )
 	{
-		sio2ResourceExtract( sio2->_SIO2resource, NULL );
+		sio2ResourceExtract( sio2->_SIO2resource, JG_GAME_PASSWORD );
 		++i;
 	}
 	
@@ -779,12 +810,51 @@ void templateLoading( void ) {
 	templatePrintProgress();
 	
 	// We are done with the file so close the stream.
-	sio2ResourceClose( sio2->_SIO2resource );
-	sio2ResetState();
+//	sio2ResourceClose( sio2->_SIO2resource );
+//	sio2ResetState();
 	sio2ResourceBindAllMatrix( sio2->_SIO2resource );
 	sio2ResourceBindAllImages( sio2->_SIO2resource );
 	sio2ResourceBindAllMaterials( sio2->_SIO2resource );
+	sio2ResourceBindAllSoundBuffers( sio2->_SIO2resource );  
+	sio2ResourceBindAllInstances( sio2->_SIO2resource );
+	sio2ResourceBindAllPhysicObjects( sio2->_SIO2resource,
+									 sio2->_SIO2physic );   // add by moje
 	//sio2ResourceBindAllInstances( sio2->_SIO2resource );
+	
+	
+	SIO2video *_SIO2video;        //video start: by moje
+	// Fire
+	{
+		_SIO2video = sio2VideoInit( "fire" );
+		
+		_SIO2video->_SIO2stream = sio2StreamInit( "fire" );
+		
+		sio2ResourceExtractFile( sio2->_SIO2resource,
+								_SIO2video->_SIO2stream,
+								"image/fire.ogv",
+								JG_GAME_PASSWORD );
+		
+		sio2VideoLoad( _SIO2video, _SIO2video->_SIO2stream );
+		
+		sio2VideoPlay( _SIO2video, 1 );
+	}
+	
+		sio2ExecLUA( "video.init();" );
+	
+//	static SIO2object *fire    = sio2ResourceGetObject( sio2->_SIO2resource,
+//													   "object/fire" );
+//	sio2DisableState( &fire->flags   , SIO2_OBJECT_INVISIBLE );
+	
+	//	sio2ObjectRender( fire,
+	//					 sio2->_SIO2window,
+	//					 sio2->_SIO2camera,
+	//					 1, SIO2_TRANSFORM_MATRIX_BIND );
+	
+//	sio2EnableState( &fire->flags   , SIO2_OBJECT_INVISIBLE );              // video end by moje
+	
+	
+	
+	
 	
 	sio2ResourceGenId( sio2->_SIO2resource );
 	
@@ -793,7 +863,7 @@ void templateLoading( void ) {
 
 #pragma mark Definition of Vectors:
 	excludeObjects.push_back( targetObject );
-	excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneXY" ));
+   excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneXY" ));
 	excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneYZ" ));
 	excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneXZ" ));
 	

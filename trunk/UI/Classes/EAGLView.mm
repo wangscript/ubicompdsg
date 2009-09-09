@@ -246,7 +246,9 @@ BOOL isDebug = YES;
 		
 		sio2InitAL();
 		
-		sio2->_SIO2resource = sio2ResourceInit( "default" );
+		sio2InitLUA();
+		
+		sio2->_SIO2resource = sio2ResourceInit( "jgGarden" );
 		
 		sio2->_SIO2window = sio2WindowInit();
 	
