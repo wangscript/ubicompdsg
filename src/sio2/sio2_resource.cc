@@ -2444,7 +2444,7 @@ void sio2ResourceRender( SIO2resource *_SIO2resource,
 		while( i != _SIO2resource->n_object )
 		{
 			SIO2object *_SIO2object = ( SIO2object * )_SIO2resource->_SIO2object[ i ];
-
+			_SIO2object->dst = 1.0f;
 			if( ( _SIO2object->type & SIO2_OBJECT_SOLID ) && _SIO2object->dst )
 			{
 				sio2ObjectRender( _SIO2object,
