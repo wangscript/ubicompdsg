@@ -52,7 +52,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #import "TCPServer.h"
 
-NSString * const TCPServerErrorDomain = @"TCPServerErrorDomain";
+NSString * const TCPServerErrorDomain2 = @"TCPServerErrorDomain2";
 
 @interface TCPServer ()
 @property(nonatomic,retain) NSNetService* netService;
@@ -115,7 +115,7 @@ static void TCPServerAcceptCallBack(CFSocketRef socket, CFSocketCallBackType typ
     _ipv4socket = CFSocketCreate(kCFAllocatorDefault, PF_INET, SOCK_STREAM, IPPROTO_TCP, kCFSocketAcceptCallBack, (CFSocketCallBack)&TCPServerAcceptCallBack, &socketCtxt);
 	
     if (NULL == _ipv4socket) {
-        if (error) *error = [[NSError alloc] initWithDomain:TCPServerErrorDomain code:kTCPServerNoSocketsAvailable userInfo:nil];
+        if (error) *error = [[NSError alloc] initWithDomain:TCPServerErrorDomain2 code:kTCPServerNoSocketsAvailable userInfo:nil];
         if (_ipv4socket) CFRelease(_ipv4socket);
         _ipv4socket = NULL;
         return NO;
@@ -135,7 +135,7 @@ static void TCPServerAcceptCallBack(CFSocketRef socket, CFSocketCallBackType typ
     NSData *address4 = [NSData dataWithBytes:&addr4 length:sizeof(addr4)];
 	
     if (kCFSocketSuccess != CFSocketSetAddress(_ipv4socket, (CFDataRef)address4)) {
-        if (error) *error = [[NSError alloc] initWithDomain:TCPServerErrorDomain code:kTCPServerCouldNotBindToIPv4Address userInfo:nil];
+        if (error) *error = [[NSError alloc] initWithDomain:TCPServerErrorDomain2 code:kTCPServerCouldNotBindToIPv4Address userInfo:nil];
         if (_ipv4socket) CFRelease(_ipv4socket);
         _ipv4socket = NULL;
         return NO;
