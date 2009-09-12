@@ -353,8 +353,8 @@ void templateRender( void ) {
 	glLoadIdentity();
 	glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT );
 	
-	SIO2camera *_SIO2camera = ( SIO2camera * )sio2ResourceGet( sio2->_SIO2resource, SIO2_CAMERA,"camera/Camera" );
-
+	SIO2camera* _SIO2camera = ( SIO2camera * )sio2ResourceGet( sio2->_SIO2resource, SIO2_CAMERA, "camera/Camera" );
+	SIO2object* fire        = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/fire"   );
 	
 	if( !_SIO2camera ){ return; }
 	
@@ -390,7 +390,6 @@ void templateRender( void ) {
 				tap_select = 0;
 				
 				glClear( GL_COLOR_BUFFER_BIT ); // Clear the color buffer
-				sio2MaterialReset();            // Reset the material states
 				
 				double cameraPosition = camera->_SIO2transform->loc->x;
 				
@@ -422,18 +421,23 @@ void templateRender( void ) {
 					if( sio2->_SIO2window->n_touch != 0 ) {
 						if (GRAB_WITH_BACK_TOUCH) {
 							glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT );
+							sio2MaterialReset();            // Reset the material states
+							sio2DisableState( &fire->flags, SIO2_OBJECT_INVISIBLE );
 							selection = sio2ResourceSelect3D( sio2->_SIO2resource,
 													   sio2->_SIO2camera,
 													   sio2->_SIO2window,
 													   selectionPosition);
+							sio2EnableState( &fire->flags, SIO2_OBJECT_INVISIBLE );
 							glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT );
 						}
 						else {
 							glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT );
+							sio2DisableState( &fire->flags, SIO2_OBJECT_INVISIBLE );
 							selection = sio2ResourceSelect3D( sio2->_SIO2resource,
 															 sio2->_SIO2camera,
 															 sio2->_SIO2window,
 															 sio2->_SIO2window->touch[0]);
+							sio2EnableState( &fire->flags, SIO2_OBJECT_INVISIBLE );
 							glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT );
 						}
 					}
@@ -525,10 +529,12 @@ void templateRender( void ) {
 						if (GRAB_WITH_BACK_TOUCH) {
 							glClear( GL_COLOR_BUFFER_BIT ); // Clear the color buffer
 							sio2MaterialReset();            // Reset the material states
+							sio2DisableState( &fire->flags, SIO2_OBJECT_INVISIBLE );
 							selection = sio2ResourceSelect3D( sio2->_SIO2resource,
 															 sio2->_SIO2camera,
 															 sio2->_SIO2window,
 															 backSelectPosition );
+							sio2EnableState( &fire->flags, SIO2_OBJECT_INVISIBLE );
 						}
 						
 						// 重疊處理
@@ -593,10 +599,12 @@ void templateRender( void ) {
 							
 							glClear( GL_COLOR_BUFFER_BIT ); // Clear the color buffer
 							sio2MaterialReset();            // Reset the material states
+							sio2DisableState( &fire->flags, SIO2_OBJECT_INVISIBLE );
 							selection = sio2ResourceSelect3D( sio2->_SIO2resource,
 													   sio2->_SIO2camera,
 													   sio2->_SIO2window,
 													   frontSelectPosition );
+							sio2EnableState( &fire->flags, SIO2_OBJECT_INVISIBLE );
 							glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT );
 						}
 					}
@@ -910,11 +918,12 @@ void templateLoading( void ) {
 	excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneYZ" ));
 	excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneXZ" ));
 	
-	theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Cube2") ] );
-	theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Cube") ]);
-	theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Cube3") ] );
-	theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane")] );
-	theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/fire") ]);
+	theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Cube2")  ]);
+	theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Cube")   ]);
+	theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Cube3")  ]);
+	theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane")  ]);
+	theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/fire")   ]);
+	theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Window") ]);
 	
 	
 	/* Initialize the Matrixs for Rotating:
@@ -1014,11 +1023,11 @@ void templateChangeObjectScale( void *_ptr, float det_scale)
 		{
 			
 			//SIO2camera *_SIO2camera = ( SIO2camera * )sio2ResourceGet( sio2->_SIO2resource, SIO2_CAMERA,"camera/Camera");
-			if(debug) printf("_SIO2object->_SIO2transform->scl->x = %f \n", _SIO2object->_SIO2transform->scl->x);
+			if(debug) printf("_SIO2object->_SIO2transform->scl->y = %f \n", _SIO2object->_SIO2transform->scl->y );
 			
-			if(_SIO2object->_SIO2transform->scl->x + det_scale < 3 && _SIO2object->_SIO2transform->scl->x + det_scale > 0.1)
+			if(_SIO2object->_SIO2transform->scl->y + det_scale < 10 && _SIO2object->_SIO2transform->scl->y + det_scale > 0.1)
 			{
-				_SIO2object->_SIO2transform->scl->x += det_scale;
+				//_SIO2object->_SIO2transform->scl->x += det_scale;   // Do not increase the thickness of windows.
 				_SIO2object->_SIO2transform->scl->y += det_scale;
 				_SIO2object->_SIO2transform->scl->z += det_scale;
 			}
