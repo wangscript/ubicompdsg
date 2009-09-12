@@ -106,6 +106,8 @@ NSDate	*taskDate = [NSDate date];
 SIO2object	*selectObject;
 SIO2object	*targetObject;
 SIO2camera	*camera;
+SIO2thread  *videoThread;
+SIO2object  *fire;
 
 vec3		*cameraOrignalPos;
 vec3		*cameraOrignalTar;
@@ -284,6 +286,7 @@ void generateLogFormat() {
 {
 	if (self) {
 		_obj = newObject;
+		_obj->dst = 1.0f;
 		
 		for( int i=0; i<16; i++)
 		{
@@ -319,6 +322,29 @@ void generateLogFormat() {
 
 void templateRender( void ) {
 	
+	
+	// Initialize the thread that will stream the
+	// sound and videos.
+	if( !videoThread )
+	{
+		// Initialize the thread
+		videoThread = sio2ThreadInit();
+		
+		// Create the thread giving it a high priority.
+		// This priority should give good results on iPhone
+		// as well as iPod Touch. A priorty of thread too
+		// high will degrade the overall performance.
+		sio2ThreadCreate( videoThread,
+						  videoPlayThread,
+						  ( void * )NULL,
+						  SIO2_THREAD_PRIORITY_NORMAL );
+		
+		// Start the thread.
+		sio2ThreadPlay( videoThread );
+		
+	}
+	
+	
 	nowTime = [NSDate timeIntervalSinceReferenceDate];
 	
 	fingersOnDevice = (fingersOnFront || fingersOnBack);
@@ -328,6 +354,7 @@ void templateRender( void ) {
 	glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT );
 	
 	SIO2camera *_SIO2camera = ( SIO2camera * )sio2ResourceGet( sio2->_SIO2resource, SIO2_CAMERA,"camera/Camera" );
+
 	
 	if( !_SIO2camera ){ return; }
 	
@@ -355,7 +382,8 @@ void templateRender( void ) {
 			// Update the fire video if one of the lantern is          //add by moje
 			// visible.                                                //add by moje
 			sio2ExecLUA( "video.render_fire();" );                     //add by moje
-			
+
+#pragma mark Selection:
 			if ( tap_select ) {
 				
 				theSelectedGroup.clear();
@@ -393,16 +421,20 @@ void templateRender( void ) {
 					
 					if( sio2->_SIO2window->n_touch != 0 ) {
 						if (GRAB_WITH_BACK_TOUCH) {
+							glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT );
 							selection = sio2ResourceSelect3D( sio2->_SIO2resource,
 													   sio2->_SIO2camera,
 													   sio2->_SIO2window,
 													   selectionPosition);
+							glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT );
 						}
 						else {
+							glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT );
 							selection = sio2ResourceSelect3D( sio2->_SIO2resource,
 															 sio2->_SIO2camera,
 															 sio2->_SIO2window,
 															 sio2->_SIO2window->touch[0]);
+							glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT );
 						}
 					}
 					
@@ -459,8 +491,6 @@ void templateRender( void ) {
 			else if( front_select || back_select)
 			{
 				theSelectedGroup.clear();
-				glClear( GL_COLOR_BUFFER_BIT ); // Clear the color buffer
-				sio2MaterialReset();            // Reset the material states
 				double cameraPosition = camera->_SIO2transform->loc->x;
 				
 				if(back_select)
@@ -480,7 +510,7 @@ void templateRender( void ) {
 					
 					back_select = 0;
 					selection = nil;
-					for( int index = theSortedObjects.size()-1; index>=0; index--)
+					for( int index = theSortedObjects.size()- 1; index>=0; index--) // TODO-02
 					{
 						GLfloat _M [16];
 						for( int k=0; k<16; k++)
@@ -493,6 +523,8 @@ void templateRender( void ) {
 						RenderSolidObject( theSortedObjects[ index ]._obj  );
 						
 						if (GRAB_WITH_BACK_TOUCH) {
+							glClear( GL_COLOR_BUFFER_BIT ); // Clear the color buffer
+							sio2MaterialReset();            // Reset the material states
 							selection = sio2ResourceSelect3D( sio2->_SIO2resource,
 															 sio2->_SIO2camera,
 															 sio2->_SIO2window,
@@ -545,22 +577,27 @@ void templateRender( void ) {
 						
 					}
 				}
-				if(front_select)
+				else if(front_select)
 				{
 					
-					for( int k=0; k<theSortedObjects.size(); k++)
+					for( int k=0; k<theSortedObjects.size(); k++)   // TODO-01
 					{
-						RenderSolidObject( theSortedObjects[k]._obj  );
+						SIO2object* tempObj = theSortedObjects[k]._obj;
+						RenderSolidObject( tempObj );
 					}
 					
 					front_select = 0;
 					selection = nil;
 					if( sio2->_SIO2window->n_touch != 0 ) {
 						if (GRAB_WITH_BACK_TOUCH) {
+							
+							glClear( GL_COLOR_BUFFER_BIT ); // Clear the color buffer
+							sio2MaterialReset();            // Reset the material states
 							selection = sio2ResourceSelect3D( sio2->_SIO2resource,
 													   sio2->_SIO2camera,
 													   sio2->_SIO2window,
 													   frontSelectPosition );
+							glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT );
 						}
 					}
 					
@@ -604,11 +641,17 @@ void templateRender( void ) {
 								   sio2->_SIO2window,
 								   sio2->_SIO2camera,
 								   SIO2_RENDER_SOLID_OBJECT );
+				
+				//Rendering the video object:
+				
+				sio2DisableState( &fire->flags, SIO2_OBJECT_INVISIBLE );
+				sio2ObjectRender( fire,
+								  sio2->_SIO2window,
+								  sio2->_SIO2camera,
+								  1, SIO2_TRANSFORM_MATRIX_BIND );
+				sio2EnableState(  &fire->flags, SIO2_OBJECT_INVISIBLE);
 			}
-			 /*sio2ResourceRender( sio2->_SIO2resource,
-							   sio2->_SIO2window,
-							   sio2->_SIO2camera,
-							   SIO2_RENDER_SOLID_OBJECT );*/
+
 			
 			// 有選到東西的的話做highlight
 			for( int index=0; index < theSelectedGroup.size(); index++)
@@ -646,8 +689,7 @@ void templateRender( void ) {
 							   SIO2_RENDER_TRANSPARENT_OBJECT );
 			
             //fire
-			{	static SIO2object *fire    = sio2ResourceGetObject( sio2->_SIO2resource,
-																   "object/fire" );
+			{
 				sio2DisableState( &fire->flags   , SIO2_OBJECT_INVISIBLE );
 				
 				sio2ObjectRender( fire,
@@ -716,7 +758,7 @@ void templateRender( void ) {
 					sio2FontReset();
 					sio2MaterialReset();
 					
-					sio2WindowDebugTouch( sio2->_SIO2window );
+					//sio2WindowDebugTouch( sio2->_SIO2window );
 				}
 				sio2WindowLeaveLandscape2D( sio2->_SIO2window );
 			}
@@ -859,17 +901,21 @@ void templateLoading( void ) {
 	sio2ResourceGenId( sio2->_SIO2resource );
 	
 	selectObject = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Cube" );
-	targetObject = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Cube1" );
+	targetObject = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Cube1");
+	fire         = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/fire" );
 
 #pragma mark Definition of Vectors:
 	excludeObjects.push_back( targetObject );
-   excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneXY" ));
+    excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneXY" ));
 	excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneYZ" ));
 	excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneXZ" ));
 	
 	theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Cube2") ] );
 	theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Cube") ]);
-
+	theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Cube3") ] );
+	theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane")] );
+	theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/fire") ]);
+	
 	
 	/* Initialize the Matrixs for Rotating:
 	for( int i=0; i<theSortedObjects.size(); i++)
@@ -894,6 +940,8 @@ void templateLoading( void ) {
 void templateShutdown( void ) {
 	
 	sio2ResourceUnloadAll( sio2->_SIO2resource );
+	
+	videoThread = sio2ThreadFree( videoThread );
 	
 	sio2->_SIO2resource = sio2ResourceFree( sio2->_SIO2resource );
 	
@@ -1251,21 +1299,36 @@ void RenderTransparentObject ( SIO2object* obj )
 		free( _SIO2transp );
 		_SIO2transp = NULL;
 	}
+	
+	sio2ObjectReset();
 }
 
 void RenderSolidObject( SIO2object* obj)
 {
-	//SIO2object *_SIO2object = ( SIO2object * )obj;
-	//obj->dst = 1.0f;
-	if( ( obj->type & SIO2_OBJECT_SOLID ) && obj->dst )
-	{
-		sio2ObjectRender( obj,
-						 sio2->_SIO2window,			
-						 sio2->_SIO2camera,
-						 !( SIO2_RENDER_SOLID_OBJECT & SIO2_RENDER_NO_MATERIAL ),
-						 !( SIO2_RENDER_SOLID_OBJECT & SIO2_RENDER_NO_MATRIX ) );
-	}
+	//if( !sio2StringCmp( obj->name, "object/fire" ))
+	//{
+		//obj->dst = 1.0f;
+		
+		//sio2DisableState( &obj->flags   , SIO2_OBJECT_INVISIBLE );
+		//sio2ObjectRender( obj,
+		//				  sio2->_SIO2window,
+		//				  sio2->_SIO2camera,
+		//				  1, SIO2_TRANSFORM_MATRIX_BIND );
+		//sio2EnableState( &obj->flags   , SIO2_OBJECT_INVISIBLE );
+	//}
 	
+	//else
+	{
+		obj->dst = 1.0f;
+		if( ( obj->type & SIO2_OBJECT_SOLID ) && obj->dst )
+		{
+			sio2ObjectRender( obj,
+							 sio2->_SIO2window,			
+							 sio2->_SIO2camera,
+							 !( SIO2_RENDER_SOLID_OBJECT & SIO2_RENDER_NO_MATERIAL ),
+							 !( SIO2_RENDER_SOLID_OBJECT & SIO2_RENDER_NO_MATRIX ) );
+		}
+	}
 	sio2ObjectReset();
 }
 
@@ -1312,5 +1375,20 @@ bool checkForGroup( SIO2object* oFront, SIO2object* oBack )
 	if( theDistance < theDimantion )	return true;
 	else							return false;
 }
+
+#pragma mark Video Thread Functions:
+void videoPlayThread( void *)
+{
+	/*
+	 Get the video handle and keep them
+	 as static variables.
+	 */
+	static SIO2video* fire_vid = ( SIO2video* ) sio2ResourceGetVideo( sio2->_SIO2resource, "fire" );
+	
+	sio2VideoQueueBuffers( fire_vid );
+	
+
+}
+
 
 

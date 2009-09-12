@@ -97,4 +97,9 @@ void RenderSolidObject( SIO2object* obj);
 
 bool checkForGroup( SIO2object* oFront, SIO2object* oBack );
 
+// Algmented functions for video player:
+void videoPlayThread( void* );
+
+
+
 #endif
