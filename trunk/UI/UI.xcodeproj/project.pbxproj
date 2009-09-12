@@ -15,7 +15,6 @@
 		28FD14FE0DC6FC130079059D /* EAGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 28FD14FD0DC6FC130079059D /* EAGLView.mm */; };
 		28FD15000DC6FC520079059D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD14FF0DC6FC520079059D /* OpenGLES.framework */; };
 		28FD15080DC6FC5B0079059D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD15070DC6FC5B0079059D /* QuartzCore.framework */; };
-		391393B310568C3800EB2227 /* libisimulate.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 391393B210568C3800EB2227 /* libisimulate.a */; };
 		391396B51057901C00EB2227 /* Visual03.sio2 in Resources */ = {isa = PBXBuildFile; fileRef = 391396B41057901C00EB2227 /* Visual03.sio2 */; };
 		88272BED105667DD00E0DF4A /* libsio2_sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88272BEC105667DD00E0DF4A /* libsio2_sim.a */; };
 		88272C001056684500E0DF4A /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88272BFF1056684500E0DF4A /* CoreLocation.framework */; };
@@ -336,7 +335,6 @@
 		28FD15070DC6FC5B0079059D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = main.mm; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* template_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = template_Prefix.pch; sourceTree = "<group>"; };
-		391393B210568C3800EB2227 /* libisimulate.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libisimulate.a; path = ../libisimulate.a; sourceTree = SOURCE_ROOT; };
 		391396B41057901C00EB2227 /* Visual03.sio2 */ = {isa = PBXFileReference; lastKnownFileType = file; name = Visual03.sio2; path = ../data/Visual03.sio2; sourceTree = SOURCE_ROOT; };
 		88272BEC105667DD00E0DF4A /* libsio2_sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsio2_sim.a; path = ../../SIO2_SDK_v1.4/src/sio2/libsio2_sim.a; sourceTree = SOURCE_ROOT; };
 		88272BFF1056684500E0DF4A /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -950,7 +948,6 @@
 				889B3A461030591300204ACA /* CoreGraphics.framework in Frameworks */,
 				88272BED105667DD00E0DF4A /* libsio2_sim.a in Frameworks */,
 				88272C001056684500E0DF4A /* CoreLocation.framework in Frameworks */,
-				391393B310568C3800EB2227 /* libisimulate.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1027,7 +1024,6 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				391393B210568C3800EB2227 /* libisimulate.a */,
 				88272BFF1056684500E0DF4A /* CoreLocation.framework */,
 				88272BEC105667DD00E0DF4A /* libsio2_sim.a */,
 				889B3A451030591300204ACA /* CoreGraphics.framework */,
