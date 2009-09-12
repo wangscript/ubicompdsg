@@ -19,6 +19,7 @@
 		88272BED105667DD00E0DF4A /* libsio2_sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88272BEC105667DD00E0DF4A /* libsio2_sim.a */; };
 		88272C001056684500E0DF4A /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88272BFF1056684500E0DF4A /* CoreLocation.framework */; };
 		88561653104FE3BF0009CC1C /* Visual02.sio2 in Resources */ = {isa = PBXBuildFile; fileRef = 88561652104FE3BF0009CC1C /* Visual02.sio2 */; };
+		885D73D0105B9D7800B85522 /* UIdemo.sio2 in Resources */ = {isa = PBXBuildFile; fileRef = 885D73CF105B9D7800B85522 /* UIdemo.sio2 */; };
 		889B398A103055BA00204ACA /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 889B3985103055BA00204ACA /* BrowserViewController.m */; };
 		889B398B103055BA00204ACA /* Picker.m in Sources */ = {isa = PBXBuildFile; fileRef = 889B3987103055BA00204ACA /* Picker.m */; };
 		889B398C103055BA00204ACA /* TCPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 889B3989103055BA00204ACA /* TCPServer.m */; };
@@ -339,6 +340,7 @@
 		88272BEC105667DD00E0DF4A /* libsio2_sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsio2_sim.a; path = ../../SIO2_SDK_v1.4/src/sio2/libsio2_sim.a; sourceTree = SOURCE_ROOT; };
 		88272BFF1056684500E0DF4A /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		88561652104FE3BF0009CC1C /* Visual02.sio2 */ = {isa = PBXFileReference; lastKnownFileType = file; name = Visual02.sio2; path = ../data/Visual02.sio2; sourceTree = SOURCE_ROOT; };
+		885D73CF105B9D7800B85522 /* UIdemo.sio2 */ = {isa = PBXFileReference; lastKnownFileType = file; name = UIdemo.sio2; path = ../data/UIdemo.sio2; sourceTree = SOURCE_ROOT; };
 		889B3984103055BA00204ACA /* BrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserViewController.h; sourceTree = "<group>"; };
 		889B3985103055BA00204ACA /* BrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserViewController.m; sourceTree = "<group>"; };
 		889B3986103055BA00204ACA /* Picker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Picker.h; sourceTree = "<group>"; };
@@ -1009,6 +1011,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				885D73CF105B9D7800B85522 /* UIdemo.sio2 */,
 				88561652104FE3BF0009CC1C /* Visual02.sio2 */,
 				88FD063D1036BF7B00AF93D2 /* default16x16.tga */,
 				E0E313F40E5EA78B00F6D25F /* Icon.png */,
@@ -1730,6 +1733,7 @@
 				88FD063E1036BF7B00AF93D2 /* default16x16.tga in Resources */,
 				88561653104FE3BF0009CC1C /* Visual02.sio2 in Resources */,
 				391396B51057901C00EB2227 /* Visual03.sio2 in Resources */,
+				885D73D0105B9D7800B85522 /* UIdemo.sio2 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
