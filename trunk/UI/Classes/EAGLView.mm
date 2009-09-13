@@ -790,8 +790,11 @@ BOOL isDebug = YES;
 			tempPtr = [self.frontLoc objectAtIndex:i];
 			if(tempPtr._touch == touch){
 				
-				if (strtState && strtPairIdx[0] == num && !isStrtHalt ) [self strtHaltWithIndex:0];
-				if (strtState && strtPairIdx[2] == num && !isStrtHalt ) [self strtHaltWithIndex:2];				
+				if ( dragState && dragPairIdx[0] == i ) [ self dragEnded];
+				if ( flipState && flipPairIdx[0] == i ) [ self flipEnded];
+				
+				if (strtState && strtPairIdx[0] == i && !isStrtHalt ) [self strtHaltWithIndex:0];
+				if (strtState && strtPairIdx[2] == i && !isStrtHalt ) [self strtHaltWithIndex:2];				
 				if (strtState && strtPairIdx[0] == i && isStrtHalt ) [self strtEnded];
 				
 				if (newestDragFrontIdx[0] == i) newestDragFrontIdx[0] = 5;
@@ -1125,7 +1128,7 @@ BOOL isDebug = YES;
 				rotateDirection = ROTATE_UP;
 				isRotateEnded    = NO;
 				NSTimer *timer;
-				timer = [NSTimer scheduledTimerWithTimeInterval:0.005/90
+				timer = [NSTimer scheduledTimerWithTimeInterval:0.010/180
 														 target:self
 													   selector:@selector(rotateTheObject:)
 													   userInfo:nil
@@ -1137,7 +1140,7 @@ BOOL isDebug = YES;
 				rotateDirection = ROTATE_DOWN;
 				isRotateEnded	 = NO;
 				NSTimer *timer;
-				timer = [NSTimer scheduledTimerWithTimeInterval:0.005/90
+				timer = [NSTimer scheduledTimerWithTimeInterval:0.010/180
 														 target:self
 													   selector:@selector(rotateTheObject:)
 													   userInfo:nil
@@ -1152,7 +1155,7 @@ BOOL isDebug = YES;
 				rotateDirection = ROTATE_RIGHT;
 				isRotateEnded    = NO;
 				NSTimer *timer;
-				timer = [NSTimer scheduledTimerWithTimeInterval:0.005/90
+				timer = [NSTimer scheduledTimerWithTimeInterval:0.010/180
 														 target:self
 													   selector:@selector(rotateTheObject:)
 													   userInfo:nil
@@ -1165,7 +1168,7 @@ BOOL isDebug = YES;
 				rotateDirection = ROTATE_LEFT;
 				isRotateEnded    = NO;
 				NSTimer *timer;
-				timer = [NSTimer scheduledTimerWithTimeInterval:0.005/90
+				timer = [NSTimer scheduledTimerWithTimeInterval:0.010/180
 														 target:self
 													   selector:@selector(rotateTheObject:)
 													   userInfo:nil
@@ -1308,11 +1311,23 @@ BOOL isDebug = YES;
 - (void) PushBegan {
 	if (!ENABLE_OBJECT_PUSH) return;
 	
+	vec2 avgP;
+	TouchPoint *tp1, *tp2;
+	
 	if (_PushFromFront){
 		if(isDebug) printf("Push (From Front) Began\n");
+		tp1 = [self.frontLoc objectAtIndex: newestDragFrontIdx[0]];
+		tp2 = [self.frontLoc objectAtIndex: newestDragFrontIdx[1]];
+		avgP.x = ( tp1._point.x + tp2._point.x );
+		avgP.y = ( tp1._point.y + tp2._point.y );
+		
 	}
 	else {
 		if(isDebug) printf("Push (From Back) Began\n");	
+		tp1 = [self.backLoc objectAtIndex: newestDragBackIdx[0]];
+		tp2 = [self.backLoc objectAtIndex: newestDragBackIdx[1]];
+		avgP.x = ( tp1._point.x + tp2._point.x );
+		avgP.y = ( tp1._point.y + tp2._point.y );;
 	}
 	_PushState = 1;
 	NSTimer *timer;
@@ -1320,7 +1335,13 @@ BOOL isDebug = YES;
 											 target: self
 										   selector: @selector(PushMoved:)
 										   userInfo: nil
-											repeats: YES ];
+											repeats: NO ];   //UI specialization: no repeat for pushing movement.
+	
+	// Picking the selected object.
+	
+	selectionPosition->x = avgP.x;            //Added by YO: for grab by Back-Side touch!----------------------------------------
+	selectionPosition->y = 480-avgP.y;
+	tap_select = 1; //設定物件被選取
 }
 
 - (void) PushMoved: (id)sender {
@@ -1495,7 +1516,7 @@ static int _degree_counter = 0; // Counter for rotate 90 degree
 	
 	int testtest;
 	
-	if( _degree_counter == 90)
+	if( _degree_counter == 180)
 		testtest = 1;
 	else 
 		testtest = 0;
@@ -1516,7 +1537,7 @@ static int _degree_counter = 0; // Counter for rotate 90 degree
 								 );
 	
 	_degree_counter++;
-	if(_degree_counter==90){
+	if(_degree_counter==180){
 		_degree_counter=0;
 		[sender invalidate];
 		isRotateEnded = YES;
