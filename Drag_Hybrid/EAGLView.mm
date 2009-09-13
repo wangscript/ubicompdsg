@@ -1033,6 +1033,13 @@ BOOL isDebug = YES;
 }
 
 - (void) dragMoved:(CGPoint)point {
+	
+	//add for anytime selection
+	if(stateStartFlag == YES)
+		[self dragEnded];
+	//
+	
+	
 	if (!ENABLE_OBJECT_MOVE) return;
 	if (isDebug) printf("Drag Moved\n");
 	if(!flipState){

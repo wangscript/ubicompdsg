@@ -782,6 +782,9 @@ BOOL isDebug = YES;
 				if( newestSingleIdx    == i) newestSingleIdx    = 5;
 				if( newestDoubleIdx[0] == i) newestDoubleIdx[0] = 5;
 				if( newestDoubleIdx[1] == i) newestDoubleIdx[1] = 5;
+				//090913
+				if( dragState && dragPairIdx[0] == i ) [ self dragEnded];
+				if( flipState && flipPairIdx[0] == i ) [ self flipEnded];
 					
 				 isUsed[i]=FALSE;
 				//return i;
@@ -1044,7 +1047,7 @@ BOOL isDebug = YES;
 - (void) dragEnded {
 	if (isDebug) printf("Drag End\n");
 	dragState = NO;
-	newestDragBackIdx[0] = 5;
+	//newestDragBackIdx[0] = 5;
 	newestDragBackIdx[1] = 5;
 	newestDragFrontIdx[0] = 5;
 	newestDragFrontIdx[1] = 5;
