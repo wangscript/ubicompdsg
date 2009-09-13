@@ -39,7 +39,7 @@ vec2* selectionPosition;
 vec2* frontSelectPosition;
 vec2* backSelectPosition;
 
-bool debug = FALSE;
+bool debug = NO;
 
 //-------Edit for LogButton-----------------
 bool  isReadyToLog		= NO;
@@ -442,13 +442,13 @@ void templateRender( void ) {
 						}
 					}
 					
-					// 重疊處理
+					/* 重疊處理
 					if (selection == targetObject) {
 						if (pointInBox(selectObject->_SIO2transform->loc, targetObject->_SIO2transform->loc, targetObject->_SIO2transform->scl->x))
 							selection = selectObject;
 						else if (selectObject->_SIO2transform->loc->x + selectObject->_SIO2transform->scl->x < targetObject->_SIO2transform->loc->x - targetObject->_SIO2transform->scl->x)
 							selection = selectObject;
-					}
+					}*/
 					
 					// Selection 例外處理：不能select的物件
 					for (int a=0 ; a<excludeObjects.size() ; a++ ){
@@ -537,13 +537,13 @@ void templateRender( void ) {
 							sio2EnableState( &fire->flags, SIO2_OBJECT_INVISIBLE );
 						}
 						
-						// 重疊處理
+						/* 重疊處理
 						if (selection == targetObject) {
 							if (pointInBox(selectObject->_SIO2transform->loc, targetObject->_SIO2transform->loc, targetObject->_SIO2transform->scl->x))
 								selection = selectObject;
 							else if (selectObject->_SIO2transform->loc->x + selectObject->_SIO2transform->scl->x < targetObject->_SIO2transform->loc->x - targetObject->_SIO2transform->scl->x)
 								selection = selectObject;
-						}
+						}*/
 						
 						// Selection 例外處理：不能select的物件
 						for (int a=0 ; a<excludeObjects.size() ; a++ ){
@@ -609,13 +609,13 @@ void templateRender( void ) {
 						}
 					}
 					
-					// 重疊處理
+					/* 重疊處理
 					if (selection == targetObject) {
 						if (pointInBox(selectObject->_SIO2transform->loc, targetObject->_SIO2transform->loc, targetObject->_SIO2transform->scl->x))
 							selection = selectObject;
 						else if (selectObject->_SIO2transform->loc->x + selectObject->_SIO2transform->scl->x < targetObject->_SIO2transform->loc->x - targetObject->_SIO2transform->scl->x)
 							selection = selectObject;
-					}
+					}*/
 					
 					// Selection 例外處理：不能select的物件
 					for (int a=0 ; a<excludeObjects.size() ; a++ ){
@@ -908,22 +908,22 @@ void templateLoading( void ) {
 	
 	sio2ResourceGenId( sio2->_SIO2resource );
 	
-	selectObject = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Cube" );
-	targetObject = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Cube1");
-	//fire         = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/fire" );
+	//selectObject = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Cube" );
+	//targetObject = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Cube1");
+	fire         = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/fire" );
 
 #pragma mark Definition of Vectors:
 	excludeObjects.push_back( targetObject );
-    excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneXY" ));
-	excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneYZ" ));
-	excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneXZ" ));
+    //excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneXY" ));
+	//excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneYZ" ));
+	//excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneXZ" ));
 	
-	theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Cube")   ]);
+	//theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Cube")   ]);
 	//theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane")  ]);
 	//theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/fire")   ]);
-	theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Window") ]);
-	//theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Window2") ]);
-	
+	theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Window")  ]);
+	theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Window2") ]);
+	theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Window3") ]);
 	
 	/* Initialize the Matrixs for Rotating:
 	for( int i=0; i<theSortedObjects.size(); i++)
@@ -1028,7 +1028,7 @@ void templateChangeObjectScale( void *_ptr, float det_scale)
 			{
 				//_SIO2object->_SIO2transform->scl->x += det_scale;   // Do not increase the thickness of windows.
 				_SIO2object->_SIO2transform->scl->y += det_scale;
-				_SIO2object->_SIO2transform->scl->z += det_scale;
+				_SIO2object->_SIO2transform->scl->z += det_scale * _SIO2object->_SIO2transform->scl->z / _SIO2object->_SIO2transform->scl->y;
 			}
 			
 			//sio2TransformBindMatrix( _SIO2object->_SIO2transform  );
@@ -1152,7 +1152,7 @@ void templateMoveObject( void *_ptr ,float _detX, float _detY, float _detZ ) {
 				}
 			}
 			
-			if(fabs(_detZ) > 0.01)
+			if(fabs(_detZ) > 0.01)  //Implimentation for Gesture: PUSH
 			{
 				if(debug) printf("\nDETZ!!!");
 				if(_SIO2object->_SIO2transform->loc->x + _detZ * k < 100 && _SIO2object->_SIO2transform->loc->x + _detZ * k > _SIO2object->_SIO2transform->scl->x)
