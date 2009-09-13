@@ -9,8 +9,8 @@
 using namespace std;
 
 #define SIO2_FILE_NAME			"Task_Drag.sio2"
-#define TASK_TOTAL_ROUND		48
-#define TASK_PER_ROUND			8
+#define TASK_TOTAL_ROUND		40
+#define TASK_PER_ROUND			5
 #define OBJ_IN_SAME_POSISION	0.75
 
 #define pi						3.1415926
@@ -162,18 +162,20 @@ void generatePosition() {
 	
 	
 	switch( idx ){
-		case 1: 	y1 = -6; z1 =  3; y2 =  6; z2 =  3; y3 = 0; z3 = 3; rot_x = 180; break;	// ->
-		case 2: 	y1 = -6; z1 = -3; y2 =  6; z2 = -3; y3 = 0; z3 = -3; rot_x = 180; break;	// ->
+		case 1: 	y1 = -3; z1 =  0; y2 =  3; z2 =  0; y3 = 0; z3 = 0; rot_x = 180; break;	// ->
+		case 2: 	y1 = 3; z1 = 0; y2 =  -3; z2 = 0; y3 = 0; z3 = 0; rot_x = 0; break;	// ->
 		//case 3: 	y1 =  6; z1 =  3; y2 = -6; z2 =  3; y3 = 0; z3 = 3; rot_x = 0; break;	// <-
 		//case 4: 	y1 =  6; z1 = -3; y2 = -6; z2 = -3; y3 = 0; z3 = -3; rot_x = 0; break;	// <-
 		//case 3: 	y1 = -6; z1 =  3; y2 = -6; z2 = -3; y3 = -6; z3 = 0; rot_x = 270; break;	// V
-		case 3: 	y1 =  6; z1 =  3; y2 =  6; z2 = -3; y3 = 6; z3 = 0; rot_x = 270; break;	// V
-		case 4: 	y1 = -6; z1 = -3; y2 = -6; z2 =  3; y3 = -6; z3 = 0; rot_x = 90; break;	// ^
+		case 3: 	y1 =  0; z1 =  3; y2 =  0; z2 = -3; y3 = 0; z3 = 0; rot_x = 270; break;	// V
+		case 4: 	y1 = 0; z1 = -3; y2 = 0; z2 =  3; y3 = 0; z3 = 0; rot_x = 90; break;	// ^
 		//case 8: 	y1 =  6; z1 = -3; y2 =  6; z2 =  3; y3 = 6; z3 = 0; rot_x = 90; break;	// ^
 		//case 5: 	y1 = -6; z1 =  3; y2 =  6; z2 = -3; y3 = 0; z3 = 0; rot_x = 210; break;	// >V
-		case 5:	y1 =  6; z1 = -3; y2 = -6; z2 =  3; y3 = 0; z3 = 0; rot_x = 30; break;	// <^
+		case 5:	y1 = -2.122; z1 = 2.122; y2 = 2.122; z2 =-2.122 ; y3 = 0; z3 = 0; rot_x = 225; break;	// 左上到右下
 		//case 7:	y1 =  6; z1 =  3; y2 = -6; z2 = -3; y3 = 0; z3 = 0; rot_x = 330; break;	// <V
-		case 6:	y1 = -6; z1 = -3; y2 =  6; z2 =  3; y3 = 0; z3 = 0; rot_x = 150; break;	// >^
+		case 6:	y1 = 2.122; z1 = -2.122; y2 =  -2.122; z2 =  2.122; y3 = 0; z3 = 0; rot_x = 45; break;	// 右下到左上
+		case 7:	y1 = -2.122; z1 = -2.122; y2 =  2.122; z2 =  2.122; y3 = 0; z3 = 0; rot_x = 135; break;	// 左下到右上
+		case 8:	y1 = 2.122; z1 = 2.122; y2 = -2.122; z2 =  -2.122; y3 = 0; z3 = 0; rot_x = 315; break;	// 右上到左下
 		default: break;
 	}
 	
@@ -332,9 +334,14 @@ void templateRender( void ) {
 				//------------------------------------------------------------------------------
 				break;
 			default:
+				selection = objectSelect;
 				if (objectsAreNear( objectSelect, objectEnd )){
 					stateStartFlag = TRUE;
-					AudioServicesPlaySystemSound(soundID);
+					if( taskState % TASK_PER_ROUND == 0)
+						AudioServicesPlaySystemSound(soundID3);
+					else
+						AudioServicesPlaySystemSound(soundID);
+					
 					taskState ++;
 				}
 				break; 
@@ -760,6 +767,16 @@ void templateLoading( void ) {
 	objectSelect = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Moveable" );
 	objectEnd    = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/End" );
 	objectArrow  = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Arrow" );
+	
+	//
+	objectSelect->_SIO2transform->scl->x = 0.75 ;
+	objectSelect->_SIO2transform->scl->y = 0.75 ;
+	objectEnd->_SIO2transform->scl->x = 0.75 ;
+	objectEnd->_SIO2transform->scl->y = 0.75 ;
+	
+	
+	
+	
 	
 	excludeObjects.push_back( objectEnd );
 	excludeObjects.push_back( objectArrow );
