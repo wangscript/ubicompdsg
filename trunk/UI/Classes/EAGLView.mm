@@ -1311,63 +1311,59 @@ BOOL isDebug = YES;
 - (void) PushBegan {
 	if (!ENABLE_OBJECT_PUSH) return;
 	
-	vec2 avgP;
-	TouchPoint *tp1, *tp2;
+	//vec2 avgP;
+	//TouchPoint *tp1, *tp2;
 	
 	if (_PushFromFront){
 		if(isDebug) printf("Push (From Front) Began\n");
-		tp1 = [self.frontLoc objectAtIndex: newestDragFrontIdx[0]];
-		tp2 = [self.frontLoc objectAtIndex: newestDragFrontIdx[1]];
-		avgP.x = ( tp1._point.x + tp2._point.x );
-		avgP.y = ( tp1._point.y + tp2._point.y );
+		//tp1 = [self.frontLoc objectAtIndex: newestDragFrontIdx[0]];
+		//tp2 = [self.frontLoc objectAtIndex: newestDragFrontIdx[1]];
+		//avgP.x = ( tp1._point.x + tp2._point.x );
+		//avgP.y = ( tp1._point.y + tp2._point.y );
 		
 	}
 	else {
 		if(isDebug) printf("Push (From Back) Began\n");	
-		tp1 = [self.backLoc objectAtIndex: newestDragBackIdx[0]];
-		tp2 = [self.backLoc objectAtIndex: newestDragBackIdx[1]];
-		avgP.x = ( tp1._point.x + tp2._point.x );
-		avgP.y = ( tp1._point.y + tp2._point.y );;
+		//tp1 = [self.backLoc objectAtIndex: newestDragBackIdx[0]];
+		//tp2 = [self.backLoc objectAtIndex: newestDragBackIdx[1]];
+		//avgP.x = ( tp1._point.x + tp2._point.x );
+		//avgP.y = ( tp1._point.y + tp2._point.y );;
 	}
 	_PushState = 1;
 	NSTimer *timer;
 	timer = [NSTimer scheduledTimerWithTimeInterval: PUSH_PERIOD_TIME 
-											 target: self
-										   selector: @selector(PushMoved:)
-										   userInfo: nil
-											repeats: NO ];   //UI specialization: no repeat for pushing movement.
+									  target: self
+									selector: @selector(PushMoved:)
+								     userInfo: nil
+									repeats: NO ];   //UI specialization: no repeat for pushing movement.
 	
 	// Picking the selected object.
 	
-	selectionPosition->x = avgP.x;            //Added by YO: for grab by Back-Side touch!----------------------------------------
-	selectionPosition->y = 480-avgP.y;
-	tap_select = 1; //設定物件被選取
+	//selectionPosition->x = avgP.x;            //Added by YO: for grab by Back-Side touch!----------------------------------------
+	//selectionPosition->y = 480-avgP.y;
+	//tap_select = 1; //設定物件被選取
+
 }
 
 - (void) PushMoved: (id)sender {
 	if(_PushState > 0) {
-		if ([self TouchesOnScreen: _PushFromFront] < 2){
+		if ( [self TouchesOnScreen: _PushFromFront] < 2){
 			[self PushEnded: (id)sender];
+			return;
 		}
 		else {
 			_PushState = [self TouchesOnScreen: _PushFromFront];
 		}
+		
+		// Debuging message:
 		if(isDebug) printf("Push (From %s) Moved, Level: %d\n", (_PushFromFront ? "Front" : "Back"), _PushState);
 
 		double scale;
 		if(!_PushFromFront) {
-			switch(_PushState) {
-			case 2:	scale = 5; break;
-			case 3: scale = 7; break;
-			case 4:	scale = 9; break;
-			}
+
 		}
 		else {
-			switch(_PushState) {
-				case 2: scale = -5; break;
-				case 3: scale = -7; break;
-				case 4:	scale = -9;	break;
-			}		
+	
 		}
 		
 		mysio2ResourceDispatchEvents( sio2->_SIO2resource,
@@ -1379,7 +1375,7 @@ BOOL isDebug = YES;
 									  0,			//dirState
 									  0,			//delta x
 									  0,            //delta y
-									  50*scale		//delta z
+									  scale		//delta z
 									 );
 	
 	}
@@ -1403,6 +1399,15 @@ BOOL isDebug = YES;
 	}
 	return count;
 }
+
+- (void) PopOutFirstStage: (id)sender {}
+- (void) PopOutSecondStage: (id)sender {};
+
+- (void) PushBackFirstStage: (id)sender {};
+- (void) PushBackSecondStage: (id)sender {};
+
+
+
 
 #pragma mark Camera Move
 // ================ Functions for CAMERA MOVE =================
