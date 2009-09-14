@@ -1189,6 +1189,15 @@ BOOL isDebug = YES;
 }
 
 - (void) strtMoved:(CGPoint)point1 andPoint:(CGPoint)point2 {
+	
+	
+	///	
+	if( stateStartFlag == true)
+		[self strtEnded];
+	
+	///
+	
+	
 	if(strtExpand) 
 		if(isDebug) printf("Stretch Expand\n");
 	else
