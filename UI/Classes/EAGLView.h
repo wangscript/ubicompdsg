@@ -154,6 +154,7 @@ Note that setting the view non-opaque will only work if the EAGL surface has an 
 - (void) PushBegan;
 - (void) PushMoved: (id)sender;
 - (void) PushEnded: (id)sender;
+- (void) PushEnded;
 - (int) TouchesOnScreen: (BOOL) isFront;
 - (void) PopOutFirstStage: (id)sender;
 - (void) PopOutSecondStage: (id)sender;
