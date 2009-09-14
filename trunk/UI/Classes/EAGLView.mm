@@ -1363,7 +1363,6 @@ BOOL isDebug = YES;
 			theSelectedGroup.push_back( theSortedObjects[i]._obj );
 		}
 
-		double scale;
 		if(_PushFromFront )			
 		{	
 			NSTimer *frontPushTimer;
@@ -1431,7 +1430,7 @@ static int thePushCount = 0;
 							0,			//dirState
 							0,			//delta x
 							0,               //delta y
-							0.5             //delta z
+							0.05             //delta z
 							);
 	
 	thePushCount++;
@@ -1440,14 +1439,62 @@ static int thePushCount = 0;
 	{
 		thePushCount = 0;
 		[ sender invalidate ];
+		theSelectedGroup.clear();
 		
-		theObject* tempObject = theSortedObjects
+		theSelectedGroup.push_back( theSortedObjects[0]._obj );
 		
-		NSTimer popOutTimer;
+		mysio2ResourceDispatchEvents( sio2->_SIO2resource,
+									 sio2->_SIO2window,
+									 my_WINDOW_MOVE_OBJ,
+									 SIO2_WINDOW_TAP_DOWN,
+									 0,			//scale
+									 0,			//direction, 1: horizontal ; 2: vertical
+									 0,			//dirState
+									 0,			//delta x
+									 0,               //delta y
+									 -10.5             //delta z
+									 );
+		
+		for( int i=0; i<theSortedObjects.size(); i++)
+		{
+			theSelectedGroup.push_back( theSortedObjects[i]._obj );
+		}
+		sortingTheObjects();
+		
+		NSTimer* popOutTimer;
+		popOutTimer = [ NSTimer scheduledTimerWithTimeInterval: 0.05/35 
+														target: self
+													  selector: @selector(PopOutSecondStage:)
+													  userInfo: nil
+													   repeats: YES ];	
+		
 	}
 	
   }
-- (void) PopOutSecondStage: (id)sender {};
+- (void) PopOutSecondStage: (id)sender {
+	
+	mysio2ResourceDispatchEvents( sio2->_SIO2resource,
+								 sio2->_SIO2window,
+								 my_WINDOW_MOVE_OBJ,
+								 SIO2_WINDOW_TAP_DOWN,
+								 0,			//scale
+								 0,			//direction, 1: horizontal ; 2: vertical
+								 0,			//dirState
+								 0,			//delta x
+								 0,               //delta y
+								 0.05             //delta z
+								 );
+	thePushCount++;
+	if( thePushCount == 34)
+	{
+		thePushCount = 0;
+		[ sender invalidate];
+		[ self PushEnded];
+		theSelectedGroup.clear();
+		
+	}
+
+};
 
 - (void) PushBackFirstStage: (id)sender {
 	
@@ -1460,7 +1507,7 @@ static int thePushCount = 0;
 								 0,			//dirState
 								 0,			//delta x
 								 0,              //delta y
-								 -0.5            //delta z
+								 -0.05            //delta z
 								 );
 	
 	thePushCount++;
@@ -1468,12 +1515,87 @@ static int thePushCount = 0;
 	{
 		thePushCount = 0;
 		[ sender invalidate ];
-		[ self PushEnded ];
+		theSelectedGroup.clear();
+		
+		theSelectedGroup.push_back( theSortedObjects[ theSortedObjects.size() - 1 ]._obj );
+		
+		mysio2ResourceDispatchEvents( sio2->_SIO2resource,
+									  sio2->_SIO2window,
+									  my_WINDOW_MOVE_OBJ,
+									  SIO2_WINDOW_TAP_DOWN,
+									  0,			//scale
+									  0,			//direction, 1: horizontal ; 2: vertical
+									  0,			//dirState
+									  0,			//delta x
+									  0,               //delta y
+									  10.5             //delta z
+									 );
+		
+		theSelectedGroup.clear();
+		for( int i=0; i<theSortedObjects.size(); i++)
+		{
+			theSelectedGroup.push_back( theSortedObjects[i]._obj );
+		}
+		sortingTheObjects();
+		NSTimer* pushBackTimer;
+		pushBackTimer = [ NSTimer scheduledTimerWithTimeInterval: 0.05/35 
+													      target: self
+														selector: @selector(PushBackSecondStage:)
+													    userInfo: nil
+													     repeats: YES ];	
+		
 	}
 };
-- (void) PushBackSecondStage: (id)sender {};
+- (void) PushBackSecondStage: (id)sender {
+	
+	mysio2ResourceDispatchEvents( sio2->_SIO2resource,
+								 sio2->_SIO2window,
+								 my_WINDOW_MOVE_OBJ,
+								 SIO2_WINDOW_TAP_DOWN,
+								 0,			//scale
+								 0,			//direction, 1: horizontal ; 2: vertical
+								 0,			//dirState
+								 0,			//delta x
+								 0,               //delta y
+								 -0.05             //delta z
+								 );
+	
+	thePushCount++;
+	if( thePushCount == 34)
+	{
+		thePushCount = 0;
+		[ sender invalidate];
+		[ self PushEnded];
+		theSelectedGroup.clear();
+	} 
+};
 
-
+- (void) sortingTheObjects
+{
+	theObject* tempObject;
+	SIO2camera* theCamera = ( SIO2camera* )sio2ResourceGet( sio2->_SIO2resource, SIO2_CAMERA,"camera/Camera" );
+	double tempDistance;
+	double d;
+	
+	for( int i=0; i< theSortedObjects.size(); i++)
+	{
+		tempObject   = theSortedObjects[ i ] ;
+		tempDistance = fabs( theSortedObjects[ i ]._obj ->_SIO2transform->loc->x - theCamera->_SIO2transform->loc->x ); 
+		
+		for( int j = i+1; j< theSortedObjects.size(); j++)
+		{
+			d = fabs( theSortedObjects[ j ]._obj ->_SIO2transform->loc->x - theCamera->_SIO2transform->loc->x );
+			if( d < tempDistance)
+			{
+				tempDistance = d;
+				theSortedObjects[ i ]  = theSortedObjects[ j ] ;
+				theSortedObjects[ j ]  = tempObject;
+				tempObject = theSortedObjects[ i ] ; 
+			}
+		}
+	}
+	
+}
 
 
 #pragma mark Camera Move

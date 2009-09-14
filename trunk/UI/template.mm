@@ -1343,17 +1343,18 @@ void RenderSolidObject( SIO2object* obj)
 void sortingTheObjects() 
 {
 	theObject* tempObject;
+	SIO2camera* theCamera = ( SIO2camera* )sio2ResourceGet( sio2->_SIO2resource, SIO2_CAMERA,"camera/Camera" );
 	double tempDistance;
 	double d;
 	
 	for( int i=0; i< theSortedObjects.size(); i++)
 	{
 		tempObject   = theSortedObjects[ i ] ;
-		tempDistance = fabs( theSortedObjects[ i ]._obj ->_SIO2transform->loc->x - camera->_SIO2transform->loc->x ); 
+		tempDistance = fabs( theSortedObjects[ i ]._obj ->_SIO2transform->loc->x - theCamera->_SIO2transform->loc->x ); 
 		
 		for( int j = i+1; j< theSortedObjects.size(); j++)
 		{
-			d = fabs( theSortedObjects[ j ]._obj ->_SIO2transform->loc->x - camera->_SIO2transform->loc->x );
+			d = fabs( theSortedObjects[ j ]._obj ->_SIO2transform->loc->x - theCamera->_SIO2transform->loc->x );
 			if( d < tempDistance)
 			{
 				tempDistance = d;
