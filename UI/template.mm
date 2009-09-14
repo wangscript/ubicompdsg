@@ -1155,9 +1155,9 @@ void templateMoveObject( void *_ptr ,float _detX, float _detY, float _detZ ) {
 			if(fabs(_detZ) > 0.01)  //Implimentation for Gesture: PUSH
 			{
 				if(debug) printf("\nDETZ!!!");
-				if(_SIO2object->_SIO2transform->loc->x + _detZ * k < 100 && _SIO2object->_SIO2transform->loc->x + _detZ * k > _SIO2object->_SIO2transform->scl->x)
+				// if(_SIO2object->_SIO2transform->loc->x + _detZ  < 100 && _SIO2object->_SIO2transform->loc->x + _detZ  > _SIO2object->_SIO2transform->scl->x)
 				{
-					_SIO2object->_SIO2transform->loc->x += _detZ * k; 
+					_SIO2object->_SIO2transform->loc->x += _detZ ; 
 				}
 				if(debug) printf("X: %f\n",_SIO2object->_SIO2transform->loc->x);
 			}

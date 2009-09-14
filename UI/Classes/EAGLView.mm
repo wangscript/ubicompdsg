@@ -68,6 +68,7 @@ extern vec2				*backSelectPosition;
 
 
 extern vector< SIO2object* > theSelectedGroup; 
+extern vector< theObject* > theSortedObjects;
 
 @implementation TouchPoint
 
@@ -1355,6 +1356,12 @@ BOOL isDebug = YES;
 			_PushState = [self TouchesOnScreen: _PushFromFront];
 		}
 		
+		theSelectedGroup.clear();
+		
+		for( int i=0; i<theSortedObjects.size(); i++)
+		{
+			theSelectedGroup.push_back( theSortedObjects[i]._obj );
+		}
 
 		double scale;
 		if(_PushFromFront )			
@@ -1362,7 +1369,7 @@ BOOL isDebug = YES;
 			NSTimer *frontPushTimer;
 			frontPushTimer = [ NSTimer scheduledTimerWithTimeInterval: 0.05/35 
 													  target: self
-													selector: @selector(PopOutFirstStage:)
+													selector: @selector(PushBackFirstStage:)
 													userInfo: nil
 													 repeats: YES ];
 		}
@@ -1371,22 +1378,11 @@ BOOL isDebug = YES;
 			NSTimer *backPushTimer;
 			backPushTimer = [ NSTimer scheduledTimerWithTimeInterval: 0.05/35 
 													   target: self
-													 selector: @selector(PushBackFirstStage:)
+													 selector: @selector(PopOutFirstStage:)
 													userInfo: nil
 													 repeats: YES ];			
 		}
 		
-		mysio2ResourceDispatchEvents( sio2->_SIO2resource,
-							      sio2->_SIO2window,
-							      my_WINDOW_MOVE_OBJ,
-							      SIO2_WINDOW_TAP_DOWN,
-								0,			//scale
-								0,			//direction, 1: horizontal ; 2: vertical
-								0,			//dirState
-								0,			//delta x
-								0,                //delta y
-								scale		      //delta z
-								);
 	
 	}
 }
@@ -1398,6 +1394,8 @@ BOOL isDebug = YES;
 	
 	if(selection!= nil)
 		[gestureSequence addObject: INTOBJ(GESTURE_BOTH_PUSH)];
+	
+	theSelectedGroup.clear();
 }
 
 - (void) PushEnded  {
@@ -1407,6 +1405,8 @@ BOOL isDebug = YES;
 	
 	if(selection!= nil)
 		[gestureSequence addObject: INTOBJ(GESTURE_BOTH_PUSH)];
+	
+	theSelectedGroup.clear();
 }
 
 - (int) TouchesOnScreen: (BOOL) isFront {
@@ -1440,7 +1440,10 @@ static int thePushCount = 0;
 	{
 		thePushCount = 0;
 		[ sender invalidate ];
-		[ self PushEnded ];
+		
+		theObject* tempObject = theSortedObjects
+		
+		NSTimer popOutTimer;
 	}
 	
   }
