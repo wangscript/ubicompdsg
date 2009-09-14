@@ -1355,34 +1355,53 @@ BOOL isDebug = YES;
 			_PushState = [self TouchesOnScreen: _PushFromFront];
 		}
 		
-		// Debuging message:
-		if(isDebug) printf("Push (From %s) Moved, Level: %d\n", (_PushFromFront ? "Front" : "Back"), _PushState);
 
 		double scale;
-		if(!_PushFromFront) {
-
+		if(_PushFromFront )			
+		{	
+			NSTimer *frontPushTimer;
+			frontPushTimer = [ NSTimer scheduledTimerWithTimeInterval: 0.05/35 
+													  target: self
+													selector: @selector(PopOutFirstStage:)
+													userInfo: nil
+													 repeats: YES ];
 		}
-		else {
-	
+		else 
+		{
+			NSTimer *backPushTimer;
+			backPushTimer = [ NSTimer scheduledTimerWithTimeInterval: 0.05/35 
+													   target: self
+													 selector: @selector(PushBackFirstStage:)
+													userInfo: nil
+													 repeats: YES ];			
 		}
 		
 		mysio2ResourceDispatchEvents( sio2->_SIO2resource,
-									  sio2->_SIO2window,
-									  my_WINDOW_MOVE_OBJ,
-									  SIO2_WINDOW_TAP_DOWN,
-									  0,			//scale
-									  0,			//direction, 1: horizontal ; 2: vertical
-									  0,			//dirState
-									  0,			//delta x
-									  0,            //delta y
-									  scale		//delta z
-									 );
+							      sio2->_SIO2window,
+							      my_WINDOW_MOVE_OBJ,
+							      SIO2_WINDOW_TAP_DOWN,
+								0,			//scale
+								0,			//direction, 1: horizontal ; 2: vertical
+								0,			//dirState
+								0,			//delta x
+								0,                //delta y
+								scale		      //delta z
+								);
 	
 	}
 }
 
 - (void) PushEnded: (id)sender {
 	[sender invalidate];
+	if(isDebug) printf("Push End\n");
+	_PushState = 0;
+	
+	if(selection!= nil)
+		[gestureSequence addObject: INTOBJ(GESTURE_BOTH_PUSH)];
+}
+
+- (void) PushEnded  {
+
 	if(isDebug) printf("Push End\n");
 	_PushState = 0;
 	
@@ -1400,10 +1419,55 @@ BOOL isDebug = YES;
 	return count;
 }
 
-- (void) PopOutFirstStage: (id)sender {}
+static int thePushCount = 0;
+- (void) PopOutFirstStage: (id)sender {
+	
+	mysio2ResourceDispatchEvents( sio2->_SIO2resource,
+							sio2->_SIO2window,
+							my_WINDOW_MOVE_OBJ,
+							SIO2_WINDOW_TAP_DOWN,
+							0,			//scale
+							0,			//direction, 1: horizontal ; 2: vertical
+							0,			//dirState
+							0,			//delta x
+							0,               //delta y
+							0.5             //delta z
+							);
+	
+	thePushCount++;
+	
+	if( thePushCount == 35)
+	{
+		thePushCount = 0;
+		[ sender invalidate ];
+		[ self PushEnded ];
+	}
+	
+  }
 - (void) PopOutSecondStage: (id)sender {};
 
-- (void) PushBackFirstStage: (id)sender {};
+- (void) PushBackFirstStage: (id)sender {
+	
+	mysio2ResourceDispatchEvents( sio2->_SIO2resource,
+								 sio2->_SIO2window,
+								 my_WINDOW_MOVE_OBJ,
+								 SIO2_WINDOW_TAP_DOWN,
+								 0,			//scale
+								 0,			//direction, 1: horizontal ; 2: vertical
+								 0,			//dirState
+								 0,			//delta x
+								 0,              //delta y
+								 -0.5            //delta z
+								 );
+	
+	thePushCount++;
+	if( thePushCount == 35)
+	{
+		thePushCount = 0;
+		[ sender invalidate ];
+		[ self PushEnded ];
+	}
+};
 - (void) PushBackSecondStage: (id)sender {};
 
 
