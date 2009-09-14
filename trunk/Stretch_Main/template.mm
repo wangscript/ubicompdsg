@@ -333,6 +333,11 @@ void templateRender( void ) {
 				//------------------------------------------------------------------------------
 				break;
 			default:
+				if (taskType[taskState - 1] == 1) 
+					selection = objectSelect;
+				else
+					selection = objectSelect2;
+				
 				if (taskType[taskState - 1] == 1) {
 					if (objectsAreInSameSize( objectSelect, objectEnd )){
 						stateStartFlag = TRUE;
