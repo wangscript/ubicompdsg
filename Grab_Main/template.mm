@@ -4,13 +4,14 @@
 #include "template.h"
 
 #include "../src/sio2/sio2.h"
+#include "math.h"
 #import <AudioToolbox/AudioToolbox.h>
 
 using namespace std;
 
 #define SIO2_FILE_NAME			"Task_Grab.sio2"
-#define TASK_TOTAL_ROUND		40
-#define TASK_PER_ROUND			10
+#define TASK_TOTAL_ROUND		35
+#define TASK_PER_ROUND			5
 #define OBJ_IN_SAME_POSISION	0.75
 #define RANDOM_LOC_DISTANCE		3
 
@@ -18,7 +19,7 @@ using namespace std;
 
 #define TARTET_ROT_X_1			0
 #define TARTET_ROT_Y_1			90
-#define TARTET_ROT_Z_1			0
+#define TARTET_ROT_Z_1			0     
 #define TARTET_ROT_X_2			0
 #define TARTET_ROT_Y_2			270
 #define TARTET_ROT_Z_2			180
@@ -26,6 +27,11 @@ using namespace std;
 #define TAR_OBJ_SCL_THRESHOLD	0.2
 
 #pragma mark -
+
+//
+float orignalSize;
+
+
 
 NSString *FILENAME;
 SystemSoundID soundID;
@@ -162,16 +168,24 @@ void generatePosition() {
 	
 	
 	switch( idx ){
-		case 1: y1 = -6; z1 = 3; size = 1.5; break;
-		case 2: y1 = -6; z1 = 3; size = 1; break;
-		case 3: y1 = -6; z1 = 3; size = 0.5; break;
-		case 4: y1 = -6; z1 = 3; size = 0.25; break;
+		case 1: y1 = -6; z1 = 3; size = 1; break;
+		case 2: y1 = -6; z1 = 3; size = 0.8; break;
+		case 3: y1 = -6; z1 = 3; size = 0.6; break;
+		case 4: y1 = -6; z1 = 3; size = 0.5; break;
+		case 5: y1 = -6; z1 = 3; size = 0.4; break;
+		case 6: y1 = -6; z1 = 3; size = 0.3; break;
+		case 7: y1 = -6; z1 = 3; size = 0.2; break;
+			
+
 		//case 5: y1 = -6; z1 = 3; size = 1; break;
 		//case 6: y1 = 0; z1 = 3; size = 1; break;
 		//case 7: y1 = -6; z1 = 0; size = 1; break;
 		//case 8: y1 = 0; z1 = 0; size = 1; break;	
 		default: break;
 	}
+	
+	orignalSize = size;
+	
 	if (taskState == 1){
 		yy = y1 + (float)(rand() % 1200) / 100;
 		zz = z1 - (float)(rand() % 600) / 100;
@@ -428,9 +442,10 @@ void templateRender( void ) {
 						
 						if(tempObject != NULL)
 						{//Enlarge the object:
-							tempObject->_SIO2transform->scl->x *= 1.1;
-							tempObject->_SIO2transform->scl->y *= 1.1;
-							tempObject->_SIO2transform->scl->z *= 1.1;
+							printf("size = %lf\n",pow( 2, -orignalSize) * 1.1);
+							tempObject->_SIO2transform->scl->x = orignalSize + 0.1;
+							tempObject->_SIO2transform->scl->y = orignalSize + 0.1;
+							tempObject->_SIO2transform->scl->z = orignalSize + 0.1;
 							sio2TransformBindMatrix( tempObject->_SIO2transform  );
 							backHoverOn[vIndex] = tempObject;
 						}
@@ -448,9 +463,9 @@ void templateRender( void ) {
 						
 						if( tempObject != backHoverOn[vIndex])
 						{ //the touch point is not hovering on sth:
-							backHoverOn[vIndex]->_SIO2transform->scl->x /= 1.10;
-							backHoverOn[vIndex]->_SIO2transform->scl->y /= 1.10;
-							backHoverOn[vIndex]->_SIO2transform->scl->z /= 1.10;
+							backHoverOn[vIndex]->_SIO2transform->scl->x = orignalSize;
+							backHoverOn[vIndex]->_SIO2transform->scl->y = orignalSize;
+							backHoverOn[vIndex]->_SIO2transform->scl->z = orignalSize;
 							sio2TransformBindMatrix( backHoverOn[vIndex]->_SIO2transform  );
 							backHoverOn[vIndex] = NULL;
 						}
@@ -752,6 +767,10 @@ void templateLoading( void ) {
 	sio2ResourceGenId( sio2->_SIO2resource );
 	
 	objectSelect = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Circle" );
+	
+
+	
+	
 	//objectEnd    = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/End" );
 	//objectArrow  = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Arrow" );
 	
