@@ -1290,7 +1290,7 @@ BOOL isDebug = YES;
 - (void) setTouchAtSameTime: (int)count andFront: (BOOL)front {
 	double nowTime = [NSDate timeIntervalSinceReferenceDate];
 	if ((nowTime - _SameTouchFirstTime) < PUSH_INITIAL_PERIOD) {
-		_PushState = 5;
+		_PushState = [self TouchesOnScreen: front]; 
 		_PushFromFront = front;
 		NSTimer *timer;
 		timer = [NSTimer scheduledTimerWithTimeInterval: PUSH_INITIAL_WAIT_TIME 
@@ -1299,12 +1299,14 @@ BOOL isDebug = YES;
 											   userInfo: nil
 												repeats: NO ];
 	}
-	
-	_SameTouchFirstTime = nowTime;
+	else
+		_SameTouchFirstTime = nowTime;
 }
 
 - (void) PushWaitTimer: (id)sender {
-	if (_PushState == 5) {
+
+	if ( [ self TouchesOnScreen: _PushFromFront ] > 0 ) 
+	{
 		[self PushBegan];
 	}
 }
@@ -1317,20 +1319,11 @@ BOOL isDebug = YES;
 	
 	if (_PushFromFront){
 		if(isDebug) printf("Push (From Front) Began\n");
-		//tp1 = [self.frontLoc objectAtIndex: newestDragFrontIdx[0]];
-		//tp2 = [self.frontLoc objectAtIndex: newestDragFrontIdx[1]];
-		//avgP.x = ( tp1._point.x + tp2._point.x );
-		//avgP.y = ( tp1._point.y + tp2._point.y );
-		
 	}
 	else {
 		if(isDebug) printf("Push (From Back) Began\n");	
-		//tp1 = [self.backLoc objectAtIndex: newestDragBackIdx[0]];
-		//tp2 = [self.backLoc objectAtIndex: newestDragBackIdx[1]];
-		//avgP.x = ( tp1._point.x + tp2._point.x );
-		//avgP.y = ( tp1._point.y + tp2._point.y );;
 	}
-	_PushState = 1;
+
 	NSTimer *timer;
 	timer = [NSTimer scheduledTimerWithTimeInterval: PUSH_PERIOD_TIME 
 									  target: self
@@ -1347,14 +1340,8 @@ BOOL isDebug = YES;
 }
 
 - (void) PushMoved: (id)sender {
-	if(_PushState > 0) {
-		if ( [self TouchesOnScreen: _PushFromFront] < 2){
-			[self PushEnded: (id)sender];
-			return;
-		}
-		else {
-			_PushState = [self TouchesOnScreen: _PushFromFront];
-		}
+	{
+		_PushState = [self TouchesOnScreen: _PushFromFront];
 		
 		theSelectedGroup.clear();
 		
@@ -1404,6 +1391,10 @@ BOOL isDebug = YES;
 	
 	if(selection!= nil)
 		[gestureSequence addObject: INTOBJ(GESTURE_BOTH_PUSH)];
+	
+	printf("the object0: %f \n", theSortedObjects[0]._obj->_SIO2transform->loc->x );
+	printf("the object1: %f \n", theSortedObjects[1]._obj->_SIO2transform->loc->x );
+	printf("the object2: %f \n", theSortedObjects[2]._obj->_SIO2transform->loc->x );
 	
 	theSelectedGroup.clear();
 }
@@ -1455,11 +1446,13 @@ static int thePushCount = 0;
 									 -10.5             //delta z
 									 );
 		
+		theSelectedGroup.clear();
+		sortingTheObjects();
 		for( int i=0; i<theSortedObjects.size(); i++)
 		{
 			theSelectedGroup.push_back( theSortedObjects[i]._obj );
 		}
-		sortingTheObjects();
+		
 		
 		NSTimer* popOutTimer;
 		popOutTimer = [ NSTimer scheduledTimerWithTimeInterval: 0.05/35 
@@ -1471,6 +1464,7 @@ static int thePushCount = 0;
 	}
 	
   }
+
 - (void) PopOutSecondStage: (id)sender {
 	
 	mysio2ResourceDispatchEvents( sio2->_SIO2resource,
@@ -1485,11 +1479,11 @@ static int thePushCount = 0;
 								 0.05             //delta z
 								 );
 	thePushCount++;
-	if( thePushCount == 34)
+	if( thePushCount == 35)
 	{
 		thePushCount = 0;
 		[ sender invalidate];
-		[ self PushEnded];
+		[ self PushEnded ];
 		theSelectedGroup.clear();
 		
 	}
@@ -1532,11 +1526,12 @@ static int thePushCount = 0;
 									 );
 		
 		theSelectedGroup.clear();
+		sortingTheObjects();
 		for( int i=0; i<theSortedObjects.size(); i++)
 		{
 			theSelectedGroup.push_back( theSortedObjects[i]._obj );
 		}
-		sortingTheObjects();
+
 		NSTimer* pushBackTimer;
 		pushBackTimer = [ NSTimer scheduledTimerWithTimeInterval: 0.05/35 
 													      target: self
@@ -1561,7 +1556,7 @@ static int thePushCount = 0;
 								 );
 	
 	thePushCount++;
-	if( thePushCount == 34)
+	if( thePushCount == 35)
 	{
 		thePushCount = 0;
 		[ sender invalidate];
@@ -1791,7 +1786,7 @@ static int _degree_counter = 0; // Counter for rotate 90 degree
 
 - (void) frontSingleSelectionTimer:(id) sender
 {
-	if( newestDragFrontIdx[0] == theFrontPreIndexForSingleSelection && theFrontPreIndexForSingleSelection != 5  && !dragState )
+	if( newestDragFrontIdx[0] == theFrontPreIndexForSingleSelection && theFrontPreIndexForSingleSelection != 5  && !dragState  && _PushState == 0)
 	{
 		TouchPoint* tp = [self.frontLoc objectAtIndex: theFrontPreIndexForSingleSelection];
 		
@@ -1809,7 +1804,7 @@ static int _degree_counter = 0; // Counter for rotate 90 degree
 
 - (void) backSingleSelectionTimer:(id) sender
 {
-	if( newestDragBackIdx[0] == theBackPreIndexForSingleSelection  && theBackPreIndexForSingleSelection != 5  && !dragState )
+	if( newestDragBackIdx[0] == theBackPreIndexForSingleSelection  && theBackPreIndexForSingleSelection != 5  && !dragState && _PushState == 0)
 	{
 		TouchPoint* tp = [self.backLoc objectAtIndex: theBackPreIndexForSingleSelection];
 		
