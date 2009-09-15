@@ -41,6 +41,9 @@ vec2* backSelectPosition;
 
 bool debug = NO;
 
+//-------Edit for "Full Screen"-------------
+bool isFullScreen = NO;
+
 //-------Edit for LogButton-----------------
 bool  isReadyToLog		= NO;
 bool  isAllTaskFinished = NO;
@@ -281,12 +284,25 @@ void generateLogFormat() {
 @implementation theObject
 
 @synthesize _obj;
+@synthesize _originalScl;
+@synthesize _theLocBeforeFullScreen;
 
 - (theObject*) initWithSIO2Object:( SIO2object*) newObject;
 {
 	if (self) {
+		
 		_obj = newObject;
 		_obj->dst = 1.0f;
+		
+		_originalScl = sio2Vec3Init();
+		_originalScl->x = newObject->_SIO2transform->scl->x;
+		_originalScl->y = newObject->_SIO2transform->scl->y;
+		_originalScl->z = newObject->_SIO2transform->scl->z;
+		
+		_theLocBeforeFullScreen = sio2Vec3Init();
+		_theLocBeforeFullScreen->x = newObject->_SIO2transform->loc->x;
+		_theLocBeforeFullScreen->y = newObject->_SIO2transform->loc->y;
+		_theLocBeforeFullScreen->z = newObject->_SIO2transform->loc->z;
 		
 		for( int i=0; i<16; i++)
 		{
@@ -384,7 +400,7 @@ void templateRender( void ) {
 			sio2ExecLUA( "video.render_fire();" );                     //add by moje
 
 #pragma mark Selection:
-			if ( tap_select ) {
+			if ( tap_select && !isFullScreen ) {
 				
 				theSelectedGroup.clear();
 				tap_select = 0;
@@ -473,26 +489,8 @@ void templateRender( void ) {
 				}
 
 								
-				/* Implimentation for Group Select:
-				if( selection )
-				{
-					int theSelectedIndex = theSortedObjects.size();
-					for( int index= 0; index < theSortedObjects.size(); index++ )
-					{
-						if( selection == theSortedObjects[ index ] )
-							theSelectedIndex = index;
-						
-						if( selection != theSortedObjects[ index ] && index > theSelectedIndex )
-						{
-							if ( checkForGroup( selection, theSortedObjects[ index ] ) )
-								theSelectedGroup.push_back( theSortedObjects[ index ] );
-						}	
-					}
-					
-					theSelectedGroup.push_back( selection );
-				}*/
 			}
-			else if( front_select || back_select)
+			else if( ( front_select || back_select)  && !isFullScreen )
 			{
 				theSelectedGroup.clear();
 				double cameraPosition = camera->_SIO2transform->loc->x;
@@ -998,45 +996,70 @@ void templateScreenAccelerometer( void *_ptr ) {
 
 void templateChangeObjectScale( void *_ptr, float det_scale) 
 {
-	det_scale *= 0.1;
-	SIO2object* _SIO2object = nil;
-	int index;
-	
-	for( int i= theSelectedGroup.size()-1; i >= 0; i--)
+	if( theSelectedGroup.size() > 0)
 	{
-		GLfloat _M[16];
-		for( int k=0; k < theSortedObjects.size(); k++)
+		
+		det_scale *= 0.1;
+		SIO2object* _SIO2object = nil;
+		int index = theSortedObjects.size();
+		
+		//Finding the selected obj whitch is nearest to the camera: 
+		for( int i= theSelectedGroup.size()-1; i >= 0; i--)
 		{
-			if( theSortedObjects[k]._obj == theSelectedGroup[ i ] )
+			int tempIndex;
+			for( int k=0; k<theSortedObjects.size(); k++)
 			{
-				for( int s=0; s<16; s++)
-					_M[s] = [ theSortedObjects[k] getRotatingMatrix ][s];
+				if( theSelectedGroup[i] == theSortedObjects[k]._obj)
+				{
+					tempIndex = k;
+					break;
+				}
 				
-				index = k;
-				_SIO2object = theSortedObjects[k]._obj;
-				break;
+				
+			}
+			
+			if( tempIndex < index)
+				index = tempIndex;
+			
+		}
+		
+		
+		{
+			GLfloat _M[16];
+			
+			for( int s=0; s<16; s++)
+				_M[s] = [ theSortedObjects[index] getRotatingMatrix ][s];
+			
+			_SIO2object = theSortedObjects[index]._obj;
+			
+			
+			if( _SIO2object )
+			{
+				
+				//SIO2camera *_SIO2camera = ( SIO2camera * )sio2ResourceGet( sio2->_SIO2resource, SIO2_CAMERA,"camera/Camera");
+				if(debug) printf("_SIO2object->_SIO2transform->scl->y = %f \n", _SIO2object->_SIO2transform->scl->y );
+				
+				if(_SIO2object->_SIO2transform->scl->y + det_scale < 14 - 2.5*index && _SIO2object->_SIO2transform->scl->y + det_scale > 1.5 )
+				{
+					//_SIO2object->_SIO2transform->scl->x += det_scale;   // Do not increase the thickness of windows.
+					_SIO2object->_SIO2transform->scl->y += det_scale;
+					_SIO2object->_SIO2transform->scl->z += det_scale * _SIO2object->_SIO2transform->scl->z / _SIO2object->_SIO2transform->scl->y;
+					
+					printf(" ==== The scale of obj is: %f \n", _SIO2object->_SIO2transform->scl->y );
+				}
+				else if( _SIO2object->_SIO2transform->scl->y + det_scale >=14 - 2.5*index )
+				{
+					fullScreenSetup( index, _SIO2object );
+				}
+				
+				//sio2TransformBindMatrix( _SIO2object->_SIO2transform  );
+				sio2TransformBindMatrix2(_SIO2object->_SIO2transform,_M, 0.0f,0.0f,0.0f , 2);
+				[ theSortedObjects[ index ] setRotatingMatrix: _M ];
 			}
 		}
 		
-		if( _SIO2object )
-		{
-			
-			//SIO2camera *_SIO2camera = ( SIO2camera * )sio2ResourceGet( sio2->_SIO2resource, SIO2_CAMERA,"camera/Camera");
-			if(debug) printf("_SIO2object->_SIO2transform->scl->y = %f \n", _SIO2object->_SIO2transform->scl->y );
-			
-			if(_SIO2object->_SIO2transform->scl->y + det_scale < 10 && _SIO2object->_SIO2transform->scl->y + det_scale > 0.1)
-			{
-				//_SIO2object->_SIO2transform->scl->x += det_scale;   // Do not increase the thickness of windows.
-				_SIO2object->_SIO2transform->scl->y += det_scale;
-				_SIO2object->_SIO2transform->scl->z += det_scale * _SIO2object->_SIO2transform->scl->z / _SIO2object->_SIO2transform->scl->y;
-			}
-			
-			//sio2TransformBindMatrix( _SIO2object->_SIO2transform  );
-			sio2TransformBindMatrix2(_SIO2object->_SIO2transform,_M, 0.0f,0.0f,0.0f , 2);
-			[ theSortedObjects[ index ] setRotatingMatrix: _M ];
-		}
+		
 	}
-
 }
 
 void templateRotateObject( void *_ptr , int rotateDirection, int theDirState ) {
@@ -1108,68 +1131,70 @@ void templateRotateObject( void *_ptr , int rotateDirection, int theDirState ) {
 
 void templateMoveObject( void *_ptr ,float _detX, float _detY, float _detZ ) {	
 
-	for( int i=0;  i < theSelectedGroup.size(); i++)
+	if( theSelectedGroup.size() > 0)
 	{
-		GLfloat _M[16];
-		SIO2object *_SIO2object = nil;
-		int index;
-		
-		for( int k=0; k<theSortedObjects.size(); k++)
+		for( int i=0;  i < theSelectedGroup.size(); i++)
 		{
-			if( theSortedObjects[k]._obj == theSelectedGroup[i])
+			GLfloat _M[16];
+			SIO2object *_SIO2object = nil;
+			int index;
+			
+			for( int k=0; k<theSortedObjects.size(); k++)
 			{
-				for( int l=0; l<16; l++)
-					_M[l] = [ theSortedObjects[k] getRotatingMatrix][l] ;
+				if( theSortedObjects[k]._obj == theSelectedGroup[i])
+				{
+					for( int l=0; l<16; l++)
+						_M[l] = [ theSortedObjects[k] getRotatingMatrix][l] ;
+					
+					_SIO2object = theSortedObjects[k]._obj; 
+					index = k;
+					break;
+				}
+			}
+			
+			// Check if we get a pointer.
+			if( _SIO2object )
+			{
+				// Apply a rotation based on the touch movement.
+				SIO2camera *_SIO2camera = ( SIO2camera * )sio2ResourceGet( sio2->_SIO2resource, SIO2_CAMERA,"camera/Camera");
+				float k = sio2Distance(_SIO2camera->_SIO2transform->loc, _SIO2object->_SIO2transform->loc) * 0.0001;
 				
-				_SIO2object = theSortedObjects[k]._obj; 
-				index = k;
-				break;
-			}
-		}
-		
-		// Check if we get a pointer.
-		if( _SIO2object )
-		{
-			// Apply a rotation based on the touch movement.
-			SIO2camera *_SIO2camera = ( SIO2camera * )sio2ResourceGet( sio2->_SIO2resource, SIO2_CAMERA,"camera/Camera");
-			float k = sio2Distance(_SIO2camera->_SIO2transform->loc, _SIO2object->_SIO2transform->loc) * 0.0001;
-			
-			
-			if(fabsf(_detX) > 0.01)
-			{
-				if(debug) printf("\nDETX!!!");
-				if(_SIO2object->_SIO2transform->loc->z + _detX * k < 100 && _SIO2object->_SIO2transform->loc->z + _detX * k > _SIO2object->_SIO2transform->scl->x)
+				
+				if(fabsf(_detX) > 0.01)
 				{
-					_SIO2object->_SIO2transform->loc->z += _detX * k;
+					if(debug) printf("\nDETX!!!");
+					if(_SIO2object->_SIO2transform->loc->z + _detX * k < 100 && _SIO2object->_SIO2transform->loc->z + _detX * k > _SIO2object->_SIO2transform->scl->x)
+					{
+						_SIO2object->_SIO2transform->loc->z += _detX * k;
+					}
 				}
-			}
-			if(fabsf(_detY) > 0.01)
-			{
-				if(debug) printf("\nDETY!!!");
-				if(_SIO2object->_SIO2transform->loc->y + _detY * k < 100 && _SIO2object->_SIO2transform->loc->y + _detY * k > _SIO2object->_SIO2transform->scl->x)
+				if(fabsf(_detY) > 0.01)
 				{
-					_SIO2object->_SIO2transform->loc->y += _detY * k;
+					if(debug) printf("\nDETY!!!");
+					if(_SIO2object->_SIO2transform->loc->y + _detY * k < 100 && _SIO2object->_SIO2transform->loc->y + _detY * k > _SIO2object->_SIO2transform->scl->x)
+					{
+						_SIO2object->_SIO2transform->loc->y += _detY * k;
+					}
 				}
-			}
-			
-			if(fabs(_detZ) > 0.01)  //Implimentation for Gesture: PUSH
-			{
-				if(debug) printf("\nDETZ!!!");
-				// if(_SIO2object->_SIO2transform->loc->x + _detZ  < 100 && _SIO2object->_SIO2transform->loc->x + _detZ  > _SIO2object->_SIO2transform->scl->x)
+				
+				if(fabs(_detZ) > 0.01)  //Implimentation for Gesture: PUSH
 				{
-					_SIO2object->_SIO2transform->loc->x += _detZ ; 
+					if(debug) printf("\nDETZ!!!");
+					// if(_SIO2object->_SIO2transform->loc->x + _detZ  < 100 && _SIO2object->_SIO2transform->loc->x + _detZ  > _SIO2object->_SIO2transform->scl->x)
+					{
+						_SIO2object->_SIO2transform->loc->x += _detZ ; 
+					}
+					if(debug) printf("X: %f\n",_SIO2object->_SIO2transform->loc->x);
 				}
-				if(debug) printf("X: %f\n",_SIO2object->_SIO2transform->loc->x);
+				
+				
+				sio2TransformBindMatrix2(_SIO2object->_SIO2transform,_M, 0.0f, 0.0f, 0.0f , 2);
+				[ theSortedObjects[ index] setRotatingMatrix: _M];
+				
+				//sio2TransformBindMatrix( _SIO2object->_SIO2transform  );
 			}
-			
-			
-			sio2TransformBindMatrix2(_SIO2object->_SIO2transform,_M, 0.0f, 0.0f, 0.0f , 2);
-			[ theSortedObjects[ index] setRotatingMatrix: _M];
-			
-			//sio2TransformBindMatrix( _SIO2object->_SIO2transform  );
 		}
 	}
-
 }
 
 void templateMoveCamera( void *_ptr ,float _detX, float _detY, float _detZ ) {	
@@ -1399,5 +1424,29 @@ void videoPlayThread( void *)
 
 }
 
+#pragma mark FULL SCREEN algmented functions:
+void fullScreenSetup( int theTargetIndex, SIO2object* _SIO2object )
+{
+	theSelectedGroup.clear();
+	
+	theSortedObjects[ theTargetIndex ]._theLocBeforeFullScreen->x = _SIO2object->_SIO2transform->loc->x;
+	theSortedObjects[ theTargetIndex ]._theLocBeforeFullScreen->y = _SIO2object->_SIO2transform->loc->y;
+	theSortedObjects[ theTargetIndex ]._theLocBeforeFullScreen->z = _SIO2object->_SIO2transform->loc->z;
+	
+	_SIO2object->_SIO2transform->scl->x = theSortedObjects[ theTargetIndex ]._originalScl->x;
+	_SIO2object->_SIO2transform->scl->y = theSortedObjects[ theTargetIndex ]._originalScl->y;
+	_SIO2object->_SIO2transform->scl->z = theSortedObjects[ theTargetIndex ]._originalScl->z;
+	
+	_SIO2object->_SIO2transform->loc->x = camera->_SIO2transform->loc->x - 13.0;
+	_SIO2object->_SIO2transform->loc->y = camera->_SIO2transform->loc->y;
+	_SIO2object->_SIO2transform->loc->z = camera->_SIO2transform->loc->z;
+	
+	isFullScreen = YES;
+	
+}
 
+void fullScreenShutDown( void )
+{
+	
+}
 
