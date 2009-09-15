@@ -185,4 +185,7 @@ Note that setting the view non-opaque will only work if the EAGL surface has an 
 - (void) singleSelectionMoved: (CGPoint)point andFront: (BOOL)front;
 - (void) singleSelectionEndedForFront: (BOOL)front;
 
+#pragma mark Help Function for Exiting Full Screen
+- (void) fullScreenShutDown;
+
 @end

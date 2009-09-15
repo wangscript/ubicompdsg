@@ -66,7 +66,7 @@ extern vec2				*selectionPosition;
 extern vec2				*frontSelectPosition;
 extern vec2				*backSelectPosition;
 
-
+extern bool isFullScreen;
 extern vector< SIO2object* > theSelectedGroup; 
 extern vector< theObject* > theSortedObjects;
 
@@ -1237,7 +1237,7 @@ BOOL isDebug = YES;
 									 sio2->_SIO2window,
 									 my_WINDOW_CHANGE_OBJ_SCALE,
 									 SIO2_WINDOW_TAP_DOWN,
-									 0.05*scaleIndex,  //scale
+									 0.15*scaleIndex,  //scale
 									 0,     //direction, 1: horizontal ; 2: vertical
 									 0,     //dirState
 									 0,     //delta x
@@ -1328,8 +1328,8 @@ BOOL isDebug = YES;
 	timer = [NSTimer scheduledTimerWithTimeInterval: PUSH_PERIOD_TIME 
 									  target: self
 									selector: @selector(PushMoved:)
-								     userInfo: nil
-									repeats: NO ];   //UI specialization: no repeat for pushing movement.
+									userInfo: nil
+									 repeats: NO ];   //UI specialization: no repeat for pushing movement.
 	
 	// Picking the selected object.
 	
@@ -1339,39 +1339,50 @@ BOOL isDebug = YES;
 
 }
 
-- (void) PushMoved: (id)sender {
+- (void) PushMoved: (id)sender 
+{
+	_PushState = [self TouchesOnScreen: _PushFromFront];
+	
+	if(!isFullScreen)
 	{
-		_PushState = [self TouchesOnScreen: _PushFromFront];
-		
 		theSelectedGroup.clear();
 		
 		for( int i=0; i<theSortedObjects.size(); i++)
 		{
 			theSelectedGroup.push_back( theSortedObjects[i]._obj );
 		}
-
+		
 		if(_PushFromFront )			
 		{	
 			NSTimer *frontPushTimer;
 			frontPushTimer = [ NSTimer scheduledTimerWithTimeInterval: 0.05/35 
-													  target: self
-													selector: @selector(PushBackFirstStage:)
-													userInfo: nil
-													 repeats: YES ];
+															   target: self
+															 selector: @selector(PushBackFirstStage:)
+															 userInfo: nil
+															  repeats: YES ];
 		}
 		else 
 		{
 			NSTimer *backPushTimer;
 			backPushTimer = [ NSTimer scheduledTimerWithTimeInterval: 0.05/35 
-													   target: self
-													 selector: @selector(PopOutFirstStage:)
-													userInfo: nil
-													 repeats: YES ];			
+															  target: self
+															selector: @selector(PopOutFirstStage:)
+															userInfo: nil
+															 repeats: YES ];			
 		}
 		
-	
+		return;
 	}
+	
+#pragma mark Algmented Part for Exiting Full Screen:
+	if( isFullScreen && _PushFromFront)
+	{
+		[ self fullScreenShutDown ];
+		[ self PushEnded ];
+	}
+	
 }
+
 
 - (void) PushEnded: (id)sender {
 	[sender invalidate];
@@ -1391,10 +1402,6 @@ BOOL isDebug = YES;
 	
 	if(selection!= nil)
 		[gestureSequence addObject: INTOBJ(GESTURE_BOTH_PUSH)];
-	
-	printf("the object0: %f \n", theSortedObjects[0]._obj->_SIO2transform->loc->x );
-	printf("the object1: %f \n", theSortedObjects[1]._obj->_SIO2transform->loc->x );
-	printf("the object2: %f \n", theSortedObjects[2]._obj->_SIO2transform->loc->x );
 	
 	theSelectedGroup.clear();
 }
@@ -1908,6 +1915,31 @@ static int _degree_counter = 0; // Counter for rotate 90 degree
 	isReadyToLog = YES;
 }
 
+#pragma mark Help Function for Exiting Full Screen
+- (void) fullScreenShutDown
+{
+	CGFloat _M[16];
+	
+	// Finding the "Full Screen Obj" by re-sorting the Objs.
+	[ self sortingTheObjects ];
+	
+	// Moving the "Full Screen Obj" back to it's original location:
+	theSortedObjects[0]._obj->_SIO2transform->loc->x = theSortedObjects[0]._theLocBeforeFullScreen->x; 
+	theSortedObjects[0]._obj->_SIO2transform->loc->y = theSortedObjects[0]._theLocBeforeFullScreen->y; 
+	theSortedObjects[0]._obj->_SIO2transform->loc->z = theSortedObjects[0]._theLocBeforeFullScreen->z; 
+	
+	// Extract the rotating matrix:
+	for( int i=0; i<16; i++)
+	{
+		_M[i] = [ theSortedObjects[0] getRotatingMatrix][i];
+	}
+	sio2TransformBindMatrix2(theSortedObjects[0]._obj->_SIO2transform,_M, 0.0f, 0.0f, 0.0f , 2);
+	
+	[ theSortedObjects[0] setRotatingMatrix: _M];
+	
+	isFullScreen = NO;
+	
+}
 
 
 

@@ -33,13 +33,17 @@
 {
 	SIO2object* _obj;
 	GLfloat _rotateMatrix[16];
+	vec3* _originalScl;
+	vec3* _theLocBeforeFullScreen;
 }
 
 - ( theObject*) initWithSIO2Object:( SIO2object*) newObject;
 - ( GLfloat* ) getRotatingMatrix;
 - ( void ) setRotatingMatrix:( GLfloat*) newMatrix;
 
-@property (nonatomic ) SIO2object* _obj;
+@property ( nonatomic ) SIO2object* _obj;
+@property ( nonatomic ) vec3* _originalScl;
+@property ( nonatomic ) vec3* _theLocBeforeFullScreen;
 
 @end
 
@@ -100,6 +104,8 @@ bool checkForGroup( SIO2object* oFront, SIO2object* oBack );
 // Algmented functions for video player:
 void videoPlayThread( void* );
 
+// Algmented function for " Full Screen "
+void fullScreenSetup( int theTargetIndex, SIO2object* _SIO2object );
 
 
 #endif
