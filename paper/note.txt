@@ -8,7 +8,8 @@ Piolot study
 3. 螢幕髒髒的
 4. 
 
-We coducted a piolot study to learn 
+We coducted a piolot study to evaluate the performance of object manipulation with double-side multi-touch gesture.  We designed a serise of comparison tasks which consisted of all gestures we mentioned above (Grab, Drag, Push, Stretch, and Rotate).  
+Three participants were invited to this study, 
 ==========================================
 Grab改良
 用背後的點來增加正面的點中機率
