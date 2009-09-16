@@ -68,7 +68,8 @@ extern vec2				*backSelectPosition;
 
 extern bool isFullScreen;
 extern vector< SIO2object* > theSelectedGroup; 
-extern vector< theObject* > theSortedObjects;
+extern vector<  theObject* > theSortedObjects;
+extern vector< SIO2object* > theIconList;
 
 @implementation TouchPoint
 
@@ -1755,6 +1756,10 @@ static int _degree_counter = 0; // Counter for rotate 90 degree
 				break;
 		}
 		
+		// Recording the rotation angle:
+		if( rotateDirection == ROTATE_UP )  theSortedObjects[k]._angleForMinimizing = 90.0;
+		else								theSortedObjects[k]._angleForMinimizing = -90.0;
+		
 		// Start minimizing procedure:
 		[ self minimizingStart: theSortedObjects[k] ];
 	}
@@ -2010,6 +2015,21 @@ int theMoveCount = 0;
 	{
 		[ sender invalidate];
 		theMoveCount = 0;
+		
+		//Add the Icon of the target app into theIconList:
+		theIconList.push_back( theMinimizingTarget._icon);
+		
+		
+		//Arragnge the Icons in theIconList:
+		for( int i=0; i<theIconList.size(); i++)
+		{
+			theIconList[i]->_SIO2transform->loc->x = 14.0;
+			theIconList[i]->_SIO2transform->loc->y = 5 + 2.5*i;
+			theIconList[i]->_SIO2transform->loc->z = 9.441;
+			
+			sio2TransformBindMatrix( theIconList[i]->_SIO2transform );
+		}
+		
 		theMinimizingTarget = nil;
 	}
 }
