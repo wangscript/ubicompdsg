@@ -1129,7 +1129,7 @@ BOOL isDebug = YES;
 				rotateDirection = ROTATE_UP;
 				isRotateEnded    = NO;
 				NSTimer *timer;
-				timer = [NSTimer scheduledTimerWithTimeInterval:0.010/180
+				timer = [NSTimer scheduledTimerWithTimeInterval:0.010/90
 														 target:self
 													   selector:@selector(rotateTheObject:)
 													   userInfo:nil
@@ -1141,7 +1141,7 @@ BOOL isDebug = YES;
 				rotateDirection = ROTATE_DOWN;
 				isRotateEnded	 = NO;
 				NSTimer *timer;
-				timer = [NSTimer scheduledTimerWithTimeInterval:0.010/180
+				timer = [NSTimer scheduledTimerWithTimeInterval:0.010/90
 														 target:self
 													   selector:@selector(rotateTheObject:)
 													   userInfo:nil
@@ -1726,21 +1726,48 @@ static int _degree_counter = 0; // Counter for rotate 90 degree
 								 SIO2_WINDOW_TAP_DOWN,
 								 0,					//scale
 								 rotateDirection,   //direction, 1: up  , 2: right, 3: down, 4: left
-								 testtest,		//dirState
+								 testtest,		    //dirState
 								 0,					//delta x
 								 0,					//delta y
 								 0					//delta z
 								 );
 	
 	_degree_counter++;
-	if(_degree_counter==180){
+	
+	// Algmented part for minimizing the app:
+	if( ( rotateDirection == ROTATE_UP || rotateDirection == ROTATE_DOWN ) && theSelectedGroup.size() == 1 && _degree_counter == 90)
+	{
 		_degree_counter=0;
 		[sender invalidate];
 		isRotateEnded = YES;
 		if(isDebug) printf("De-Select as Rotating end\n");
+		
 		// De-select as Rotating is ended:
 		theSelectedGroup.clear();
 		printf("-----The Rotating is Ended");
+		
+		// Find the selected app in theSortedObjects:
+		int k;
+		for( k=0; k<theSortedObjects.size(); k++)
+		{
+			if( theSortedObjects[k]._obj == theSelectedGroup[0])
+				break;
+		}
+		
+		// Start minimizing procedure:
+		[ self minimizingStart: theSortedObjects[k] ];
+	}
+	
+	else if(_degree_counter==180){
+		_degree_counter=0;
+		[sender invalidate];
+		isRotateEnded = YES;
+		if(isDebug) printf("De-Select as Rotating end\n");
+		
+		// De-select as Rotating is ended:
+		theSelectedGroup.clear();
+		printf("-----The Rotating is Ended");
+		
 	}
 	
 }
@@ -1941,7 +1968,46 @@ static int _degree_counter = 0; // Counter for rotate 90 degree
 	
 }
 
+#pragma mark Algmented Functions for Minimizing the Apps:
 
+theObject* theMinimizingTarget = nil;
+- (void) minimizingStart: ( void*) obj
+{
+	theObject* target = ( theObject* ) obj;
+	target._isMinimized = true;
+	theMinimizingTarget = target;
+	
+	NSTimer* timer;
+	timer = [NSTimer scheduledTimerWithTimeInterval: 0.10/100 
+											 target: self
+										   selector: @selector(minimizingMove:)
+										   userInfo: nil
+											repeats: YES ];	
+}
+
+int theMoveCount = 0;
+- (void)minimizingMove:(id) sender
+{
+	theMinimizingTarget._obj->_SIO2transform->loc->z += 0.5;
+	
+	CGFloat _M[16];
+	for( int i=0; i<16; i++)
+	{
+		_M[i] = [ theMinimizingTarget getRotatingMatrix ][i];
+	}
+	
+	sio2TransformBindMatrix2( theMinimizingTarget._obj->_SIO2transform, _M, 0, 0, 0, 2);
+	[ theMinimizingTarget setRotatingMatrix: _M ];
+	
+	theMoveCount++;
+	
+	if( theMoveCount == 100)
+	{
+		[ sender invalidate];
+		theMoveCount = 0;
+		theMinimizingTarget = nil;
+	}
+}
 
 
 @end

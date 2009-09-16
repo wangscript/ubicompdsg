@@ -188,4 +188,8 @@ Note that setting the view non-opaque will only work if the EAGL surface has an 
 #pragma mark Help Function for Exiting Full Screen
 - (void) fullScreenShutDown;
 
+#pragma mark Algmented Functions for Minimizing the Apps:
+- (void) minimizingStart: (void*) obj;
+- (void) minimizingMove: (id) sender;
+
 @end
