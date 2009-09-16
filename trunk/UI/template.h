@@ -37,6 +37,7 @@
 	vec3*		_originalScl;
 	vec3*		_theLocBeforeFullScreen;
 	bool		_isMinimized;
+	int         _angleForMinimizing;
 }
 
 - ( theObject*) initWithSIO2Object:( SIO2object* ) newObject andIcon: ( SIO2object* ) newIcon;
@@ -47,7 +48,8 @@
 @property ( nonatomic ) SIO2object* _icon;
 @property ( nonatomic ) vec3* _originalScl;
 @property ( nonatomic ) vec3* _theLocBeforeFullScreen;
-@property ( nonatomic ) bool _isMinimized;
+@property ( nonatomic ) bool  _isMinimized;
+@property ( nonatomic ) int   _angleForMinimizing;
 
 @end
 

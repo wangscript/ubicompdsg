@@ -289,6 +289,7 @@ void generateLogFormat() {
 @synthesize _originalScl;
 @synthesize _theLocBeforeFullScreen;
 @synthesize _isMinimized;
+@synthesize _angleForMinimizing;
 
 - (theObject*) initWithSIO2Object:( SIO2object*) newObject andIcon: ( SIO2object* ) newIcon ;
 {
@@ -310,6 +311,7 @@ void generateLogFormat() {
 		_theLocBeforeFullScreen->z = newObject->_SIO2transform->loc->z;
 		
 		_isMinimized = false;
+		_angleForMinimizing = 0.0;
 		
 		for( int i=0; i<16; i++)
 		{
@@ -936,34 +938,21 @@ void templateLoading( void ) {
 	
 	
 	sio2ResourceGenId( sio2->_SIO2resource );
-	
-	//selectObject = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Cube" );
-	//targetObject = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Cube1");
 	fire         = ( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/fire" );
 
 #pragma mark Definition of Vectors:
-	excludeObjects.push_back( targetObject );
-    //excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneXY" ));
-	//excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneYZ" ));
-	//excludeObjects.push_back(( SIO2object* )sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/PlaneXZ" ));
-	
-	//theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Cube")   ]);
-	//theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane")  ]);
-	//theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/fire")   ]);
+
 	theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Window")  
 																 andIcon: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Icon")]);
 	theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Window2") 
 																 andIcon: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Icon2")]);
 	theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Window3") 
 																 andIcon: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Icon3")]);
+	
+	//theIconList.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Icon"));
+	//theIconList.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Icon2"));
+	//theIconList.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Icon3"));
 
-	/* Initialize the Matrixs for Rotating:
-	for( int i=0; i<theSortedObjects.size(); i++)
-	{
-		GLfloat* tempM = [ theSortedObjects[ i ] getRotatingMatrix];
-		for( int i=0; i<16; i++)
-			printf("=======> tempM[%d]: %f", i, tempM[i] );
-	}*/
 		
 	camera = ( SIO2camera * )sio2ResourceGet( sio2->_SIO2resource, SIO2_CAMERA,"camera/Camera" );
 
@@ -1520,7 +1509,7 @@ void enlargeTheMinimizedApp( theObject* _app)
 			
 			if( theSortedObjects[i] == _app)
 			{
-				sio2TransformBindMatrix2( theSortedObjects[i]._obj->_SIO2transform, _M, 0.0f, 90.0f, 0.0f, 1);
+				sio2TransformBindMatrix2( theSortedObjects[i]._obj->_SIO2transform, _M, 0.0f, -1*_app._angleForMinimizing, 0.0f, 1);
 			}
 			
 			[ theSortedObjects[i] setRotatingMatrix: _M];
@@ -1528,8 +1517,30 @@ void enlargeTheMinimizedApp( theObject* _app)
 	}
 	
 	//Romove the Icon form theIconList:
-	vector<SIO2object*>::iterator itr = theIconList.begin();
+	vector<SIO2object*>::iterator itr;
+	
+	for( itr = theIconList.begin(); itr != theIconList.end() ; itr++)
+	{
+		SIO2object* tempObj = *( itr );
+		if( _app._icon == tempObj)
+		{
+			//Reallocate the position of the Icon:
+			_app._icon->_SIO2transform->loc->z += 10;
+			sio2TransformBindMatrix( _app._icon->_SIO2transform );
+			theIconList.erase(itr);
+			
+			{ //Rearrange the rest Icons in the list: 
+				for( int i=0; i< theIconList.size(); i++)
+				{
+					theIconList[i]->_SIO2transform->loc->y = 5 + 2.5*i;
+					sio2TransformBindMatrix( theIconList[i]->_SIO2transform );
+				}
+			}
+			
 
+			break;
+		}
+	}
 	
 	//Ending Process:
 	sortingTheObjects();
