@@ -1492,7 +1492,7 @@ static int thePushCount = 0;
 		[ sender invalidate];
 		[ self PushEnded ];
 		theSelectedGroup.clear();
-		
+		sortingTheObjects();
 	}
 
 };
@@ -1569,6 +1569,7 @@ static int thePushCount = 0;
 		[ sender invalidate];
 		[ self PushEnded];
 		theSelectedGroup.clear();
+		sortingTheObjects();
 	} 
 };
 
@@ -1976,6 +1977,10 @@ theObject* theMinimizingTarget = nil;
 	theObject* target = ( theObject* ) obj;
 	target._isMinimized = true;
 	theMinimizingTarget = target;
+	
+	target._theLocBeforeFullScreen->x = target._obj->_SIO2transform->loc->x;
+	target._theLocBeforeFullScreen->y = target._obj->_SIO2transform->loc->y;
+	target._theLocBeforeFullScreen->z = target._obj->_SIO2transform->loc->z;
 	
 	NSTimer* timer;
 	timer = [NSTimer scheduledTimerWithTimeInterval: 0.10/100 

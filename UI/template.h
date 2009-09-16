@@ -112,6 +112,6 @@ void videoPlayThread( void* );
 void fullScreenSetup( int theTargetIndex, SIO2object* _SIO2object );
 
 // Algmented function for " Minimizing "
-
+void enlargeTheMinimizedApp( theObject* _app);
 
 #endif
