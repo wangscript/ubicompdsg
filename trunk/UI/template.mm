@@ -67,15 +67,20 @@ double	taskStartTime;
 double	taskTotalTime;
 double	taskCompleteTime[TASK_TOTAL_ROUND];
 
-bool	backIsUsed[5];
-vec2	backTouchPoint[5];
-
 char	displayStr[ SIO2_MAX_CHAR ] = {""};
 
+// Algmented Part for UIdemo:
 vector<SIO2object*> excludeObjects;         // Objects cannot be selected
 vector< theObject*> theSortedObjects;
 vector<SIO2object*> theSelectedGroup;
 vector<SIO2object*> theIconList;
+
+// Algmented Part for Visual Feedback:
+bool	backIsUsed[5];
+vec2	backTouchPoint[5];
+SIO2object*		backHoverOn[5];
+vector<SIO2object*> frontVisual;
+vector<SIO2object*> backVisual;
 
 
 vec2	startLoc1;
@@ -673,7 +678,6 @@ void templateRender( void ) {
 					
 				}
 			}
-
 			else
 			{
 				sio2ResourceRender( sio2->_SIO2resource,
@@ -721,6 +725,29 @@ void templateRender( void ) {
 					
 				}
 			}
+			
+#pragma mark Visual Feedback for back-side touch:			
+			// The Back-Side Touch:
+			int vIndex;
+			for(vIndex = 0; vIndex < 5; vIndex++)
+			{
+				SIO2object* obj = backVisual[vIndex];
+				if(backIsUsed[vIndex])
+				{
+					//Showing the back-side finger on screen:
+					obj->_SIO2transform->loc->x = camera->_SIO2transform->loc->x - 36;  //TODO: The number should be modified latter...
+					sio2TransformBindMatrix( obj ->_SIO2transform  );
+					
+				}
+				else
+				{
+					//Not showing the back-side finger:
+					obj->_SIO2transform->loc->x = camera->_SIO2transform->loc->x - 200;
+					sio2TransformBindMatrix( obj ->_SIO2transform  );
+				}
+				
+			}
+			
 			// Render all the alpha objects currently inside the frustum.
 			sio2ResourceRender( sio2->_SIO2resource,
 							   sio2->_SIO2window,
@@ -949,9 +976,19 @@ void templateLoading( void ) {
 	theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Window3") 
 																 andIcon: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Icon3")]);
 	
-	//theIconList.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Icon"));
-	//theIconList.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Icon2"));
-	//theIconList.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Icon3"));
+	//The vector for visual feedback of the back-side touch:
+	backVisual.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane1") );
+	backVisual.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane2") );
+	backVisual.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane3") );
+	backVisual.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane4") );
+	backVisual.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane5") );
+	
+	excludeObjects.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane1") );
+	excludeObjects.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane2") );
+	excludeObjects.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane3") );
+	excludeObjects.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane4") );
+	excludeObjects.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane5") );
+
 
 		
 	camera = ( SIO2camera * )sio2ResourceGet( sio2->_SIO2resource, SIO2_CAMERA,"camera/Camera" );
@@ -1260,9 +1297,30 @@ void backTouchHandle(void *_ptr, int type, int index, float pt_x, float pt_y) {
 		case 1: // Add a point
 			backIsUsed[index] = TRUE;
 			backTouchPoint[index] = pt;
+			
+			//Reset the position of the plane indicating the back-side finger:
+			SIO2object* obj1 = backVisual[index];
+			if(obj1)
+			{
+				obj1->_SIO2transform->loc->z = 0.068* ( pt.x - 320/2) + 5.772;
+				obj1->_SIO2transform->loc->y = 0.068* ( pt.y - 480/2) + 10;
+			}
 			break;
 		case 2: // Modify a point
+			//Move the plane indicating the back-side finger:
+			SIO2object* obj2 = backVisual[index];
+			if(obj2)
+			{
+				vec2 d; 
+				d.x = pt.x - backTouchPoint[index].x;
+				d.y = pt.y - backTouchPoint[index].y;
+				
+				obj2->_SIO2transform->loc->z += d.x*0.068;
+				obj2->_SIO2transform->loc->y += d.y*0.068;
+			}
+			
 			backTouchPoint[index] = pt;
+			
 			break;
 		case 3: // Delete a point
 			backIsUsed[index] = FALSE;
