@@ -32,16 +32,18 @@
 @interface theObject : NSObject
 {
 	SIO2object* _obj;
+	SIO2object* _icon;
 	GLfloat _rotateMatrix[16];
 	vec3* _originalScl;
 	vec3* _theLocBeforeFullScreen;
 }
 
-- ( theObject*) initWithSIO2Object:( SIO2object*) newObject;
+- ( theObject*) initWithSIO2Object:( SIO2object* ) newObject andIcon: ( SIO2object* ) newIcon;
 - ( GLfloat* ) getRotatingMatrix;
 - ( void ) setRotatingMatrix:( GLfloat*) newMatrix;
 
 @property ( nonatomic ) SIO2object* _obj;
+@property ( nonatomic ) SIO2object* _icon;
 @property ( nonatomic ) vec3* _originalScl;
 @property ( nonatomic ) vec3* _theLocBeforeFullScreen;
 

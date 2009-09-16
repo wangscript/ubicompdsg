@@ -284,15 +284,18 @@ void generateLogFormat() {
 @implementation theObject
 
 @synthesize _obj;
+@synthesize _icon;
 @synthesize _originalScl;
 @synthesize _theLocBeforeFullScreen;
 
-- (theObject*) initWithSIO2Object:( SIO2object*) newObject;
+- (theObject*) initWithSIO2Object:( SIO2object*) newObject andIcon: ( SIO2object* ) newIcon ;
 {
 	if (self) {
 		
-		_obj = newObject;
-		_obj->dst = 1.0f;
+		_obj		= newObject;
+		_obj->dst	= 1.0f;
+		_icon		= newIcon;
+		_icon->dst	= 1.0f;
 		
 		_originalScl = sio2Vec3Init();
 		_originalScl->x = newObject->_SIO2transform->scl->x;

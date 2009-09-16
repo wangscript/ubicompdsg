@@ -1355,7 +1355,7 @@ BOOL isDebug = YES;
 		if(_PushFromFront )			
 		{	
 			NSTimer *frontPushTimer;
-			frontPushTimer = [ NSTimer scheduledTimerWithTimeInterval: 0.05/35 
+			frontPushTimer = [ NSTimer scheduledTimerWithTimeInterval: 0.06/30 
 															   target: self
 															 selector: @selector(PushBackFirstStage:)
 															 userInfo: nil
@@ -1364,7 +1364,7 @@ BOOL isDebug = YES;
 		else 
 		{
 			NSTimer *backPushTimer;
-			backPushTimer = [ NSTimer scheduledTimerWithTimeInterval: 0.05/35 
+			backPushTimer = [ NSTimer scheduledTimerWithTimeInterval: 0.06/30
 															  target: self
 															selector: @selector(PopOutFirstStage:)
 															userInfo: nil
@@ -1433,7 +1433,7 @@ static int thePushCount = 0;
 	
 	thePushCount++;
 	
-	if( thePushCount == 35)
+	if( thePushCount == 30)
 	{
 		thePushCount = 0;
 		[ sender invalidate ];
@@ -1462,7 +1462,7 @@ static int thePushCount = 0;
 		
 		
 		NSTimer* popOutTimer;
-		popOutTimer = [ NSTimer scheduledTimerWithTimeInterval: 0.05/35 
+		popOutTimer = [ NSTimer scheduledTimerWithTimeInterval: 0.08/40 
 														target: self
 													  selector: @selector(PopOutSecondStage:)
 													  userInfo: nil
@@ -1486,7 +1486,7 @@ static int thePushCount = 0;
 								 0.05             //delta z
 								 );
 	thePushCount++;
-	if( thePushCount == 35)
+	if( thePushCount == 40)
 	{
 		thePushCount = 0;
 		[ sender invalidate];
@@ -1512,7 +1512,7 @@ static int thePushCount = 0;
 								 );
 	
 	thePushCount++;
-	if( thePushCount == 35)
+	if( thePushCount == 30)
 	{
 		thePushCount = 0;
 		[ sender invalidate ];
@@ -1540,7 +1540,7 @@ static int thePushCount = 0;
 		}
 
 		NSTimer* pushBackTimer;
-		pushBackTimer = [ NSTimer scheduledTimerWithTimeInterval: 0.05/35 
+		pushBackTimer = [ NSTimer scheduledTimerWithTimeInterval: 0.08/40 
 													      target: self
 														selector: @selector(PushBackSecondStage:)
 													    userInfo: nil
@@ -1563,7 +1563,7 @@ static int thePushCount = 0;
 								 );
 	
 	thePushCount++;
-	if( thePushCount == 35)
+	if( thePushCount == 40)
 	{
 		thePushCount = 0;
 		[ sender invalidate];
