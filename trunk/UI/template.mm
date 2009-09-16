@@ -437,6 +437,7 @@ void templateRender( void ) {
 					sio2TransformBindMatrix2( theSortedObjects[ i ]._obj ->_SIO2transform, _M, 0.0f,0.0f,0.0f , 2 );
 					[ theSortedObjects[i] setRotatingMatrix: _M ];
 					
+					// Edit for "Minimizing":
 					if( !theSortedObjects[i]._isMinimized)
 						RenderSolidObject( theSortedObjects[ i ]._obj );
 					else 
@@ -495,8 +496,27 @@ void templateRender( void ) {
 					if(selection)
 						theSelectedGroup.push_back(selection);
 				}
-
-								
+				
+				// Edit for Minimizing:
+				// if any "Icon" is selected, enlargement of the minimized app. is triggered:
+				if( theSelectedGroup.size() > 0)
+				{
+					for( int k=0; k<theSelectedGroup.size(); k++)
+					{
+						for( int m=0; m<theSortedObjects.size(); m++)
+						{
+							if( theSortedObjects[m]._icon == theSelectedGroup[k])
+							{
+								theSelectedGroup.clear();
+								enlargeTheMinimizedApp( theSortedObjects[m] );
+								break;
+							}
+						}
+						
+						if( theSelectedGroup.size() == 0) break;
+					}
+				}
+				
 			}
 			else if( ( front_select || back_select)  && !isFullScreen )
 			{
@@ -1456,8 +1476,56 @@ void fullScreenSetup( int theTargetIndex, SIO2object* _SIO2object )
 	
 }
 
-void fullScreenShutDown( void )
+#pragma mark "Minimizing" Help function:
+void enlargeTheMinimizedApp( theObject* _app)
 {
+	//Push back all App objs displaying on the screen: 
+	for( int i=0; i< theSortedObjects.size(); i++)
+	{
+		if( theSortedObjects[i] == _app)
+		{
+			for( int k = 0; k<i; k++)
+			{
+				theSortedObjects[k]._obj->_SIO2transform->loc->x -= 3.5;
+			}
+		}
+	}
+	
+	//Show the target App obj:
+	_app._obj->_SIO2transform->loc->x = 0;
+	_app._obj->_SIO2transform->loc->y = _app._theLocBeforeFullScreen->y;
+	_app._obj->_SIO2transform->loc->z = _app._theLocBeforeFullScreen->z;
+	_app._obj->_SIO2transform->rot->x = 0;
+	_app._obj->_SIO2transform->rot->y = 0;
+	_app._obj->_SIO2transform->rot->z = 0;
+	
+	_app._isMinimized = false;
+
+	
+	//Bind the transform matrix:
+	for( int i=0; i<theSortedObjects.size(); i++)
+	{
+		if( !theSortedObjects[i]._isMinimized )
+		{
+			CGFloat _M[16];
+			for( int k=0; k<16; k++)
+			{
+				_M[k] = [ theSortedObjects[i] getRotatingMatrix ][k];
+			}
+			
+			sio2TransformBindMatrix2( theSortedObjects[i]._obj->_SIO2transform, _M, 0.0f, 0.0f, 0.0f, 2);
+			
+			if( theSortedObjects[i] == _app)
+			{
+				sio2TransformBindMatrix2( theSortedObjects[i]._obj->_SIO2transform, _M, 0.0f, 90.0f, 0.0f, 1);
+			}
+			
+			[ theSortedObjects[i] setRotatingMatrix: _M];
+		}
+	}
+	
+	//Ending Process:
+	sortingTheObjects();
 	
 }
 
