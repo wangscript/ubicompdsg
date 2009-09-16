@@ -1449,8 +1449,8 @@ static int thePushCount = 0;
 									 0,			//direction, 1: horizontal ; 2: vertical
 									 0,			//dirState
 									 0,			//delta x
-									 0,               //delta y
-									 -10.5             //delta z
+									 0,         //delta y
+									 -3.5*theSortedObjects.size()             //delta z
 									 );
 		
 		theSelectedGroup.clear();
@@ -1528,8 +1528,8 @@ static int thePushCount = 0;
 									  0,			//direction, 1: horizontal ; 2: vertical
 									  0,			//dirState
 									  0,			//delta x
-									  0,               //delta y
-									  10.5             //delta z
+									  0,            //delta y
+									  3.5*theSortedObjects.size()             //delta z
 									 );
 		
 		theSelectedGroup.clear();
