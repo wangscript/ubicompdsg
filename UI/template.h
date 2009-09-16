@@ -33,9 +33,10 @@
 {
 	SIO2object* _obj;
 	SIO2object* _icon;
-	GLfloat _rotateMatrix[16];
-	vec3* _originalScl;
-	vec3* _theLocBeforeFullScreen;
+	GLfloat		_rotateMatrix[16];
+	vec3*		_originalScl;
+	vec3*		_theLocBeforeFullScreen;
+	bool		_isMinimized;
 }
 
 - ( theObject*) initWithSIO2Object:( SIO2object* ) newObject andIcon: ( SIO2object* ) newIcon;
@@ -46,6 +47,7 @@
 @property ( nonatomic ) SIO2object* _icon;
 @property ( nonatomic ) vec3* _originalScl;
 @property ( nonatomic ) vec3* _theLocBeforeFullScreen;
+@property ( nonatomic ) bool _isMinimized;
 
 @end
 
@@ -106,8 +108,10 @@ bool checkForGroup( SIO2object* oFront, SIO2object* oBack );
 // Algmented functions for video player:
 void videoPlayThread( void* );
 
-// Algmented function for " Full Screen "
+// Algmented function for "Full Screen"
 void fullScreenSetup( int theTargetIndex, SIO2object* _SIO2object );
+
+// Algmented function for " Minimizing "
 
 
 #endif

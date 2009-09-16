@@ -1,11 +1,9 @@
 
-#include <vector>
+
 #include <time.h>
 #include "template.h"
-
-
 #include "../src/sio2/sio2.h"
-
+#include <vector>
 using namespace std;
 
 #define TASK_NAME				"Template"
@@ -287,6 +285,7 @@ void generateLogFormat() {
 @synthesize _icon;
 @synthesize _originalScl;
 @synthesize _theLocBeforeFullScreen;
+@synthesize _isMinimized;
 
 - (theObject*) initWithSIO2Object:( SIO2object*) newObject andIcon: ( SIO2object* ) newIcon ;
 {
@@ -306,6 +305,8 @@ void generateLogFormat() {
 		_theLocBeforeFullScreen->x = newObject->_SIO2transform->loc->x;
 		_theLocBeforeFullScreen->y = newObject->_SIO2transform->loc->y;
 		_theLocBeforeFullScreen->z = newObject->_SIO2transform->loc->z;
+		
+		_isMinimized = false;
 		
 		for( int i=0; i<16; i++)
 		{
@@ -435,7 +436,11 @@ void templateRender( void ) {
 					theSortedObjects[ i ]._obj->_SIO2transform->loc->x = cameraPosition - ( theSortedObjects[ i ]._obj ->_SIO2transform->loc->x - cameraPosition );
 					sio2TransformBindMatrix2( theSortedObjects[ i ]._obj ->_SIO2transform, _M, 0.0f,0.0f,0.0f , 2 );
 					[ theSortedObjects[i] setRotatingMatrix: _M ];
-					RenderSolidObject( theSortedObjects[ i ]._obj );
+					
+					if( !theSortedObjects[i]._isMinimized)
+						RenderSolidObject( theSortedObjects[ i ]._obj );
+					else 
+						RenderSolidObject( theSortedObjects[ i ]._icon);
 					
 					if( sio2->_SIO2window->n_touch != 0 ) {
 						if (GRAB_WITH_BACK_TOUCH) {
@@ -922,10 +927,13 @@ void templateLoading( void ) {
 	//theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Cube")   ]);
 	//theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane")  ]);
 	//theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/fire")   ]);
-	theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Window")  ]);
-	theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Window2") ]);
-	theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Window3") ]);
-	
+	theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Window")  
+																 andIcon: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Icon")]);
+	theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Window2") 
+																 andIcon: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Icon2")]);
+	theSortedObjects.push_back( [ [ theObject alloc ] initWithSIO2Object: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Window3") 
+																 andIcon: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Icon3")]);
+
 	/* Initialize the Matrixs for Rotating:
 	for( int i=0; i<theSortedObjects.size(); i++)
 	{
@@ -1068,7 +1076,7 @@ void templateChangeObjectScale( void *_ptr, float det_scale)
 void templateRotateObject( void *_ptr , int rotateDirection, int theDirState ) {
 	
 	if( theSelectedGroup.size() != 1 ) 
-	{ // Not dealing with Multi-Objects-Rotation for now.	
+	{// Not dealing with Multi-Objects-Rotation for now.	
 		return;
 	}
 	
