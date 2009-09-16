@@ -6,6 +6,7 @@
 #include <vector>
 using namespace std;
 
+
 #define TASK_NAME				"Template"
 #define SIO2_FILE_NAME			"UIdemo.sio2"
 #define TASK_TOTAL_ROUND		5
@@ -72,8 +73,10 @@ vec2	backTouchPoint[5];
 char	displayStr[ SIO2_MAX_CHAR ] = {""};
 
 vector<SIO2object*> excludeObjects;         // Objects cannot be selected
-vector<theObject*> theSortedObjects;
+vector< theObject*> theSortedObjects;
 vector<SIO2object*> theSelectedGroup;
+vector<SIO2object*> theIconList;
+
 
 vec2	startLoc1;
 vec2	startLoc2;
@@ -1523,6 +1526,10 @@ void enlargeTheMinimizedApp( theObject* _app)
 			[ theSortedObjects[i] setRotatingMatrix: _M];
 		}
 	}
+	
+	//Romove the Icon form theIconList:
+	vector<SIO2object*>::iterator itr = theIconList.begin();
+
 	
 	//Ending Process:
 	sortingTheObjects();
