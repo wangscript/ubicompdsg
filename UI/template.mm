@@ -412,6 +412,45 @@ void templateRender( void ) {
 			// Update the fire video if one of the lantern is          //add by moje
 			// visible.                                                //add by moje
 			sio2ExecLUA( "video.render_fire();" );                     //add by moje
+			
+#pragma mark Visual Feedback for back-side touch:			
+			// The Back-Side Touch:
+			int vIndex;
+			for(vIndex = 0; vIndex < 5; vIndex++)
+			{
+				SIO2object* obj = backVisual[vIndex];
+				if(backIsUsed[vIndex])
+				{
+					if( backHoverOn[ vIndex ] == nil)
+					{//Check if the touch point is hovering on sth:
+						vec2* thePos = sio2Vec2Init();
+						thePos->x = backTouchPoint[vIndex].x;
+						thePos->y = 480 - backTouchPoint[vIndex].y;
+						
+						SIO2object* tempObject = sio2ResourceSelect3D( sio2->_SIO2resource,
+																	  sio2->_SIO2camera,
+																	  sio2->_SIO2window,
+																	  thePos);
+						
+					}
+					else
+					{
+						
+					}
+					
+					//Showing the back-side finger on screen:
+					obj->_SIO2transform->loc->x = camera->_SIO2transform->loc->x - 36;  //TODO: The number should be modified latter...
+					sio2TransformBindMatrix( obj ->_SIO2transform  );
+					
+				}
+				else
+				{
+					//Not showing the back-side finger:
+					obj->_SIO2transform->loc->x = camera->_SIO2transform->loc->x - 200;
+					sio2TransformBindMatrix( obj ->_SIO2transform  );
+				}
+				
+			}
 
 #pragma mark Selection:
 			if ( tap_select && !isFullScreen ) {
@@ -694,8 +733,19 @@ void templateRender( void ) {
 								  1, SIO2_TRANSFORM_MATRIX_BIND );
 				sio2EnableState(  &fire->flags, SIO2_OBJECT_INVISIBLE);
 			}
-
 			
+			// Render all the alpha objects currently inside the frustum.
+			sio2ResourceRender( sio2->_SIO2resource,
+							    sio2->_SIO2window,
+							    sio2->_SIO2camera,
+							    SIO2_RENDER_SOLID_OBJECT );
+			
+			sio2ResourceRender( sio2->_SIO2resource, 
+							    sio2->_SIO2window, 
+							    sio2->_SIO2camera, 
+							    SIO2_RENDER_TRANSPARENT_OBJECT );
+
+#pragma mark Visual Feedback for selection:			
 			// 有選到東西的的話做highlight
 			for( int index=0; index < theSelectedGroup.size(); index++)
 			{
@@ -720,40 +770,12 @@ void templateRender( void ) {
 					
 					// Render the material
 					sio2MaterialRender( _SIO2material_selection );
-					
 					sio2ObjectRender( selection, sio2->_SIO2window, sio2->_SIO2camera, 0, SIO2_TRANSFORM_MATRIX_BIND );
 					
 				}
 			}
 			
-#pragma mark Visual Feedback for back-side touch:			
-			// The Back-Side Touch:
-			int vIndex;
-			for(vIndex = 0; vIndex < 5; vIndex++)
-			{
-				SIO2object* obj = backVisual[vIndex];
-				if(backIsUsed[vIndex])
-				{
-					//Showing the back-side finger on screen:
-					obj->_SIO2transform->loc->x = camera->_SIO2transform->loc->x - 36;  //TODO: The number should be modified latter...
-					sio2TransformBindMatrix( obj ->_SIO2transform  );
-					
-				}
-				else
-				{
-					//Not showing the back-side finger:
-					obj->_SIO2transform->loc->x = camera->_SIO2transform->loc->x - 200;
-					sio2TransformBindMatrix( obj ->_SIO2transform  );
-				}
-				
-			}
-			
-			// Render all the alpha objects currently inside the frustum.
-			sio2ResourceRender( sio2->_SIO2resource,
-							   sio2->_SIO2window,
-							   sio2->_SIO2camera,
-							   SIO2_RENDER_TRANSPARENT_OBJECT );
-			
+#pragma mark Video Object:
             //fire
 			{
 				sio2DisableState( &fire->flags   , SIO2_OBJECT_INVISIBLE );
@@ -977,17 +999,17 @@ void templateLoading( void ) {
 																 andIcon: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Icon3")]);
 	
 	//The vector for visual feedback of the back-side touch:
-	backVisual.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane1") );
-	backVisual.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane2") );
-	backVisual.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane3") );
-	backVisual.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane4") );
-	backVisual.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane5") );
+	backVisual.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/vPlane1") );
+	backVisual.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/vPlane2") );
+	backVisual.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/vPlane3") );
+	backVisual.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/vPlane4") );
+	backVisual.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/vPlane5") );
 	
-	excludeObjects.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane1") );
-	excludeObjects.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane2") );
-	excludeObjects.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane3") );
-	excludeObjects.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane4") );
-	excludeObjects.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane5") );
+	excludeObjects.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/vPlane1") );
+	excludeObjects.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/vPlane2") );
+	excludeObjects.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/vPlane3") );
+	excludeObjects.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/vPlane4") );
+	excludeObjects.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/vPlane5") );
 
 
 		
