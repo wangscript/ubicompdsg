@@ -15,6 +15,9 @@
 		28FD14FE0DC6FC130079059D /* EAGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 28FD14FD0DC6FC130079059D /* EAGLView.mm */; };
 		28FD15000DC6FC520079059D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD14FF0DC6FC520079059D /* OpenGLES.framework */; };
 		28FD15080DC6FC5B0079059D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD15070DC6FC5B0079059D /* QuartzCore.framework */; };
+		3975E55710615474006C927F /* libisimulate.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3975E55610615474006C927F /* libisimulate.a */; };
+		3975E57810615480006C927F /* libsio2_sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3975E57710615480006C927F /* libsio2_sim.a */; };
+		3975E58410615498006C927F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3975E58310615498006C927F /* CoreLocation.framework */; };
 		7DBF057B1045689A00049E7B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DBF057A1045689A00049E7B /* AudioToolbox.framework */; };
 		7DBF0589104568BA00049E7B /* ding.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7DBF0588104568BA00049E7B /* ding.wav */; };
 		881EECB41041666E00BD9CCF /* default16x16.tga in Resources */ = {isa = PBXBuildFile; fileRef = 881EECB31041666E00BD9CCF /* default16x16.tga */; };
@@ -334,6 +337,9 @@
 		28FD15070DC6FC5B0079059D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = main.mm; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* template_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = template_Prefix.pch; sourceTree = "<group>"; };
+		3975E55610615474006C927F /* libisimulate.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libisimulate.a; sourceTree = "<group>"; };
+		3975E57710615480006C927F /* libsio2_sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libsio2_sim.a; sourceTree = "<group>"; };
+		3975E58310615498006C927F /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		7DBF057A1045689A00049E7B /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		7DBF0588104568BA00049E7B /* ding.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ding.wav; sourceTree = "<group>"; };
 		881EECB31041666E00BD9CCF /* default16x16.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = default16x16.tga; sourceTree = "<group>"; };
@@ -945,6 +951,9 @@
 				889B3A141030590300204ACA /* SystemConfiguration.framework in Frameworks */,
 				889B3A461030591300204ACA /* CoreGraphics.framework in Frameworks */,
 				7DBF057B1045689A00049E7B /* AudioToolbox.framework in Frameworks */,
+				3975E55710615474006C927F /* libisimulate.a in Frameworks */,
+				3975E57810615480006C927F /* libsio2_sim.a in Frameworks */,
+				3975E58410615498006C927F /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -994,6 +1003,9 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3975E58310615498006C927F /* CoreLocation.framework */,
+				3975E55610615474006C927F /* libisimulate.a */,
+				3975E57710615480006C927F /* libsio2_sim.a */,
 				7DBF057A1045689A00049E7B /* AudioToolbox.framework */,
 				889B3A451030591300204ACA /* CoreGraphics.framework */,
 				889B3A131030590300204ACA /* SystemConfiguration.framework */,
@@ -2057,6 +2069,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/..\"",
 					"\"$(SRCROOT)/../src/sio2\"",
+					"\"$(SRCROOT)\"",
 				);
 				OTHER_CFLAGS = (
 					"-fno-regmove",
@@ -2087,6 +2100,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/..\"",
 					"\"$(SRCROOT)/../src/sio2\"",
+					"\"$(SRCROOT)\"",
 				);
 				OTHER_CFLAGS = (
 					"-fno-regmove",
@@ -2113,6 +2127,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos2.2.1;
@@ -2132,6 +2147,7 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
 				SDKROOT = iphoneos2.2.1;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
