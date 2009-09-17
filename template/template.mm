@@ -383,10 +383,10 @@ void templateRender( void ) {
 			// Draw back-side point
 			if (ENABLE_SHOW_BACK_TOUCH){
 				const GLfloat squareVertices[] = {
-					-3.0f, -3.0f,
-					3.0f, -3.0f,
-					-3.0f,  3.0f,
-					3.0f,  3.0f,
+					-6.0f, -6.0f,
+					6.0f, -6.0f,
+					-6.0f,  6.0f,
+					6.0f,  6.0f,
 				};
 				for (int i=0 ; i<5 ; i++){
 					if (!backIsUsed[i]) continue;
@@ -430,7 +430,7 @@ void templateRender( void ) {
 					sio2FontReset();
 					sio2MaterialReset();
 					
-					sio2WindowDebugTouch( sio2->_SIO2window );
+					//sio2WindowDebugTouch( sio2->_SIO2window );
 				}
 				sio2WindowLeaveLandscape2D( sio2->_SIO2window );
 			}

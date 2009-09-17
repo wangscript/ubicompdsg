@@ -1075,7 +1075,7 @@ BOOL isDebug = YES;
 				rotateDirection = ROTATE_UP;
 				isRotateEnded    = NO;
 				NSTimer *timer;
-				timer = [NSTimer scheduledTimerWithTimeInterval:0.005/90
+				timer = [NSTimer scheduledTimerWithTimeInterval:0.1/90
 														 target:self
 													   selector:@selector(rotateTheObject:)
 													   userInfo:nil
@@ -1087,7 +1087,7 @@ BOOL isDebug = YES;
 				rotateDirection = ROTATE_DOWN;
 				isRotateEnded	 = NO;
 				NSTimer *timer;
-				timer = [NSTimer scheduledTimerWithTimeInterval:0.005/90
+				timer = [NSTimer scheduledTimerWithTimeInterval:0.1/90
 														 target:self
 													   selector:@selector(rotateTheObject:)
 													   userInfo:nil
@@ -1102,7 +1102,7 @@ BOOL isDebug = YES;
 				rotateDirection = ROTATE_RIGHT;
 				isRotateEnded    = NO;
 				NSTimer *timer;
-				timer = [NSTimer scheduledTimerWithTimeInterval:0.005/90
+				timer = [NSTimer scheduledTimerWithTimeInterval:0.1/90
 														 target:self
 													   selector:@selector(rotateTheObject:)
 													   userInfo:nil
@@ -1115,7 +1115,7 @@ BOOL isDebug = YES;
 				rotateDirection = ROTATE_LEFT;
 				isRotateEnded    = NO;
 				NSTimer *timer;
-				timer = [NSTimer scheduledTimerWithTimeInterval:0.005/90
+				timer = [NSTimer scheduledTimerWithTimeInterval:0.05/90
 														 target:self
 													   selector:@selector(rotateTheObject:)
 													   userInfo:nil
