@@ -22,7 +22,7 @@
 #define ENABLE_CAMERA_MOVE		YES
 
 #define ENABLE_SHOW_BACK_TOUCH	YES
-#define	ENABLE_SHOW_TEXT		YES
+#define	ENABLE_SHOW_TEXT		NO
 
 typedef enum {
 	GESTURE_BOTH_GRAB = 0,

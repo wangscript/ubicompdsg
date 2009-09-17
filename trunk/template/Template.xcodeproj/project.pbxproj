@@ -22,6 +22,9 @@
 		889B3A461030591300204ACA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 889B3A451030591300204ACA /* CoreGraphics.framework */; };
 		889B3A6F103059BA00204ACA /* Task_Seq.sio2 in Resources */ = {isa = PBXBuildFile; fileRef = 889B3A6E103059BA00204ACA /* Task_Seq.sio2 */; };
 		88FD063E1036BF7B00AF93D2 /* default16x16.tga in Resources */ = {isa = PBXBuildFile; fileRef = 88FD063D1036BF7B00AF93D2 /* default16x16.tga */; };
+		88FF09D9106122C5008D0AE0 /* libisimulate.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88FF09D8106122C5008D0AE0 /* libisimulate.a */; };
+		88FF09DE10612384008D0AE0 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88FF09DD10612384008D0AE0 /* CoreLocation.framework */; };
+		88FF09F710612572008D0AE0 /* libsio2_sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88FF09F610612572008D0AE0 /* libsio2_sim.a */; };
 		E073A29A100D3660004A0982 /* sio2_camera.cc in Sources */ = {isa = PBXBuildFile; fileRef = E073A255100D3660004A0982 /* sio2_camera.cc */; };
 		E073A29B100D3660004A0982 /* sio2_emitter.cc in Sources */ = {isa = PBXBuildFile; fileRef = E073A258100D3660004A0982 /* sio2_emitter.cc */; };
 		E073A29C100D3660004A0982 /* sio2_font.cc in Sources */ = {isa = PBXBuildFile; fileRef = E073A25A100D3660004A0982 /* sio2_font.cc */; };
@@ -341,6 +344,9 @@
 		889B3A451030591300204ACA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		889B3A6E103059BA00204ACA /* Task_Seq.sio2 */ = {isa = PBXFileReference; lastKnownFileType = file; name = Task_Seq.sio2; path = ../data/Task_Seq.sio2; sourceTree = SOURCE_ROOT; };
 		88FD063D1036BF7B00AF93D2 /* default16x16.tga */ = {isa = PBXFileReference; lastKnownFileType = file; name = default16x16.tga; path = ../data/default16x16.tga; sourceTree = SOURCE_ROOT; };
+		88FF09D8106122C5008D0AE0 /* libisimulate.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libisimulate.a; path = ../libisimulate.a; sourceTree = SOURCE_ROOT; };
+		88FF09DD10612384008D0AE0 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		88FF09F610612572008D0AE0 /* libsio2_sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsio2_sim.a; path = ../src/sio2/libsio2_sim.a; sourceTree = SOURCE_ROOT; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E073A254100D3660004A0982 /* sio2_action.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = sio2_action.h; path = ../src/sio2/sio2_action.h; sourceTree = SOURCE_ROOT; };
 		E073A255100D3660004A0982 /* sio2_camera.cc */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = sio2_camera.cc; path = ../src/sio2/sio2_camera.cc; sourceTree = SOURCE_ROOT; };
@@ -938,6 +944,9 @@
 				E073A43D100D36D7004A0982 /* libsio2_dev.a in Frameworks */,
 				889B3A141030590300204ACA /* SystemConfiguration.framework in Frameworks */,
 				889B3A461030591300204ACA /* CoreGraphics.framework in Frameworks */,
+				88FF09D9106122C5008D0AE0 /* libisimulate.a in Frameworks */,
+				88FF09DE10612384008D0AE0 /* CoreLocation.framework in Frameworks */,
+				88FF09F710612572008D0AE0 /* libsio2_sim.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1012,6 +1021,9 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				88FF09DD10612384008D0AE0 /* CoreLocation.framework */,
+				88FF09F610612572008D0AE0 /* libsio2_sim.a */,
+				88FF09D8106122C5008D0AE0 /* libisimulate.a */,
 				889B3A451030591300204ACA /* CoreGraphics.framework */,
 				889B3A131030590300204ACA /* SystemConfiguration.framework */,
 				E073A43B100D36D7004A0982 /* libsio2_dev.a */,
@@ -2098,6 +2110,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos2.2.1;
@@ -2117,6 +2130,7 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos2.2.1;
