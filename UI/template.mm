@@ -416,6 +416,14 @@ void templateRender( void ) {
 #pragma mark Visual Feedback for back-side touch:			
 			// The Back-Side Touch:
 			int vIndex;
+			
+			glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT );
+			for( int i=0; i<theIconList.size(); i++)
+			{
+				RenderSolidObject( theIconList[i] );
+			}
+			glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT );
+			
 			for(vIndex = 0; vIndex < 5; vIndex++)
 			{
 				SIO2object* obj = backVisual[vIndex];
@@ -426,20 +434,50 @@ void templateRender( void ) {
 						vec2* thePos = sio2Vec2Init();
 						thePos->x = backTouchPoint[vIndex].x;
 						thePos->y = 480 - backTouchPoint[vIndex].y;
-						
+						glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT );
+						sio2MaterialReset(); 
 						SIO2object* tempObject = sio2ResourceSelect3D( sio2->_SIO2resource,
 																	  sio2->_SIO2camera,
 																	  sio2->_SIO2window,
 																	  thePos);
 						
+						for( int index = 0; index < theIconList.size(); index++)
+						{
+							if( tempObject == theIconList[index] )
+							{
+								theIconList[index]->_SIO2transform->scl->y *= 1.8;
+								theIconList[index]->_SIO2transform->scl->z *= 1.8;
+								//sio2TransformBindMatrix( theIconList[index]->_SIO2transform );
+								backHoverOn[vIndex] = tempObject;
+								RearrangeLocationOfIconsInList( index, YES );
+							}
+						}
+						
 					}
 					else
 					{
+						vec2* thePos = sio2Vec2Init();
+						thePos->x = backTouchPoint[vIndex].x;
+						thePos->y = 480 - backTouchPoint[vIndex].y;
+						glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT );
+						sio2MaterialReset(); 
+						SIO2object* tempObject = sio2ResourceSelect3D( sio2->_SIO2resource,
+																	  sio2->_SIO2camera,
+																	  sio2->_SIO2window,
+																	  thePos);		
 						
+						if( tempObject != backHoverOn[vIndex])
+						{ //the touch point is not hovering on sth:
+							backHoverOn[vIndex]->_SIO2transform->scl->y /= 1.8;
+							backHoverOn[vIndex]->_SIO2transform->scl->z /= 1.8;
+							//sio2TransformBindMatrix( backHoverOn[vIndex]->_SIO2transform  );
+							backHoverOn[vIndex] = NULL;
+							RearrangeLocationOfIconsInList( 0, NO );
+						}
 					}
 					
 					//Showing the back-side finger on screen:
-					obj->_SIO2transform->loc->x = camera->_SIO2transform->loc->x - 36;  //TODO: The number should be modified latter...
+					obj->_SIO2transform->loc->x = camera->_SIO2transform->loc->x - 42;  //TODO: The number should be modified latter...
 					sio2TransformBindMatrix( obj ->_SIO2transform  );
 					
 				}
@@ -787,6 +825,12 @@ void templateRender( void ) {
 				
 				sio2EnableState( &fire->flags   , SIO2_OBJECT_INVISIBLE );              // video end by moje
             }
+
+#pragma mark Bind Transform 
+			for( int i=0; i<theIconList.size(); i++)
+				sio2TransformBindMatrix( theIconList[i]->_SIO2transform );
+
+			
 			
 			sio2ObjectReset();			
 			sio2MaterialReset();
@@ -1239,7 +1283,7 @@ void templateMoveObject( void *_ptr ,float _detX, float _detY, float _detZ ) {
 			{
 				// Apply a rotation based on the touch movement.
 				SIO2camera *_SIO2camera = ( SIO2camera * )sio2ResourceGet( sio2->_SIO2resource, SIO2_CAMERA,"camera/Camera");
-				float k = sio2Distance(_SIO2camera->_SIO2transform->loc, _SIO2object->_SIO2transform->loc) * 0.0001;
+				float k = sio2Distance(_SIO2camera->_SIO2transform->loc, _SIO2object->_SIO2transform->loc) * 0.00018;
 				
 				
 				if(fabsf(_detX) > 0.01)
@@ -1324,8 +1368,8 @@ void backTouchHandle(void *_ptr, int type, int index, float pt_x, float pt_y) {
 			SIO2object* obj1 = backVisual[index];
 			if(obj1)
 			{
-				obj1->_SIO2transform->loc->z = 0.068* ( pt.x - 320/2) + 5.772;
-				obj1->_SIO2transform->loc->y = 0.068* ( pt.y - 480/2) + 10;
+				obj1->_SIO2transform->loc->z = 0.080* ( pt.x - 320/2) + 5.772;
+				obj1->_SIO2transform->loc->y = 0.080* ( pt.y - 480/2) + 10;
 			}
 			break;
 		case 2: // Modify a point
@@ -1337,8 +1381,8 @@ void backTouchHandle(void *_ptr, int type, int index, float pt_x, float pt_y) {
 				d.x = pt.x - backTouchPoint[index].x;
 				d.y = pt.y - backTouchPoint[index].y;
 				
-				obj2->_SIO2transform->loc->z += d.x*0.068;
-				obj2->_SIO2transform->loc->y += d.y*0.068;
+				obj2->_SIO2transform->loc->z += d.x*0.080;
+				obj2->_SIO2transform->loc->y += d.y*0.080;
 			}
 			
 			backTouchPoint[index] = pt;
@@ -1346,6 +1390,15 @@ void backTouchHandle(void *_ptr, int type, int index, float pt_x, float pt_y) {
 			break;
 		case 3: // Delete a point
 			backIsUsed[index] = FALSE;
+			
+			if(backHoverOn[index] != NULL)
+			{ //Shrink the obj had been hovered on:
+				backHoverOn[index]->_SIO2transform->scl->y /= 1.8;
+				backHoverOn[index]->_SIO2transform->scl->z /= 1.8;
+				sio2TransformBindMatrix( backHoverOn[index]->_SIO2transform  );
+				backHoverOn[index] = NULL;
+				RearrangeLocationOfIconsInList( 0, NO );
+			}
 			break;
 	}
 	
@@ -1613,7 +1666,7 @@ void enlargeTheMinimizedApp( theObject* _app)
 				for( int i=0; i< theIconList.size(); i++)
 				{
 					theIconList[i]->_SIO2transform->loc->y = 5 + 2.5*i;
-					sio2TransformBindMatrix( theIconList[i]->_SIO2transform );
+					//sio2TransformBindMatrix( theIconList[i]->_SIO2transform );
 				}
 			}
 			
@@ -1625,5 +1678,32 @@ void enlargeTheMinimizedApp( theObject* _app)
 	//Ending Process:
 	sortingTheObjects();
 	
+}
+
+void RearrangeLocationOfIconsInList( int _position, bool _hoverOn)
+{
+	if(_hoverOn)
+	{//The _position is hovered on:
+		theIconList[ _position ]->_SIO2transform->loc->y += 0.8;
+		theIconList[ _position ]->_SIO2transform->loc->z -= 0.2;
+		//sio2TransformBindMatrix( theIconList[ _position ]->_SIO2transform );
+		
+		for( int i=_position+1; i< theIconList.size(); i++)
+		{
+			theIconList[i]->_SIO2transform->loc->y += 1.6;
+			//sio2TransformBindMatrix( theIconList[i]->_SIO2transform );
+		}
+	}
+	else
+	{//Reset to default positions:
+		for( int i=0; i < theIconList.size(); i++)
+		{
+			theIconList[i]->_SIO2transform->loc->x = 14.0;
+			theIconList[i]->_SIO2transform->loc->y = 5.0 +2.5*i;
+			theIconList[i]->_SIO2transform->loc->z = 9.441;
+			//sio2TransformBindMatrix( theIconList[i]->_SIO2transform );
+		}
+	}
+
 }
 
