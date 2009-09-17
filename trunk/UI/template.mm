@@ -855,7 +855,7 @@ void templateRender( void ) {
 					
 					glPushMatrix();
 					{
-						glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
+						glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
 						glTranslatef( backTouchPoint[i].x, 480 - backTouchPoint[i].y, 0.0f );
 						glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);	
 					}
@@ -1043,17 +1043,17 @@ void templateLoading( void ) {
 																 andIcon: (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Icon3")]);
 	
 	//The vector for visual feedback of the back-side touch:
-	backVisual.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/vPlane1") );
-	backVisual.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/vPlane2") );
-	backVisual.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/vPlane3") );
-	backVisual.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/vPlane4") );
-	backVisual.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/vPlane5") );
+	backVisual.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane1") );
+	backVisual.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane2") );
+	backVisual.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane3") );
+	backVisual.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane4") );
+	backVisual.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane5") );
 	
-	excludeObjects.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/vPlane1") );
-	excludeObjects.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/vPlane2") );
-	excludeObjects.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/vPlane3") );
-	excludeObjects.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/vPlane4") );
-	excludeObjects.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/vPlane5") );
+	excludeObjects.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane1") );
+	excludeObjects.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane2") );
+	excludeObjects.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane3") );
+	excludeObjects.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane4") );
+	excludeObjects.push_back( (SIO2object*)sio2ResourceGet( sio2->_SIO2resource, SIO2_OBJECT, "object/Plane5") );
 
 
 		
