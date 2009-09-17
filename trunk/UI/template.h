@@ -116,4 +116,6 @@ void fullScreenSetup( int theTargetIndex, SIO2object* _SIO2object );
 // Algmented function for " Minimizing "
 void enlargeTheMinimizedApp( theObject* _app);
 
+void RearrangeLocationOfIconsInList( int _position, bool _hoverOn);
+
 #endif
